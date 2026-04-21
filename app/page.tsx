@@ -1,82 +1,134 @@
 "use client";
 
 import { useState } from "react";
+import { Cta } from "@/components/Cta";
+import { Dropzone } from "@/components/Dropzone";
+import { ProcessingState } from "@/components/ProcessingState";
+import { ResultsLayout } from "@/components/ResultsLayout";
+import { RulesEditor } from "@/components/RulesEditor";
+import { Titlepiece } from "@/components/Titlepiece";
+import type { EvaluateResponse, VoiceRule } from "@/lib/types";
+
+type Phase = "ingest" | "processing" | "results" | "error";
+
+const DEFAULT_RULES: VoiceRule[] = [
+  {
+    id: "r1",
+    kind: "banned_terms",
+    label: "Lexicon — Banned terms",
+    description: "Reject corporate jargon outright.",
+    items: ["synergy", "leverage", "ecosystem", "disrupt", "innovate"],
+  },
+  {
+    id: "r2",
+    kind: "passive_voice",
+    label: "Voice — Passive constructions",
+    description:
+      "Active verbs only; flag be-verb passives unless a direct quote.",
+    items: ["direct quotations"],
+  },
+];
 
 export default function Home() {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [phase, setPhase] = useState<Phase>("ingest");
+  const [draft, setDraft] = useState<File[]>([]);
+  const [sources, setSources] = useState<File[]>([]);
+  const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
+  const [result, setResult] = useState<EvaluateResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [model, setModel] = useState<string>("");
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
-    setLoading(true);
+  const canSubmit = draft.length === 1 && sources.length > 0;
+
+  async function submit() {
+    if (!canSubmit) return;
+    setPhase("processing");
     setError(null);
-    setOutput("");
+
+    const form = new FormData();
+    form.append("draft", draft[0]);
+    for (const s of sources) form.append("sources", s);
+    form.append("rules", JSON.stringify(rules));
+
     try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input }),
-      });
+      const res = await fetch("/api/evaluate", { method: "POST", body: form });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Request failed");
-      setOutput(data.output ?? "");
-      setModel(data.model ?? "");
+      if (!res.ok) throw new Error(data.error ?? "Evaluation failed.");
+      setResult(data as EvaluateResponse);
+      setPhase("results");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setLoading(false);
+      setError(err instanceof Error ? err.message : "Unknown error.");
+      setPhase("error");
     }
   }
 
+  function reset() {
+    setPhase("ingest");
+    setResult(null);
+    setError(null);
+  }
+
+  if (phase === "processing") return <ProcessingState />;
+
+  if (phase === "results" && result) {
+    return <ResultsLayout result={result} onReset={reset} />;
+  }
+
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-6 py-12">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          The Economist Red Pen
+    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-12 px-6 py-10 lg:px-12 lg:py-16">
+      <Titlepiece />
+
+      <section>
+        <h1 className="font-editorial text-3xl font-bold tracking-tight text-ink">
+          Submit a manuscript for audit
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          Paste an argument, paragraph, or thesis. Get a rigorous edit back.
+        <p className="mt-3 max-w-prose font-editorial text-md text-ink-2">
+          The Red Pen compares your draft against the sources you provide and
+          the editorial voice you define. It does not write. It audits. It flags
+          the sentences that would not survive a sub-editor.
         </p>
-      </header>
+      </section>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste draft prose here..."
-          rows={10}
-          className="w-full resize-y rounded-md border border-neutral-300 bg-white p-3 text-sm outline-none focus:border-neutral-500 dark:border-neutral-700 dark:bg-neutral-900"
-          disabled={loading}
-        />
-        <button
-          type="submit"
-          disabled={loading || !input.trim()}
-          className="self-start rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
-        >
-          {loading ? "Editing…" : "Apply the red pen"}
-        </button>
-      </form>
-
-      {error && (
-        <div className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
+      {phase === "error" && error && (
+        <div className="border-l-[3px] border-econ-red bg-paper-deep px-5 py-4 font-editorial text-base italic text-ink">
           {error}
+          <button
+            onClick={reset}
+            className="ml-4 cursor-pointer font-ui text-xs not-italic small-caps text-ink-2 underline underline-offset-4"
+          >
+            Try again
+          </button>
         </div>
       )}
 
-      {output && (
-        <section className="space-y-2">
-          {model && (
-            <p className="text-xs text-neutral-500">model: {model}</p>
-          )}
-          <div className="whitespace-pre-wrap rounded-md border border-neutral-200 bg-white p-4 text-sm leading-relaxed dark:border-neutral-800 dark:bg-neutral-900">
-            {output}
-          </div>
-        </section>
-      )}
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+        <Dropzone
+          label="I · Draft manuscript"
+          helper=".md or .txt"
+          accept=".md,.txt,text/markdown,text/plain"
+          files={draft}
+          onFilesChange={setDraft}
+        />
+        <Dropzone
+          label="II · Source documents"
+          helper=".pdf, .docx, .md, .txt"
+          accept=".pdf,.docx,.md,.txt"
+          multiple
+          files={sources}
+          onFilesChange={setSources}
+          minHeight="180px"
+        />
+      </div>
+
+      <RulesEditor rules={rules} onChange={setRules} />
+
+      <div className="mt-8 flex flex-col items-start gap-3 border-t border-rule pt-6">
+        <Cta disabled={!canSubmit} onClick={submit}>
+          Evaluate Draft
+        </Cta>
+        <p className="font-ui text-xs small-caps text-ink-3">
+          Requires a draft and at least one source
+        </p>
+      </div>
     </main>
   );
 }

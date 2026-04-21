@@ -1,10 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  font-family:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", sans-serif;
+:root {
+  --paper: #fbf8f1;
+  --paper-deep: #f2ebdc;
+  --paper-edge: #e6ddc8;
+  --ink: #121212;
+  --ink-2: #3c3a36;
+  --ink-3: #6b6760;
+  --rule: #b0a89a;
+  --rule-strong: #121212;
+  --economist-red: #e3120b;
+  --red-ink: #b50d07;
+  --red-wash: rgba(227, 18, 11, 0.08);
+  --navy: #0f3b5f;
+  --amber: #a4741a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0b0b0c;
+    --paper-deep: #141413;
+    --paper-edge: #1e1d1b;
+    --ink: #f0ece2;
+    --ink-2: #c7c1b4;
+    --ink-3: #8a8579;
+    --rule: #3a3732;
+    --rule-strong: #f0ece2;
+    --navy: #7fb3d9;
+    --amber: #d6a53d;
+  }
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  body {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-feature-settings: "kern", "liga";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Source Serif 4", Georgia, serif;
+    text-wrap: balance;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+
+@layer components {
+  .small-caps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.08em;
+  }
+
+  .prose-editorial {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+    max-inline-size: 34rem;
+    font-feature-settings: "kern", "liga", "onum" 1;
+    text-wrap: pretty;
+  }
+  .prose-editorial p {
+    margin: 0;
+  }
+  .prose-editorial p + p {
+    text-indent: 1.25em;
+  }
+  .prose-editorial > p:first-of-type::first-letter {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 3.6em;
+    line-height: 0.85;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--economist-red);
+    font-weight: 700;
+  }
+
+  .rule-hair {
+    border-top: 1px solid var(--rule);
+  }
+  .rule-double {
+    border-top: 1px solid var(--rule);
+    box-shadow: 0 2px 0 var(--paper), 0 3px 0 var(--rule);
+  }
+  .rule-strong {
+    border-top: 2px solid var(--rule-strong);
+  }
+
+  mark.redpen {
+    background: transparent;
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      text-decoration-thickness 180ms ease-out,
+      opacity 280ms ease-out,
+      background-color 180ms ease-out;
+  }
+  mark.redpen[data-type="grounding"] {
+    text-decoration-color: var(--economist-red);
+  }
+  mark.redpen[data-type="voice"] {
+    text-decoration-color: var(--navy);
+  }
+  mark.redpen[data-type="argumentation"] {
+    text-decoration-color: var(--amber);
+  }
+  mark.redpen:hover {
+    text-decoration-thickness: 3px;
+  }
+  mark.redpen[data-active="true"] {
+    text-decoration-thickness: 3px;
+    background: var(--red-wash);
+  }
+  .results-focused mark.redpen:not([data-active="true"]) {
+    opacity: 0.25;
+  }
+
+  .caret-blink::after {
+    content: "▌";
+    color: var(--economist-red);
+    margin-left: 4px;
+    animation: caret 1s steps(2, end) infinite;
+  }
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0ms !important;
+      transition-duration: 0ms !important;
+    }
+  }
 }

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Economist Red Pen",
-  description: "A rigorous editor for economic writing, powered by GPT-5.",
+  title: "The Editorial Red Pen",
+  description:
+    "An editorial immune system for AI-assisted journalism. Auditing, not writing.",
 };
 
 export default function RootLayout({
@@ -13,9 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
-        {children}
-      </body>
+      <body className="bg-paper text-ink antialiased">{children}</body>
     </html>
   );
 }
