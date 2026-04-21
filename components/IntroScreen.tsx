@@ -21,82 +21,66 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
           An editorial immune system for AI-assisted journalism.
         </h1>
         <p className="mt-6 max-w-prose font-editorial text-md italic font-medium text-ink">
-          The Red Pen does not write. It audits. It sets a draft against its
-          source documents and a codified house style, then returns the
-          sentences a sub-editor would strike through.
+          The Red Pen does not write. It marks. Give it a draft, the sources
+          it draws from and the house style it should obey, and it returns
+          the sentences a sub-editor would strike out.
         </p>
       </section>
 
       <div className="rule-double" />
 
       <div className="article-pane grid grid-cols-1 gap-x-14 gap-y-10 lg:grid-cols-12">
-        <Section
-          label="I · The problem"
-          className="lg:col-span-12"
-        >
+        <Section label="I · The problem" className="lg:col-span-12">
           <p>
-            Content teams and newsrooms are racing to adopt AI to scale output,
-            and in the rush they are dismantling their editorial integrity.
-            Human editors are becoming bottlenecks: forced to manually police
-            AI-assisted drafts for subtle hallucinations, wishy-washy arguments
-            and bloated corporate jargon. Generic grammar checkers and standard
-            RAG pipelines are blind to editorial failures. They can catch a
-            misspelled word. They cannot catch a weak argument or a misaligned
-            tone.
+            Newsrooms have rushed to adopt AI. The cost has been editorial. A
+            generated article can pass a grammar checker and still invent a
+            statistic, shrug an argument into neutrality and smuggle in the
+            language of a press release. A human editor asked to catch all of
+            this at speed cannot. The tools that might help her do not exist.
           </p>
         </Section>
 
-        <Section
-          label="II · Why it happens"
-          className="lg:col-span-12"
-        >
+        <Section label="II · Why it happens" className="lg:col-span-12">
           <p>
-            Large language models are sycophantic by default, and verbose by
-            habit. They reach for both-sides neutrality, pad sentences with
-            passive voice to sound authoritative, and confidently hallucinate
-            figures when asked to summarise complex material. Evaluating these
-            flaws, meanwhile, is irreducibly subjective. Without a system that
-            forces editors to codify voice in writing, AI evaluations collapse
-            into vibe-based scores. The market is saturated with tools that
-            help AI <em>write</em>. There is a void where the tools that
-            rigorously evaluate what has been written ought to sit.
+            Large language models flatter. They prefer neutrality to
+            judgement, pad with passive verbs to sound authoritative, and
+            invent figures when they cannot find them. The flaws resist
+            measurement: without rules written down, any assessment of an AI
+            draft becomes a matter of taste. Most tools on the market help AI
+            produce more. Almost none examine what it has produced.
           </p>
         </Section>
 
-        <Section
-          label="III · The solution"
-          className="lg:col-span-12"
-        >
+        <Section label="III · The solution" className="lg:col-span-12">
           <p>
-            An evaluation-only QA platform that acts as a hostile red-team
-            against AI-assisted drafts. It does not generate content. It audits
-            it — strictly, and across three separate pillars:
+            An audit, not an author. The Red Pen reads a draft against its
+            sources and against the house style the editor has defined. Three
+            readers go to work at once:
           </p>
 
           <ol className="mt-6 flex flex-col gap-4">
             <Pillar
               num="i"
               name="Absolute grounding"
-              body="Every claim in the draft is verified against the source documents you supply. Extrapolations, rounded figures and unwarranted attributions are flagged."
+              body="The draft is checked against the sources, claim by claim. Rounded figures, unsupported attributions and inferences that exceed the evidence are marked."
             />
             <Pillar
               num="ii"
               name="Editorial voice"
-              body="Banned terms, passive constructions, hedging and house-style breaches are struck through against the rules you define, not an opaque default."
+              body="Banned terms, passive constructions and unapproved hedges are struck out. The rules are the editor's, not ours."
             />
             <Pillar
               num="iii"
               name="Argumentative rigour"
-              body="Missing premises, non-sequiturs, question-begging, and conclusions that outrun their evidence are flagged as logical defects — not style issues."
+              body="Logical holes are flagged where a conclusion outruns its evidence or a premise has gone missing. Style is left alone."
             />
           </ol>
 
           <p className="mt-6">
-            By feeding an entire source document into a large-context-window
-            model — rather than the chunked fragments that power conventional
-            RAG — the Red Pen avoids the false positives that have made
-            retrieval-based checkers unusable for real editorial work. The
-            result is an auditable, quote-for-quote copy-edit.
+            Retrieval tools read sources in fragments and miss half the
+            context. The Red Pen reads each source whole. False positives fall
+            away, and what remains is a quote-by-quote copy-edit an editor
+            can defend.
           </p>
         </Section>
       </div>
