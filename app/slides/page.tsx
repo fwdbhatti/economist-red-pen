@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Presentation deck for The Editorial Red Pen, an evaluation-only editorial immune system for AI-assisted journalism.",
 };
 
+const TOTAL_MAIN = 9;
+
 export default function SlidesPage() {
   return (
     <div className="deck">
@@ -16,9 +18,29 @@ export default function SlidesPage() {
           Principal PM, AI Platform · round 3 take-home · 30 April 2026
         </span>
         <nav className="deck-nav">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <a key={i} href={`#s${i + 1}`}>
-              {String(i + 1).padStart(2, "0")}
+          {[
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6",
+            "s7",
+            "s8",
+            "s9",
+            "closing",
+            "appendix",
+            "a1",
+            "a2",
+          ].map((id, i) => (
+            <a key={id} href={`#${id}`}>
+              {i === 9
+                ? "END"
+                : i === 10
+                  ? "APX"
+                  : i > 10
+                    ? `A${i - 10}`
+                    : String(i + 1).padStart(2, "0")}
             </a>
           ))}
         </nav>
@@ -41,7 +63,7 @@ export default function SlidesPage() {
         </div>
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>01 / 10</span>
+          <span>01 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
@@ -71,37 +93,33 @@ export default function SlidesPage() {
                 holding the line on house style, rigour, and truth
               </span>
             </div>
-
             <div className="why-card">
               <h3>Why · start here</h3>
               <p>
                 AI-assisted writing isn't going away, and it shouldn't. But
                 it has to be guardrailed. For The Economist, trust is the
-                product. A single hallucinated claim or jargon-bloated
+                product — a single hallucinated claim or jargon-bloated
                 sentence erodes a hundred years of credibility.
               </p>
             </div>
-
             <div className="why-card">
               <h3>The problem</h3>
               <p>
-                Editing is already hard. Now editors also police AI drafts
-                for hallucinations, weak arguments, and bloated corporate
-                jargon — and generic grammar or RAG tools are blind to any
-                of it.
+                Editing is already hard. Now editors are also policing AI
+                drafts for hallucinations, weak arguments, and bloated
+                corporate jargon — and generic grammar or RAG tools are
+                blind to any of it.
               </p>
             </div>
-
             <div className="why-card dark">
               <h3>The solution · one line</h3>
               <p>
                 An evaluation-only auditor that reads every AI-assisted
-                draft against its source material and the house style, then
+                draft against the source material and the house style — and
                 hands the editor a pre-flighted red-line.
               </p>
             </div>
           </div>
-
           <div className="pen-illustration">
             <PenSVG />
             <div className="caption">The red pen · never writes</div>
@@ -110,11 +128,11 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>02 / 10</span>
+          <span>02 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 3 — THE PRODUCT / FLOW */}
+      {/* 3 — PRODUCT / FLOW */}
       <section id="s3" className="slide">
         <div className="slide-head">
           <span className="brand">02 · The product</span>
@@ -144,9 +162,7 @@ export default function SlidesPage() {
               <div className="h">house style · ban lists · testable</div>
             </div>
           </div>
-
           <div className="flow-arrow">→</div>
-
           <div className="flow-col">
             <span className="step-label">
               Step 2 · three specialists audit in parallel
@@ -185,15 +201,13 @@ export default function SlidesPage() {
               </div>
             </div>
           </div>
-
           <div className="flow-arrow">→</div>
-
           <div className="flow-col">
             <span className="step-label">Step 3 · editor reviews</span>
             <div className="flow-output">
               <div className="t">Red-line review</div>
               <div className="d">
-                The draft is rendered with the one active flaw highlighted,
+                The draft is rendered with the active flaw highlighted,
                 paired with a stack of mistake cards. Click a card and the
                 draft scrolls to the sentence. Every flag carries a
                 one-sentence explanation.
@@ -235,196 +249,194 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>03 / 10</span>
+          <span>03 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 4 — ENGINEERING DECISIONS */}
+      {/* 4 — PRODUCT DECISIONS */}
       <section id="s4" className="slide">
         <div className="slide-head">
-          <span className="brand">03 · Engineering decisions</span>
-          <span className="ctx">
-            What prompting or engineering decisions did you make, and why?
-          </span>
+          <span className="brand">03 · Product decisions</span>
+          <span className="ctx">Three high-priority + two lower-priority</span>
         </div>
-        <div className="question">Engineering & prompting decisions</div>
-        <h2>Three decisions define the architecture.</h2>
+        <h2>
+          Five product decisions. Three that shape the product. Two that
+          sharpen the experience.
+        </h2>
+        <p className="serif-lead">
+          Each row: the choice made versus the obvious alternative — and why.
+        </p>
 
-        <div className="bullet-block">
-          <div className="bullet">
-            <div className="label">Decision 01</div>
-            <div className="body">
-              Info-Block tokenisation with UUIDs.
-              <em>
-                The LLM returns IDs, not quoted text — so UI highlights never
-                drift.
-              </em>
-            </div>
+        <div className="decisions">
+          <div className="head">
+            <div className="cell num">#</div>
+            <div className="cell">Decision (chosen vs rejected)</div>
+            <div className="cell">Why</div>
           </div>
-          <div className="bullet">
-            <div className="label">Decision 02</div>
-            <div className="body">
-              Native text extraction first; OCR fallback, never an LLM as a
-              PDF reader.
-              <em>
-                unpdf for digital PDFs; a tesseract sidecar is lined up for
-                scans.
-              </em>
-            </div>
+          <div className="group-label high">
+            High priority · product-defining
           </div>
-          <div className="bullet">
-            <div className="label">Decision 03</div>
-            <div className="body">
-              Three parallel LLM calls with strict JSON-schema output.
-              <em>
-                Latency capped by the slowest call, not the sum. No regex
-                scraping.
-              </em>
-            </div>
+          <DRow
+            num="01"
+            chosen="Evaluation, not generation"
+            rejected="vs. another AI writer"
+          >
+            The market is saturated with generators; generic LLMs degrade
+            elite editorial standards with sycophancy, neutrality, and
+            bloat. The real product gap for a publisher like The Economist
+            is a QA backstop that audits AI-assisted drafts to preserve
+            institutional trust and authority.
+          </DRow>
+          <DRow
+            num="02"
+            chosen="Centralised guardrails in the prompt"
+            rejected="vs. open, user-controlled prompts"
+          >
+            The guardrails are encoded directly into the prompts feeding
+            the tool, rather than left to the end user. Centralisation
+            lets us bake in institutional best practice, keep evaluations
+            consistent across editors, and prevent a well-meaning user
+            from silently weakening the audit.
+          </DRow>
+          <DRow
+            num="03"
+            chosen={
+              <>
+                Structured nested{" "}
+                <code
+                  style={{
+                    background: "var(--paper-deep)",
+                    padding: "0 5px",
+                    border: "1px solid var(--rule)",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "13px",
+                  }}
+                >
+                  +
+                </code>{" "}
+                UI for voice
+              </>
+            }
+            rejected="vs. free-text prompt for configuration"
+          >
+            A nested rule builder forces editors to codify specific,
+            testable constraints — ban lists, no passive, first-person
+            plural. A free-text prompt reduces voice to vibes; grading
+            becomes subjective and indefensible. Structure makes the
+            evaluation deterministic, repeatable, and auditable.
+          </DRow>
+          <div className="group-label low">
+            Lower priority · experience sharpening
           </div>
+          <DRow
+            num="04"
+            chosen="Semantic colour-coded highlights"
+            rejected="vs. generic yellow highlights"
+            low
+          >
+            <span className="mark-grounding">Grounding</span>,{" "}
+            <span className="mark-voice">voice</span> and{" "}
+            <span className="mark-argument">argument</span> each get their
+            own colour. An editor can scan a draft and see the failure
+            profile before reading a single card — high-signal visual cues
+            over uniform yellow noise.
+          </DRow>
+          <DRow
+            num="05"
+            chosen="Ship as a tool, not a platform feature"
+            rejected="vs. embedding inside an existing CMS flow"
+            low
+          >
+            A standalone tool keeps the end-user focus tight: a single job
+            (audit this draft), a single surface, no existing workflow to
+            fight. A platform feature would have dragged in CMS
+            constraints, auth models, and a broader stakeholder list —
+            none of which sharpen the audit itself. Platform integration
+            is a later phase.
+          </DRow>
         </div>
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>04 / 10</span>
+          <span>04 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 5 — INFRASTRUCTURE */}
+      {/* 5 — ENGINEERING DECISIONS */}
       <section id="s5" className="slide">
         <div className="slide-head">
-          <span className="brand">04 · Infrastructure</span>
-          <span className="ctx">Request lifecycle, stack, chunking</span>
-        </div>
-        <div className="question">Infrastructure solution design</div>
-        <h2>Stateless. Serverless. No database. No vector store.</h2>
-
-        <pre className="infra">{`                  Browser (Next.js client, 4-phase state machine)
-                                │  multipart form (draft + sources + rules)
-                                ▼
-                         Vercel Edge Network
-                                │
-                                ▼
-                  ┌───────────────────────────────────┐
-                  │  Next.js Route Handler            │
-                  │  /api/evaluate · Node · 300s      │
-                  └──────────┬────────────────────────┘
-                             │
-       ┌─────────────────────┼─────────────────────────┐
-       ▼                     ▼                         ▼
-  ┌──────────┐         ┌──────────────┐        ┌──────────────────┐
-  │  Parser  │         │  Tokeniser   │        │  Evaluator       │
-  │ file→txt │────────▶│  text→blocks │───────▶│  3 LLM calls     │
-  │ mammoth  │         │ Intl.        │        │  in parallel     │
-  │ unpdf    │         │ Segmenter    │        │ (strict JSON)    │
-  │          │         │ +UUID per s. │        └─────────┬────────┘
-  └──────────┘         └──────────────┘                  │
-                                                         ▼
-                                                 `}
-          <span className="red">OpenAI gpt-5.4</span>
-          {`
-                                                 `}
-          <span className="dim">(~400k ctx, one-shot)</span>
-          {`
-
-       `}
-          <span className="dim">
-            No database · no session store · no persistence · request →
-            response → done.
+          <span className="brand">04 · Engineering decisions</span>
+          <span className="ctx">
+            Three architecture choices — chosen vs rejected
           </span>
-        </pre>
+        </div>
+        <h2>Three engineering decisions keep the auditor strict and fast.</h2>
+        <p className="serif-lead">
+          Each row: the choice made versus the default path — and why.
+        </p>
+
+        <div className="decisions navy">
+          <div className="head">
+            <div className="cell num">#</div>
+            <div className="cell">Decision (chosen vs rejected)</div>
+            <div className="cell">Why</div>
+          </div>
+          <div className="group-label navy">
+            Architecture · correctness &amp; latency defining
+          </div>
+          <DRow
+            num="01"
+            chosen="Info-Block tokenisation + UUIDs"
+            rejected="vs. fuzzy string matching on LLM-quoted text"
+          >
+            Tokenise the draft into sentence blocks with UUIDs{" "}
+            <em>before</em> the LLM sees it. The LLM returns IDs, not
+            text. Fuzzy matching on quoted text breaks on curly quotes,
+            em-dashes, and paraphrases — the exact failures we are trying
+            to catch. IDs make highlight mapping deterministic.
+          </DRow>
+          <DRow
+            num="02"
+            chosen="Native extraction + OCR fallback"
+            rejected="vs. sending raw PDFs to the LLM as reader"
+          >
+            <code>unpdf</code> first; a tesseract sidecar for scans. The
+            LLM is reserved for reasoning, not transcription. Using it as
+            a PDF reader is slow, expensive, and silently drops claims —
+            the same claims we are auditing.
+          </DRow>
+          <DRow
+            num="03"
+            chosen="Three parallel calls, strict JSON"
+            rejected="vs. sequential prompt chain across pillars"
+          >
+            Grounding, voice, and rigour fire at the same time. Latency is
+            capped by the slowest call, not the sum — roughly{" "}
+            <strong style={{ color: "var(--navy)" }}>~66% faster</strong>.
+            Strict JSON schema on every call eliminates parse retries.
+            Independent judges also stop one pillar's reasoning leaking
+            into another.
+          </DRow>
+        </div>
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>05 / 10</span>
+          <span>05 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 6 — STACK & CHUNKING */}
+      {/* 6 — WALKTHROUGH */}
       <section id="s6" className="slide">
         <div className="slide-head">
-          <span className="brand">05 · Stack & chunking</span>
-          <span className="ctx">
-            What we chose, and what we deliberately rejected
-          </span>
-        </div>
-        <div className="question">The stack & the chunking decision</div>
-        <h2>Sources go in whole. Drafts are sentence-ID'd.</h2>
-
-        <div className="stack-table">
-          <div className="row">
-            <div className="cell hdr">Layer</div>
-            <div className="cell hdr">Choice</div>
-            <div className="cell hdr">Why this, not that</div>
-          </div>
-          <Row
-            layer="Host · runtime"
-            choice="Vercel · Next.js 15 · TS"
-            why="Git-linked deploy, serverless 300s limit, type-safe LLM contract from schema to UI."
-          />
-          <Row
-            layer="PDF native extraction"
-            choice="unpdf (pdfjs-dist, serverless-safe)"
-            why="Digital PDFs carry embedded text. Instant, free, deterministic. Serverless-compatible where pdf-parse is not."
-          />
-          <Row
-            layer="PDF OCR fallback"
-            choice="Tesseract sidecar (planned)"
-            why="Only when native extraction returns < 100 chars. Lined up as a separate service; the current build flags scans for manual conversion."
-          />
-          <Row
-            layer="DOCX parsing"
-            choice="mammoth"
-            why="Pure JS, Node-friendly, extracts clean text without style drift."
-          />
-          <Row
-            layer="Sentence tokeniser"
-            choice="Intl.Segmenter (Node 20+)"
-            why="Built-in, zero-dependency, locale-aware sentence boundaries."
-          />
-          <Row
-            layer="LLM"
-            choice="OpenAI gpt-5.4 · strict JSON"
-            why="~400k context so whole sources fit in one call. Schema enforcement eliminates parse failures."
-          />
-          <Row
-            layer="Rejected · vector DB + RAG"
-            choice="—"
-            why="Chunked retrieval causes the false positives we are trying to catch. Claims fail because the supporting sentence sat in an unseen chunk."
-            rejected
-          />
-          <Row
-            layer="Rejected · LangChain"
-            choice="—"
-            why="Three LLM calls with a clear schema do not need a framework. Pure SDK calls are easier to debug and audit."
-            rejected
-          />
-          <Row
-            layer="Rejected · Python sidecar"
-            choice="—"
-            why="Second deploy pipeline, second hosting target, cross-service latency. Node equivalents are 90 per cent as good for 10 per cent of the operational cost."
-            rejected
-          />
-        </div>
-
-        <div className="slide-foot">
-          <span>The Editorial Red Pen</span>
-          <span>06 / 10</span>
-        </div>
-      </section>
-
-      {/* 7 — WALKTHROUGH */}
-      <section id="s7" className="slide">
-        <div className="slide-head">
-          <span className="brand">06 · Walkthrough</span>
+          <span className="brand">05 · Walkthrough</span>
           <span className="ctx">The red-line review UI</span>
         </div>
         <div className="question">What the editor sees</div>
-        <h2>Two panes. Click a flaw — the draft scrolls to the sentence.</h2>
+        <h2>Two panes. Click a card — the draft scrolls to the sentence.</h2>
 
         <div className="ui-mockup">
           <div className="ui-pane">
-            <h5>Draft · rendered with the active flaw highlighted</h5>
+            <h5>Draft · rendered with highlighter marks</h5>
             <p>
               Inflation{" "}
               <span className="mark-grounding">
@@ -477,8 +489,8 @@ export default function SlidesPage() {
             <div className="audit-item">
               <div className="tag">Grounding · fail</div>
               <div className="msg">
-                "Lowest in a decade" — the sources only cover the last five
-                years.
+                "Lowest in a decade" — the sources only cover the last
+                five years.
               </div>
             </div>
           </div>
@@ -486,181 +498,305 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>07 / 10</span>
+          <span>06 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 8 — FAILURES & PIVOTS */}
-      <section id="s8" className="slide">
+      {/* 7 — TRADE-OFFS & UNFINISHED */}
+      <section id="s7" className="slide">
         <div className="slide-head">
-          <span className="brand">07 · Failures & pivots</span>
+          <span className="brand">06 · Trade-offs & unfinished work</span>
           <span className="ctx">
-            What did not work, and what did you do about it?
+            What I cut, what I'd revisit with more time
           </span>
         </div>
-        <div className="question">Failures & pivots</div>
-        <h2>Three dead ends. Three hard pivots.</h2>
+        <h2>
+          Three honest trade-offs. Each one a revisit point, not a
+          finished answer.
+        </h2>
+        <p className="serif-lead">
+          Where I took the shortcut, why I took it, and what I would do
+          given the time.
+        </p>
 
         <div className="fail-block">
           <div className="fail-row">
             <div className="flaw">
-              Flaw 01 · Building a generic hallucination checker.
+              01 · No formal evaluation framework for the tool itself.
             </div>
             <div className="pivot">
-              <strong>Pivot</strong>Narrowed scope to an "Editorial Voice"
-              enforcer that matches the publication's specific DNA —
-              otherwise it is not novel.
+              <strong>What I did</strong>Uploaded a small set of articles
+              and blog posts and ran the tool over them for a high-level
+              sanity check.
+            </div>
+            <div className="pivot">
+              <strong>Why the shortcut</strong>I did not have the time, or
+              the labelled Economist-grade test data, to build a proper
+              evaluation harness — precision / recall per pillar,
+              inter-rater agreement with human editors, regression set.
+            </div>
+            <div className="pivot">
+              <strong>Revisit</strong>Build a held-out set of
+              editor-annotated drafts with known hallucinations, voice
+              violations, and logic gaps, and grade the three judges
+              against it as a CI gate before any prompt change ships.
             </div>
           </div>
           <div className="fail-row">
             <div className="flaw">
-              Flaw 02 · Subjective AI "vibes" grading.
+              02 · Skipped LangChain. Dumped everything into a
+              large-context model.
             </div>
             <div className="pivot">
-              <strong>Pivot</strong>Forced editors to codify strict, testable
-              rules: banned terms, active voice, no hedging. Testable beats
-              subjective.
+              <strong>What I did</strong>Pushed the full draft, sources,
+              and rules into one large-context call, with a strict JSON
+              schema on the way back out.
+            </div>
+            <div className="pivot">
+              <strong>Why the shortcut</strong>My original LangChain setup
+              was not working, and the interview timebox did not allow me
+              to debug a framework. A single large-context call gave me
+              determinism and speed today.
+            </div>
+            <div className="pivot">
+              <strong>Revisit</strong>At scale the large-context approach
+              is expensive and re-sends identical source material every
+              run. A proper orchestration layer lets me cache sources,
+              route by pillar, and control cost per audit.
             </div>
           </div>
           <div className="fail-row">
             <div className="flaw">
-              Flaw 03 · PDF-to-HTML highlighting broke constantly.
+              03 · Tesseract OCR instead of PaddleOCR.
             </div>
             <div className="pivot">
-              <strong>Pivot</strong>Split drafts from sources. Drafts are
-              Markdown only so the DOM is predictable. Sources can be
-              anything; the LLM sees only their extracted text.
+              <strong>What I did</strong>Planned a tesseract.js (WASM)
+              sidecar inside the serverless function as the OCR fallback
+              for scanned PDFs; the current build surfaces a clear error
+              for scans pending that service.
+            </div>
+            <div className="pivot">
+              <strong>Why the shortcut</strong>PaddleOCR is stronger, but
+              it would have forced a Python sidecar. Rewriting the stack
+              mid-build was not a trade I was willing to make in an
+              interview timebox.
+            </div>
+            <div className="pivot">
+              <strong>Revisit</strong>With an engineering team, move OCR
+              to a PaddleOCR microservice behind a queue. Better accuracy
+              on scanned annual reports and filings, and it frees the main
+              function to stay pure Node.
             </div>
           </div>
         </div>
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>08 / 10</span>
+          <span>07 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 9 — MARKET REALITY */}
-      <section id="s9" className="slide">
+      {/* 8 — MARKET REALITY */}
+      <section id="s8" className="slide">
         <div className="slide-head">
-          <span className="brand">08 · Market reality</span>
+          <span className="brand">07 · Market reality</span>
           <span className="ctx">
-            What this reveals about current AI tooling for elite media
+            Why generic AI fails elite newsrooms
           </span>
         </div>
-        <div className="question">
-          Four limitations exposed by this build
-        </div>
-        <h2>
-          Standard LLMs are trained to please everyone. Elite publications are
-          defined by exclusion.
+        <h2 style={{ fontSize: 28 }}>
+          Generic LLMs are tuned to please everyone. Economist-grade
+          writing is defined by what it refuses to say.
         </h2>
+        <p className="serif-lead">
+          Four places the default AI output lands in the wrong spot — and
+          where the Red Pen pulls it back.
+        </p>
 
-        <div className="limits-grid">
-          <div className="limit-card">
-            <div className="num">01</div>
-            <div>
-              <h4>Regression to the mean vs prescriptive authority</h4>
-              <p>
-                AI defaults to agreeable neutrality. The Economist is
-                prescriptive — a classical-liberal worldview that tells
-                policymakers what to do. Generic AI cannot hold a confident
-                stance without collapsing into hyperbole.
-              </p>
-            </div>
+        <div className="market-grid">
+          <div className="market-cards">
+            <MarketCard
+              n="01"
+              title="Safe neutrality vs. a stated position"
+            >
+              AI hedges. The Economist tells policymakers what to do — from
+              a classical-liberal stance. A generic model cannot hold a
+              confident view without tipping into hyperbole.
+            </MarketCard>
+            <MarketCard n="02" title="Bloat vs. brevity">
+              Models equate intelligence with complexity: passive voice,
+              "leverage", "delve", "multifaceted". The Economist treats
+              brevity as the mark of a clear thinker. The Red Pen pushes
+              back on that instinct.
+            </MarketCard>
+            <MarketCard n="03" title="The adjective gap">
+              AI checks the number. It does not check the word sitting
+              next to it. "GDP fell 2%" passes. "The economy{" "}
+              <em>plummeted</em> by 2%" also passes. One is true. The
+              other is dishonest. Off-the-shelf RAG sees no difference.
+            </MarketCard>
+            <MarketCard n="04" title="Smoothing over the potholes">
+              Given contradictory sources, a completion engine smooths
+              them into a tidy paragraph. Good journalism lives in the
+              contradictions. Unless the model is forced to argue against
+              itself — which is what pillar 3 does — it will not.
+            </MarketCard>
           </div>
-          <div className="limit-card">
-            <div className="num">02</div>
-            <div>
-              <h4>Lexical bloat vs Orwellian clarity</h4>
-              <p>
-                AI equates intelligence with complexity: passive voice,
-                jargon, "leverage", "delve", "multifaceted". The Economist
-                equates intelligence with brevity. The Red Pen fights the
-                model's base instinct to bloat.
-              </p>
+
+          <div className="axes">
+            <div className="eyebrow">Where the defaults land</div>
+            <div className="head">
+              Generic LLM output vs. Economist house standard, on four
+              axes.
             </div>
-          </div>
-          <div className="limit-card">
-            <div className="num">03</div>
-            <div>
-              <h4>Fact-checking vs truth-checking</h4>
-              <p>
-                AI verifies the number and ignores the adjective beside it.
-                "GDP fell 2%" passes. "The economy plummeted by 2%" passes
-                too. One is true; the other is dishonest. Stock RAG sees no
-                difference.
-              </p>
+            <div className="legend">
+              <span>
+                <span
+                  className="dot"
+                  style={{ background: "var(--ink-3)" }}
+                />
+                Generic LLM
+              </span>
+              <span>
+                <span
+                  className="dot"
+                  style={{ background: "var(--econ-red)" }}
+                />
+                Economist standard
+              </span>
             </div>
-          </div>
-          <div className="limit-card">
-            <div className="num">04</div>
-            <div>
-              <h4>Synthetic coherence vs argumentative rigour</h4>
-              <p>
-                LLMs are completion engines. Fed contradictory sources, they
-                smooth the potholes. Good journalism lives in those
-                potholes. AI is bad at devil's-advocate against its own
-                output, unless forced to red-team — which is exactly what
-                pillar three does.
-              </p>
+
+            <Axis
+              left="Hedged"
+              mid="Stance"
+              right="Opinionated"
+              lhs={22}
+              rhs={82}
+            />
+            <Axis
+              left="Bloat"
+              mid="Prose density"
+              right="Brevity"
+              lhs={18}
+              rhs={85}
+            />
+            <Axis
+              left="Number only"
+              mid="Fact-check depth"
+              right="Number + adjective"
+              lhs={20}
+              rhs={78}
+            />
+            <Axis
+              left="Smoothed"
+              mid="Handling of conflict"
+              right="Surfaced"
+              lhs={15}
+              rhs={80}
+            />
+
+            <div className="caption">
+              The gap on every axis is the space the Red Pen covers.
+              Closing it is editorial work, not model work.
             </div>
           </div>
         </div>
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>09 / 10</span>
+          <span>08 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 10 — ROADMAP */}
-      <section id="s10" className="slide">
+      {/* 9 — ROADMAP */}
+      <section id="s9" className="slide">
         <div className="slide-head">
-          <span className="brand">09 · Roadmap</span>
-          <span className="ctx">What next, with an engineering team</span>
+          <span className="brand">08 · Roadmap</span>
+          <span className="ctx">Validate first, then build</span>
         </div>
-        <div className="question">The roadmap</div>
-        <h2>From prompt engineering to a tuned, multi-modal, in-situ platform.</h2>
+        <h2 style={{ fontSize: 28 }}>
+          Before I ship another feature, I'd prove this tool belongs in
+          the editor's day.
+        </h2>
+        <p className="serif-lead">
+          Three validation phases come first. The product bets come after.
+        </p>
 
-        <div className="phase-block">
-          <div className="phase">
-            <div className="tag">Phase 01</div>
-            <div className="name">Fine-tuned "judge" model</div>
-            <p>
-              Replace prompt engineering for voice. Fine-tune a smaller,
-              faster model on roughly 10,000 human-edited Economist articles
-              so the judge instinctively knows house style.
-            </p>
-          </div>
-          <div className="phase">
-            <div className="tag">Phase 02</div>
-            <div className="name">Multi-modal evidence checking</div>
-            <p>
-              Audit charts and tables alongside text. Does the prose align
-              with the data inside the uploaded figures? The adjective gap,
-              extended to visuals.
-            </p>
-          </div>
-          <div className="phase">
-            <div className="tag">Phase 03</div>
-            <div className="name">IDE integration</div>
-            <p>
-              Kill the standalone web app. Embed inside Google Docs or the
-              internal CMS — where journalists actually write. The tool lives
-              at the point of friction.
-            </p>
+        <div className="roadmap">
+          <Phase
+            num="Phase 01"
+            time="Now → 4 weeks"
+            name="Understand the workflow"
+            sub="Customer discovery"
+            proof="a ranked list of friction points the tool can and cannot solve."
+          >
+            Shadow editors and writers through a real edit. I want to know
+            whether the Red Pen slots into their flow — or gets in the way
+            of it. A tool no editor opens is a tool that does not exist.
+          </Phase>
+          <Phase
+            num="Phase 02"
+            time="Weeks 4 → 10"
+            name="Co-create the playbook"
+            sub="With editors, not for them"
+            proof="a human-signed-off v1 house-style ruleset."
+          >
+            Build the voice ruleset <em>with</em> writers and editors. Use
+            existing edited articles as a baseline to extract candidate
+            rules, then put them in front of humans for review. House
+            style is the product — it cannot be guessed, it has to be
+            bargained for.
+          </Phase>
+          <Phase
+            num="Phase 03"
+            time="Weeks 8 → 14"
+            name="Build the test bench"
+            sub="A labelled dataset, editor-graded"
+            proof="precision / recall per pillar, tracked per release."
+          >
+            A held-out set of drafts with known hallucinations, voice
+            violations, and logic gaps — labelled by real editors. Every
+            prompt change, every model swap, every rule tweak runs through
+            it. No CI green, no ship.
+          </Phase>
+        </div>
+
+        <div className="then-strip">
+          <div className="grid">
+            <div className="eyebrow">Then, and only then —</div>
+            <div className="bets">
+              <div className="bet">
+                <div className="t">Fine-tuned judge</div>
+                <div className="d">
+                  Trained on the edited archive. Replaces prompt
+                  engineering.
+                </div>
+              </div>
+              <div className="bet">
+                <div className="t">Multi-modal evidence</div>
+                <div className="d">
+                  Audits charts and figures alongside the prose.
+                </div>
+              </div>
+              <div className="bet">
+                <div className="t">In-situ integration</div>
+                <div className="d">
+                  Lives inside the CMS or Google Docs. No more app
+                  switching.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>10 / 10</span>
+          <span>09 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
       {/* CLOSING */}
-      <section id="s11" className="slide slide-closing">
+      <section id="closing" className="slide slide-closing">
         <div className="slide-head">
           <span className="brand">Thank you</span>
           <span className="ctx">Questions & discussion</span>
@@ -680,8 +816,7 @@ export default function SlidesPage() {
             want to build.
           </p>
           <div className="sig">
-            Fawad Bhatti · f.e.bhatti@gmail.com · +44 (london) ·
-            economist-red-pen.vercel.app
+            Fawad Bhatti · f.e.bhatti@gmail.com · economist-red-pen.vercel.app
           </div>
         </div>
         <div className="slide-foot">
@@ -689,11 +824,270 @@ export default function SlidesPage() {
           <span>— end —</span>
         </div>
       </section>
+
+      {/* APPENDIX DIVIDER */}
+      <section id="appendix" className="slide slide-appendix">
+        <div className="slide-head">
+          <span className="brand">Appendix</span>
+          <span className="ctx">Deeper technical detail on request</span>
+        </div>
+        <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+          <div className="kicker">Appendix</div>
+          <h1>Appendix</h1>
+          <p className="sub">
+            Infrastructure request lifecycle and the stack &amp; chunking
+            rationale. Here for reference — not part of the main narrative.
+          </p>
+          <div className="list">
+            A1 · Infrastructure &nbsp;·&nbsp; A2 · Stack &amp; chunking
+          </div>
+        </div>
+        <div className="slide-foot">
+          <span>The Editorial Red Pen</span>
+          <span>Appendix</span>
+        </div>
+      </section>
+
+      {/* A1 — INFRASTRUCTURE */}
+      <section id="a1" className="slide">
+        <div className="slide-head">
+          <span className="brand">A1 · Infrastructure</span>
+          <span className="ctx">
+            Request lifecycle · stateless · serverless
+          </span>
+        </div>
+        <div className="question">Infrastructure solution design</div>
+        <h2>Stateless. Serverless. No database. No vector store.</h2>
+
+        <pre className="infra">{`                  Browser (Next.js client, 4-phase state machine)
+                                │  multipart form (draft + sources + rules)
+                                ▼
+                         Vercel Edge Network
+                                │
+                                ▼
+                  ┌───────────────────────────────────┐
+                  │  Next.js Route Handler            │
+                  │  /api/evaluate · Node · 300s      │
+                  └──────────┬────────────────────────┘
+                             │
+       ┌─────────────────────┼─────────────────────────┐
+       ▼                     ▼                         ▼
+  ┌──────────┐         ┌──────────────┐        ┌──────────────────┐
+  │  Parser  │         │  Tokeniser   │        │  Evaluator       │
+  │ file→txt │────────▶│  text→blocks │───────▶│  3 LLM calls     │
+  │ mammoth  │         │ Intl.        │        │  in parallel     │
+  │ unpdf    │         │ Segmenter    │        │ (strict JSON)    │
+  │          │         │ +UUID per s. │        └─────────┬────────┘
+  └──────────┘         └──────────────┘                  │
+                                                         ▼
+                                                 `}
+          <span className="red">OpenAI gpt-5.4</span>
+          {`
+                                                 `}
+          <span className="dim">(~400k ctx, one-shot)</span>
+          {`
+
+       `}
+          <span className="dim">
+            No database · no session store · no persistence · request →
+            response → done.
+          </span>
+        </pre>
+
+        <div className="slide-foot">
+          <span>The Editorial Red Pen</span>
+          <span>A1 · Appendix</span>
+        </div>
+      </section>
+
+      {/* A2 — STACK & CHUNKING */}
+      <section id="a2" className="slide">
+        <div className="slide-head">
+          <span className="brand">A2 · Stack & chunking</span>
+          <span className="ctx">
+            What we chose, and what we deliberately rejected
+          </span>
+        </div>
+        <div className="question">The stack & the chunking decision</div>
+        <h2>Sources go in whole. Drafts are sentence-ID'd.</h2>
+
+        <div className="stack-table">
+          <div className="row">
+            <div className="cell hdr">Layer</div>
+            <div className="cell hdr">Choice</div>
+            <div className="cell hdr">Why this, not that</div>
+          </div>
+          <StackRow
+            layer="Host · runtime"
+            choice="Vercel · Next.js 15 · TS"
+            why="Git-linked deploy, serverless 300s limit, type-safe LLM contract from schema to UI."
+          />
+          <StackRow
+            layer="PDF native extraction"
+            choice="unpdf (serverless-safe pdfjs-dist wrapper)"
+            why="Digital PDFs carry embedded text. Instant, free, deterministic. Works on Vercel where pdf-parse does not."
+          />
+          <StackRow
+            layer="PDF OCR fallback"
+            choice="Tesseract sidecar (planned)"
+            why="Triggers when native extraction returns < 100 chars. Lined up as a separate service; scans currently surface an explicit conversion prompt."
+          />
+          <StackRow
+            layer="DOCX parsing"
+            choice="mammoth"
+            why="Pure JS, Node-friendly, extracts clean text without style drift."
+          />
+          <StackRow
+            layer="Sentence tokeniser"
+            choice="Intl.Segmenter (Node 20+)"
+            why="Built-in, zero-dependency, locale-aware sentence boundaries."
+          />
+          <StackRow
+            layer="LLM"
+            choice="OpenAI gpt-5.4 · strict JSON"
+            why="~400k context so whole sources fit in one call. Schema enforcement eliminates parse failures."
+          />
+          <StackRow
+            layer="Rejected · vector DB + RAG"
+            choice="—"
+            why="Chunked retrieval causes the false positives we are trying to catch. Claims fail because the supporting sentence sat in an unseen chunk."
+            rejected
+          />
+          <StackRow
+            layer="Rejected · LangChain"
+            choice="—"
+            why="Three LLM calls with a clear schema do not need a framework. Pure SDK calls are easier to debug and audit."
+            rejected
+          />
+          <StackRow
+            layer="Rejected · Python sidecar"
+            choice="—"
+            why="Second deploy pipeline, second hosting target, cross-service latency. Node equivalents are 90 per cent as good for 10 per cent of the operational cost."
+            rejected
+          />
+        </div>
+
+        <div className="slide-foot">
+          <span>The Editorial Red Pen</span>
+          <span>A2 · Appendix</span>
+        </div>
+      </section>
     </div>
   );
 }
 
-function Row({
+function DRow({
+  num,
+  chosen,
+  rejected,
+  children,
+  low,
+}: {
+  num: string;
+  chosen: React.ReactNode;
+  rejected: string;
+  children: React.ReactNode;
+  low?: boolean;
+}) {
+  return (
+    <div className={`row${low ? " low" : ""}`}>
+      <div className="num-cell">{num}</div>
+      <div className="pick-cell">
+        <div className="chosen">{chosen}</div>
+        <div className="rejected">{rejected}</div>
+      </div>
+      <div className="why-cell">{children}</div>
+    </div>
+  );
+}
+
+function MarketCard({
+  n,
+  title,
+  children,
+}: {
+  n: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="market-card">
+      <div className="num">{n}</div>
+      <h4>{title}</h4>
+      <p>{children}</p>
+    </div>
+  );
+}
+
+function Axis({
+  left,
+  mid,
+  right,
+  lhs,
+  rhs,
+}: {
+  left: string;
+  mid: string;
+  right: string;
+  lhs: number;
+  rhs: number;
+}) {
+  return (
+    <div className="axis">
+      <div className="axis-label">
+        <span>{left}</span>
+        <span className="mid">{mid}</span>
+        <span>{right}</span>
+      </div>
+      <div className="track">
+        <span
+          className="mark"
+          style={{ left: `${lhs}%`, background: "var(--ink-3)" }}
+        />
+        <span
+          className="mark"
+          style={{ left: `${rhs}%`, background: "var(--econ-red)" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Phase({
+  num,
+  time,
+  name,
+  sub,
+  proof,
+  children,
+}: {
+  num: string;
+  time: string;
+  name: string;
+  sub: string;
+  proof: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="phase">
+      <div className="top">
+        <div className="tag-row">
+          <span className="time">{time}</span>
+          <span className="phase-num">· {num}</span>
+        </div>
+        <div className="name">{name}</div>
+        <div className="sub">{sub}</div>
+        <p>{children}</p>
+      </div>
+      <div className="proof">
+        <strong>Proof point:</strong>
+        {proof}
+      </div>
+    </div>
+  );
+}
+
+function StackRow({
   layer,
   choice,
   why,
@@ -707,7 +1101,10 @@ function Row({
   return (
     <div className="row">
       <div className={`cell tool ${rejected ? "rejected" : ""}`}>{layer}</div>
-      <div className="cell" style={{ fontStyle: rejected ? "italic" : "normal" }}>
+      <div
+        className="cell"
+        style={{ fontStyle: rejected ? "italic" : "normal" }}
+      >
         {choice}
       </div>
       <div className="cell why">{why}</div>
@@ -750,15 +1147,43 @@ function PenSVG() {
       <g transform="translate(110 260) rotate(18) translate(-110 -260)">
         <polygon points="108,440 112,440 115,462 105,462" fill="#1a1a1a" />
         <polygon points="108,440 112,440 113,452 107,452" fill="#e3120b" />
-        <line x1="110" y1="440" x2="110" y2="462" stroke="#0a0a0a" strokeWidth="0.5" />
+        <line
+          x1="110"
+          y1="440"
+          x2="110"
+          y2="462"
+          stroke="#0a0a0a"
+          strokeWidth="0.5"
+        />
         <rect x="96" y="150" width="28" height="290" fill="url(#penBody)" />
-        <rect x="100" y="152" width="4" height="286" fill="#ffffff" opacity="0.25" />
-        <rect x="118" y="152" width="4" height="286" fill="#000000" opacity="0.2" />
+        <rect
+          x="100"
+          y="152"
+          width="4"
+          height="286"
+          fill="#ffffff"
+          opacity="0.25"
+        />
+        <rect
+          x="118"
+          y="152"
+          width="4"
+          height="286"
+          fill="#000000"
+          opacity="0.2"
+        />
         <rect x="94" y="432" width="32" height="8" fill="#bfbfbf" />
         <rect x="94" y="432" width="32" height="2" fill="#eeeeee" />
         <rect x="94" y="438" width="32" height="2" fill="#7a7a7a" />
         <rect x="94" y="70" width="32" height="82" fill="url(#penCap)" />
-        <rect x="98" y="72" width="3" height="78" fill="#ffffff" opacity="0.2" />
+        <rect
+          x="98"
+          y="72"
+          width="3"
+          height="78"
+          fill="#ffffff"
+          opacity="0.2"
+        />
         <path d="M 94 70 Q 110 62 126 70 L 126 78 L 94 78 Z" fill="#1a1a1a" />
         <rect x="103" y="78" width="5" height="56" rx="1" fill="#d4d4d4" />
         <rect x="103" y="78" width="5" height="4" rx="1" fill="#f0f0f0" />
