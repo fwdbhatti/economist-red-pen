@@ -58,41 +58,46 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px]">
       <section
         className={cn(
-          "border-r border-rule px-8 py-10 lg:px-14",
+          "border-r border-rule bg-paper px-6 py-10 lg:px-10",
           activeMistakeId && "results-focused",
         )}
       >
-        <div className="mb-2 font-ui text-xs small-caps text-ink-3">
-          Manuscript · model {result.model} · {result.blocks.length} info-blocks
-          {result.ingestion.length > 0 && (
-            <>
-              {" · "}
-              {result.ingestion
-                .map((i) =>
-                  i.method === "ocr"
-                    ? `${i.name} (OCR, ${i.pagesOCRed ?? 0}pp)`
-                    : `${i.name} (${i.method})`,
-                )
-                .join(", ")}
-            </>
-          )}
-        </div>
-        <div className="rule-strong mb-6" />
-        <div
-          className="prose-editorial mx-auto"
-          dangerouslySetInnerHTML={{ __html: html }}
-          onClick={onPaneClick}
-        />
-        <div className="mx-auto mt-12 max-w-prose">
-          <div className="my-8 text-center font-editorial text-ink-3 tracking-[0.5em]">
-            *   *   *
+        <div className="mx-auto max-w-[44rem]">
+          <div className="mb-2 font-ui text-xs font-semibold small-caps text-ink-2">
+            Manuscript · model {result.model} · {result.blocks.length} info-blocks
+            {result.ingestion.length > 0 && (
+              <>
+                {" · "}
+                {result.ingestion
+                  .map((i) =>
+                    i.method === "ocr"
+                      ? `${i.name} (OCR, ${i.pagesOCRed ?? 0}pp)`
+                      : `${i.name} (${i.method})`,
+                  )
+                  .join(", ")}
+              </>
+            )}
           </div>
-          <button
-            onClick={onReset}
-            className="cursor-pointer font-ui text-sm small-caps text-ink-2 underline underline-offset-4 hover:text-econ-red"
-          >
-            ← Submit new manuscript
-          </button>
+          <article className="article-pane mt-4">
+            <div
+              className="prose-editorial mx-auto"
+              dangerouslySetInnerHTML={{ __html: html }}
+              onClick={onPaneClick}
+            />
+            <div className="mx-auto mt-10 max-w-prose">
+              <div className="my-6 text-center font-editorial text-ink-3 tracking-[0.5em]">
+                *   *   *
+              </div>
+            </div>
+          </article>
+          <div className="mt-6">
+            <button
+              onClick={onReset}
+              className="cursor-pointer font-ui text-sm small-caps text-ink-2 underline underline-offset-4 hover:text-econ-red"
+            >
+              ← Submit new manuscript
+            </button>
+          </div>
         </div>
       </section>
 
