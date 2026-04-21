@@ -29,7 +29,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
 
       <div className="rule-double" />
 
-      <div className="grid grid-cols-1 gap-x-14 gap-y-12 lg:grid-cols-12">
+      <div className="article-pane grid grid-cols-1 gap-x-14 gap-y-10 lg:grid-cols-12">
         <Section
           label="I · The problem"
           className="lg:col-span-12"
@@ -138,8 +138,11 @@ function Section({
 }) {
   return (
     <section className={className}>
-      <h2 className="font-display text-xs font-semibold small-caps text-ink">
-        <span className="mr-2 inline-block h-[1em] w-[3px] translate-y-[1px] bg-econ-red" />
+      <h2 className="section-label flex items-center gap-2">
+        <span
+          aria-hidden
+          className="inline-block h-[1em] w-[3px] translate-y-[1px] bg-econ-red"
+        />
         {label}
       </h2>
       <div className="mt-2 border-t border-rule" />
@@ -159,12 +162,14 @@ function Pillar({
 }) {
   return (
     <li className="grid grid-cols-[auto_1fr] gap-x-4 border-l-[3px] border-econ-red pl-4">
-      <span className="font-display text-sm font-semibold small-caps text-econ-red">
+      <span className="font-display text-sm font-bold small-caps text-econ-red">
         {num}
       </span>
       <div>
         <div className="font-editorial text-md font-bold text-ink">{name}</div>
-        <p className="mt-1 font-editorial text-base text-ink-2">{body}</p>
+        <p className="mt-1 font-editorial text-base font-medium text-ink">
+          {body}
+        </p>
       </div>
     </li>
   );
