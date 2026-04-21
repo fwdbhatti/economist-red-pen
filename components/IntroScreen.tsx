@@ -20,7 +20,7 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
         <h1 className="mt-3 max-w-[30ch] font-editorial text-3xl font-bold leading-[1.05] text-ink lg:text-[56px] lg:leading-[1.02]">
           An editorial immune system for AI-assisted journalism.
         </h1>
-        <p className="mt-6 max-w-prose font-editorial text-md italic text-ink-2">
+        <p className="mt-6 max-w-prose font-editorial text-md italic font-medium text-ink">
           The Red Pen does not write. It audits. It sets a draft against its
           source documents and a codified house style, then returns the
           sentences a sub-editor would strike through.

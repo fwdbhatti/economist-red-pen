@@ -34,9 +34,9 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
     });
   }, []);
 
-  const handleCardClick = useCallback(
+  const handleCardNavigate = useCallback(
     (mistakeId: string, blockId: string) => {
-      setActiveMistakeId((prev) => (prev === mistakeId ? null : mistakeId));
+      setActiveMistakeId(mistakeId);
       scrollToMark(blockId);
     },
     [scrollToMark],
@@ -111,7 +111,9 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
                 mistake={m}
                 block={blockIndex.get(m.info_block_id)}
                 active={activeMistakeId === m.id}
-                onClick={() => handleCardClick(m.id, m.info_block_id)}
+                onNavigate={() =>
+                  handleCardNavigate(m.id, m.info_block_id)
+                }
               />
             ))
           )}

@@ -35,18 +35,18 @@ export function ProcessingState() {
         </h2>
       </div>
 
-      <p className="mt-8 font-editorial text-lg italic text-ink-2">
+      <p className="mt-8 font-editorial text-lg font-medium italic text-ink">
         <span className="caret-blink">{STATUS_LINES[idx]}</span>
       </p>
 
-      <div className="mt-10 h-[1px] w-full bg-rule">
+      <div className="mt-10 h-[2px] w-full bg-rule">
         <div
-          className="h-[1px] bg-econ-red transition-[width] duration-700 ease-out"
+          className="h-[2px] bg-econ-red transition-[width] duration-700 ease-out"
           style={{ width: `${width}%` }}
         />
       </div>
 
-      <p className="mt-4 font-ui text-xs small-caps text-ink-3">
+      <p className="mt-4 font-ui text-xs font-semibold small-caps text-ink-2">
         Est. 20–45 seconds
       </p>
     </main>
