@@ -34,6 +34,7 @@ export interface ParagraphRef {
 }
 
 export interface IngestionRecord {
+  role: "draft" | "source";
   name: string;
   method: string;
 }

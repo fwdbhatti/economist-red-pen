@@ -27,10 +27,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Draft file is required." }, { status: 400 });
   }
 
+  const ingestion: Array<{ role: "draft" | "source"; name: string; method: string }> = [];
+
   let draft: string;
   try {
     const parsed = await parseFileToText(draftFile);
     draft = parsed.text;
+    ingestion.push({
+      role: "draft",
+      name: draftFile.name,
+      method: parsed.method,
+    });
   } catch (err) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Draft parse failed." },
@@ -46,13 +53,12 @@ export async function POST(req: NextRequest) {
     .filter((v): v is File => v instanceof File);
 
   const sources: Array<{ name: string; text: string }> = [];
-  const ingestion: Array<{ name: string; method: string }> = [];
 
   for (const f of sourceFiles) {
     try {
       const parsed = await parseFileToText(f);
       sources.push({ name: f.name, text: parsed.text });
-      ingestion.push({ name: f.name, method: parsed.method });
+      ingestion.push({ role: "source", name: f.name, method: parsed.method });
     } catch (err) {
       return NextResponse.json(
         {

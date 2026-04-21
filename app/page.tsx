@@ -21,14 +21,13 @@ const DEFAULT_RULES: VoiceRule[] = ECONOMIST_DEFAULTS;
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("intro");
   const [draft, setDraft] = useState<File[]>([]);
-  const [draftText, setDraftText] = useState<string>("");
   const [sources, setSources] = useState<File[]>([]);
   const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
   const [result, setResult] = useState<EvaluateResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [skipSources, setSkipSources] = useState(false);
-  const hasDraft = draft.length === 1 || draftText.trim().length > 20;
+  const hasDraft = draft.length === 1;
   const hasSources = sources.length > 0;
   const sourcesResolved = hasSources || skipSources;
   const canSubmit = hasDraft && sourcesResolved;
@@ -39,14 +38,7 @@ export default function Home() {
     setError(null);
 
     const form = new FormData();
-    if (draft.length === 1) {
-      form.append("draft", draft[0]);
-    } else {
-      const pasted = new File([draftText], "pasted-draft.md", {
-        type: "text/markdown",
-      });
-      form.append("draft", pasted);
-    }
+    form.append("draft", draft[0]);
     for (const s of sources) form.append("sources", s);
     form.append("rules", JSON.stringify(rules));
 
@@ -71,7 +63,6 @@ export default function Home() {
   function loadSample() {
     const { draft: d, source: s } = makeSampleFiles();
     setDraft([d]);
-    setDraftText("");
     setSources([s]);
     setSkipSources(false);
   }
@@ -197,8 +188,6 @@ export default function Home() {
             accept=".md,.txt,text/markdown,text/plain"
             files={draft}
             onFilesChange={setDraft}
-            pastedText={draftText}
-            onPastedTextChange={setDraftText}
           />
         </section>
 
