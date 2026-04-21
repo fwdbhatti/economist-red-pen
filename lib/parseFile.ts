@@ -1,11 +1,9 @@
 import mammoth from "mammoth";
-
-const OCR_TRIGGER_THRESHOLD = 100;
+import { extractText } from "unpdf";
 
 export interface ParseResult {
   text: string;
-  method: "native" | "docx" | "markdown" | "ocr";
-  pagesOCRed?: number;
+  method: "native" | "docx" | "markdown" | "pdf-empty";
 }
 
 export async function parseFileToText(file: File): Promise<ParseResult> {
@@ -22,70 +20,17 @@ export async function parseFileToText(file: File): Promise<ParseResult> {
   }
 
   if (name.endsWith(".pdf")) {
-    return parsePdf(buf);
+    const { text } = await extractText(new Uint8Array(buf), {
+      mergePages: true,
+    });
+    const joined = Array.isArray(text) ? text.join("\n\n") : text;
+    if (!joined || joined.trim().length < 20) {
+      throw new Error(
+        `"${file.name}" appears to be a scanned PDF with no embedded text. OCR is not yet enabled on this build — please convert the file to a searchable PDF, DOCX, or markdown first.`,
+      );
+    }
+    return { text: joined, method: "native" };
   }
 
   throw new Error(`Unsupported file type: ${file.name}`);
-}
-
-async function parsePdf(buf: Buffer): Promise<ParseResult> {
-  const { PDFParse } = await import("pdf-parse");
-  const parser = new PDFParse({ data: buf });
-
-  try {
-    const nativeResult = await parser.getText();
-    const nativeText = nativeResult.text?.trim() ?? "";
-
-    if (nativeText.length >= OCR_TRIGGER_THRESHOLD) {
-      return { text: nativeResult.text, method: "native" };
-    }
-
-    const pagesWithText = (nativeResult.pages ?? [])
-      .map((p: { text?: string }) => (p.text ?? "").trim())
-      .filter(Boolean).length;
-
-    if (pagesWithText > 0 && nativeText.length > 0) {
-      return { text: nativeResult.text, method: "native" };
-    }
-
-    const ocrText = await ocrPdfPages(parser);
-    return {
-      text: ocrText.text,
-      method: "ocr",
-      pagesOCRed: ocrText.pageCount,
-    };
-  } finally {
-    await parser.destroy();
-  }
-}
-
-async function ocrPdfPages(
-  parser: InstanceType<typeof import("pdf-parse").PDFParse>,
-): Promise<{ text: string; pageCount: number }> {
-  const { createWorker } = await import("tesseract.js");
-
-  const screenshotResult = await parser.getScreenshot({
-    imageBuffer: true,
-    scale: 2,
-  });
-
-  const pages = screenshotResult.pages ?? [];
-  if (pages.length === 0) {
-    return { text: "", pageCount: 0 };
-  }
-
-  const worker = await createWorker("eng");
-  try {
-    const texts: string[] = [];
-    for (const page of pages) {
-      if (!page.data) continue;
-      const buffer = Buffer.from(page.data);
-      const { data } = await worker.recognize(buffer);
-      const pageText = (data.text ?? "").trim();
-      if (pageText) texts.push(pageText);
-    }
-    return { text: texts.join("\n\n"), pageCount: pages.length };
-  } finally {
-    await worker.terminate();
-  }
 }

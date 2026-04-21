@@ -46,21 +46,20 @@ export async function POST(req: NextRequest) {
     .filter((v): v is File => v instanceof File);
 
   const sources: Array<{ name: string; text: string }> = [];
-  const ingestion: Array<{ name: string; method: string; pagesOCRed?: number }> = [];
+  const ingestion: Array<{ name: string; method: string }> = [];
 
   for (const f of sourceFiles) {
     try {
       const parsed = await parseFileToText(f);
       sources.push({ name: f.name, text: parsed.text });
-      ingestion.push({
-        name: f.name,
-        method: parsed.method,
-        pagesOCRed: parsed.pagesOCRed,
-      });
+      ingestion.push({ name: f.name, method: parsed.method });
     } catch (err) {
       return NextResponse.json(
         {
-          error: `Could not parse source "${f.name}": ${err instanceof Error ? err.message : "unknown"}`,
+          error:
+            err instanceof Error
+              ? err.message
+              : `Could not parse source "${f.name}".`,
         },
         { status: 400 },
       );

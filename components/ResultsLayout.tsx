@@ -25,21 +25,34 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
     [result, activeMistakeId],
   );
 
-  const scrollToMark = useCallback((blockId: string) => {
+  const scrollToMark = useCallback(() => {
     requestAnimationFrame(() => {
       const el = document.querySelector(
-        `mark.redpen[data-block-id="${blockId}"]`,
+        `mark.redpen[data-active="true"]`,
       ) as HTMLElement | null;
       el?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
 
-  const handleCardNavigate = useCallback(
-    (mistakeId: string, blockId: string) => {
-      setActiveMistakeId(mistakeId);
-      scrollToMark(blockId);
+  const selectMistake = useCallback(
+    (mistakeId: string) => {
+      setActiveMistakeId((prev) => {
+        if (prev === mistakeId) return null;
+        return mistakeId;
+      });
     },
-    [scrollToMark],
+    [],
+  );
+
+  const selectFromCard = useCallback(
+    (mistakeId: string) => {
+      const prev = activeMistakeId;
+      setActiveMistakeId(prev === mistakeId ? null : mistakeId);
+      if (prev !== mistakeId) {
+        scrollToMark();
+      }
+    },
+    [activeMistakeId, scrollToMark],
   );
 
   const onPaneClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -56,12 +69,7 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
 
   return (
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px]">
-      <section
-        className={cn(
-          "border-r border-rule bg-paper px-6 py-10 lg:px-10",
-          activeMistakeId && "results-focused",
-        )}
-      >
+      <section className="border-r border-rule bg-paper px-6 py-10 lg:px-10">
         <div className="mx-auto max-w-[44rem]">
           <div className="mb-2 font-ui text-xs font-semibold small-caps text-ink-2">
             Manuscript · model {result.model} · {result.blocks.length} info-blocks
@@ -69,11 +77,7 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
               <>
                 {" · "}
                 {result.ingestion
-                  .map((i) =>
-                    i.method === "ocr"
-                      ? `${i.name} (OCR, ${i.pagesOCRed ?? 0}pp)`
-                      : `${i.name} (${i.method})`,
-                  )
+                  .map((i) => `${i.name} (${i.method})`)
                   .join(", ")}
               </>
             )}
@@ -93,7 +97,9 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
           <div className="mt-6">
             <button
               onClick={onReset}
-              className="cursor-pointer font-ui text-sm small-caps text-ink-2 underline underline-offset-4 hover:text-econ-red"
+              className={cn(
+                "cursor-pointer font-ui text-sm small-caps text-ink-2 underline underline-offset-4 hover:text-econ-red",
+              )}
             >
               ← Submit new manuscript
             </button>
@@ -116,9 +122,7 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
                 mistake={m}
                 block={blockIndex.get(m.info_block_id)}
                 active={activeMistakeId === m.id}
-                onNavigate={() =>
-                  handleCardNavigate(m.id, m.info_block_id)
-                }
+                onSelect={() => selectFromCard(m.id)}
               />
             ))
           )}

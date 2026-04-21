@@ -166,38 +166,45 @@
     border-top: 2px solid var(--rule-strong);
   }
 
+  /* Highlighter effect — one active mark at a time, brushed yellow/colour wash.
+     No underlines. Uses box-decoration-break so multi-line quotes stay clean. */
   mark.redpen {
-    background: transparent;
-    color: inherit;
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-    padding: 0;
+    color: #0a0a0a;
+    padding: 1px 4px 2px;
+    text-decoration: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background:
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 8%,
+        var(--mark-color) 8%,
+        var(--mark-color) 92%,
+        transparent 92%,
+        transparent 100%
+      );
     cursor: pointer;
-    transition:
-      text-decoration-thickness 180ms ease-out,
-      opacity 280ms ease-out,
-      background-color 180ms ease-out;
+    transition: background-color 180ms ease-out, filter 180ms ease-out;
   }
   mark.redpen[data-type="grounding"] {
-    text-decoration-color: var(--economist-red);
+    --mark-color: rgba(255, 215, 100, 0.85);
+    --mark-color-strong: rgba(255, 195, 40, 0.95);
   }
   mark.redpen[data-type="voice"] {
-    text-decoration-color: var(--navy);
+    --mark-color: rgba(160, 200, 240, 0.75);
+    --mark-color-strong: rgba(110, 170, 225, 0.9);
   }
   mark.redpen[data-type="argumentation"] {
-    text-decoration-color: var(--amber);
+    --mark-color: rgba(255, 178, 112, 0.8);
+    --mark-color-strong: rgba(250, 150, 70, 0.95);
   }
   mark.redpen:hover {
-    text-decoration-thickness: 3px;
+    --mark-color: var(--mark-color-strong);
   }
   mark.redpen[data-active="true"] {
-    text-decoration-thickness: 3px;
-    background: var(--red-wash);
-  }
-  .results-focused mark.redpen:not([data-active="true"]) {
-    opacity: 0.25;
+    --mark-color: var(--mark-color-strong);
+    box-shadow: 0 0 0 2px rgba(10, 10, 10, 0.08);
   }
 
   .caret-blink::after {

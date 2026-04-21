@@ -36,7 +36,6 @@ export interface ParagraphRef {
 export interface IngestionRecord {
   name: string;
   method: string;
-  pagesOCRed?: number;
 }
 
 export interface EvaluateResponse {
