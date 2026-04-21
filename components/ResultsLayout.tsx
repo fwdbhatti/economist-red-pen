@@ -64,6 +64,18 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
       >
         <div className="mb-2 font-ui text-xs small-caps text-ink-3">
           Manuscript · model {result.model} · {result.blocks.length} info-blocks
+          {result.ingestion.length > 0 && (
+            <>
+              {" · "}
+              {result.ingestion
+                .map((i) =>
+                  i.method === "ocr"
+                    ? `${i.name} (OCR, ${i.pagesOCRed ?? 0}pp)`
+                    : `${i.name} (${i.method})`,
+                )
+                .join(", ")}
+            </>
+          )}
         </div>
         <div className="rule-strong mb-6" />
         <div

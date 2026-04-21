@@ -25,10 +25,17 @@ export interface ParagraphRef {
   blockIds: string[];
 }
 
+export interface IngestionRecord {
+  name: string;
+  method: string;
+  pagesOCRed?: number;
+}
+
 export interface EvaluateResponse {
   model: string;
   blocks: InfoBlock[];
   paragraphs: ParagraphRef[];
   mistakes: Mistake[];
   totals: { grounding: number; voice: number; argumentation: number };
+  ingestion: IngestionRecord[];
 }

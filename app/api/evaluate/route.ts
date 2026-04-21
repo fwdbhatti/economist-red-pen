@@ -29,7 +29,8 @@ export async function POST(req: NextRequest) {
 
   let draft: string;
   try {
-    draft = await parseFileToText(draftFile);
+    const parsed = await parseFileToText(draftFile);
+    draft = parsed.text;
   } catch (err) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Draft parse failed." },
@@ -43,11 +44,19 @@ export async function POST(req: NextRequest) {
   const sourceFiles = form
     .getAll("sources")
     .filter((v): v is File => v instanceof File);
+
   const sources: Array<{ name: string; text: string }> = [];
+  const ingestion: Array<{ name: string; method: string; pagesOCRed?: number }> = [];
+
   for (const f of sourceFiles) {
     try {
-      const text = await parseFileToText(f);
-      sources.push({ name: f.name, text });
+      const parsed = await parseFileToText(f);
+      sources.push({ name: f.name, text: parsed.text });
+      ingestion.push({
+        name: f.name,
+        method: parsed.method,
+        pagesOCRed: parsed.pagesOCRed,
+      });
     } catch (err) {
       return NextResponse.json(
         {
@@ -90,6 +99,7 @@ export async function POST(req: NextRequest) {
       paragraphs,
       mistakes,
       totals,
+      ingestion,
     };
     return NextResponse.json(response);
   } catch (err) {
