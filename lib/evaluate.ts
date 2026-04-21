@@ -34,10 +34,11 @@ const MISTAKE_SCHEMA = {
 } as const;
 
 function rulesToPrompt(rules: VoiceRule[]): string {
-  if (!rules.length) {
+  const active = rules.filter((r) => r.enabled !== false);
+  if (!active.length) {
     return "No explicit voice rules were supplied. Apply The Economist's standard style guide.";
   }
-  return rules
+  return active
     .map((r, i) => {
       const items = (r.items ?? []).length
         ? `\n   Items: ${(r.items ?? []).map((x) => `"${x}"`).join(", ")}`

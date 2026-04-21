@@ -12,13 +12,21 @@ export interface Mistake {
   flaw: string;
 }
 
+export type VoiceRuleKind =
+  | "plain_english"
+  | "banned_terms"
+  | "active_voice"
+  | "perspective"
+  | "register"
+  | "custom";
+
 export interface VoiceRule {
   id: string;
-  kind: "banned_terms" | "passive_voice" | "custom";
+  kind: VoiceRuleKind;
   label: string;
   description?: string;
   items?: string[];
-  children?: VoiceRule[];
+  enabled: boolean;
 }
 
 export interface ParagraphRef {

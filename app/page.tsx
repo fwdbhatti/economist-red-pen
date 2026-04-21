@@ -12,26 +12,11 @@ import { StepLabel } from "@/components/StepLabel";
 import { Titlepiece } from "@/components/Titlepiece";
 import { makeSampleFiles } from "@/lib/sampleData";
 import type { EvaluateResponse, VoiceRule } from "@/lib/types";
+import { ECONOMIST_DEFAULTS } from "@/lib/voicePresets";
 
 type Phase = "intro" | "ingest" | "processing" | "results" | "error";
 
-const DEFAULT_RULES: VoiceRule[] = [
-  {
-    id: "r1",
-    kind: "banned_terms",
-    label: "Lexicon — Banned terms",
-    description: "Reject corporate jargon outright.",
-    items: ["synergy", "leverage", "ecosystem", "disrupt", "innovate"],
-  },
-  {
-    id: "r2",
-    kind: "passive_voice",
-    label: "Voice — Passive constructions",
-    description:
-      "Active verbs only; flag be-verb passives unless a direct quote.",
-    items: ["direct quotations"],
-  },
-];
+const DEFAULT_RULES: VoiceRule[] = ECONOMIST_DEFAULTS;
 
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("intro");
@@ -221,9 +206,9 @@ export default function Home() {
           <StepLabel
             num={3}
             title="Codify the voice"
-            complete={rules.length > 0}
+            complete={rules.some((r) => r.enabled)}
           >
-            Optional — defaults apply
+            Five pillars · Economist preset applied
           </StepLabel>
           <RulesEditor rules={rules} onChange={setRules} />
         </section>
@@ -238,7 +223,11 @@ export default function Home() {
               optional={skipSources}
             />
             <StatusDot complete={hasDraft} label="Draft" />
-            <StatusDot complete={rules.length > 0} label="Voice" optional />
+            <StatusDot
+              complete={rules.some((r) => r.enabled)}
+              label="Voice"
+              optional
+            />
           </div>
           <div className="flex items-center gap-4">
             {!canSubmit && (
