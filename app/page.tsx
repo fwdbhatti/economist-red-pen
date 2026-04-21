@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { BookOpen } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Cta } from "@/components/Cta";
 import { Dropzone } from "@/components/Dropzone";
 import { IntroScreen } from "@/components/IntroScreen";
 import { ProcessingState } from "@/components/ProcessingState";
 import { ResultsLayout } from "@/components/ResultsLayout";
 import { RulesEditor } from "@/components/RulesEditor";
+import { StepLabel } from "@/components/StepLabel";
 import { Titlepiece } from "@/components/Titlepiece";
+import { makeSampleFiles } from "@/lib/sampleData";
 import type { EvaluateResponse, VoiceRule } from "@/lib/types";
 
 type Phase = "intro" | "ingest" | "processing" | "results" | "error";
@@ -33,12 +36,15 @@ const DEFAULT_RULES: VoiceRule[] = [
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("intro");
   const [draft, setDraft] = useState<File[]>([]);
+  const [draftText, setDraftText] = useState<string>("");
   const [sources, setSources] = useState<File[]>([]);
   const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
   const [result, setResult] = useState<EvaluateResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const canSubmit = draft.length === 1 && sources.length > 0;
+  const hasDraft = draft.length === 1 || draftText.trim().length > 20;
+  const hasSources = sources.length > 0;
+  const canSubmit = hasDraft && hasSources;
 
   async function submit() {
     if (!canSubmit) return;
@@ -46,7 +52,14 @@ export default function Home() {
     setError(null);
 
     const form = new FormData();
-    form.append("draft", draft[0]);
+    if (draft.length === 1) {
+      form.append("draft", draft[0]);
+    } else {
+      const pasted = new File([draftText], "pasted-draft.md", {
+        type: "text/markdown",
+      });
+      form.append("draft", pasted);
+    }
     for (const s of sources) form.append("sources", s);
     form.append("rules", JSON.stringify(rules));
 
@@ -68,6 +81,13 @@ export default function Home() {
     setError(null);
   }
 
+  function loadSample() {
+    const { draft: d, source: s } = makeSampleFiles();
+    setDraft([d]);
+    setDraftText("");
+    setSources([s]);
+  }
+
   if (phase === "intro") {
     return <IntroScreen onEnter={() => setPhase("ingest")} />;
   }
@@ -79,61 +99,175 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-12 px-6 py-10 lg:px-12 lg:py-16">
-      <Titlepiece />
-
-      <section>
-        <h1 className="font-editorial text-3xl font-bold tracking-tight text-ink">
-          Submit a manuscript for audit
-        </h1>
-        <p className="mt-3 max-w-prose font-editorial text-md text-ink-2">
-          The Red Pen compares your draft against the sources you provide and
-          the editorial voice you define. It does not write. It audits. It flags
-          the sentences that would not survive a sub-editor.
-        </p>
-      </section>
-
-      {phase === "error" && error && (
-        <div className="border-l-[3px] border-econ-red bg-paper-deep px-5 py-4 font-editorial text-base italic text-ink">
-          {error}
+    <>
+      <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-10 px-6 pb-32 pt-10 lg:px-12 lg:pt-16">
+        <div className="flex items-start justify-between gap-6">
+          <Titlepiece />
           <button
-            onClick={reset}
-            className="ml-4 cursor-pointer font-ui text-xs not-italic small-caps text-ink-2 underline underline-offset-4"
+            onClick={loadSample}
+            className="flex cursor-pointer items-center gap-2 border border-rule bg-paper px-3 py-2 font-ui text-xs small-caps text-ink-2 transition-colors hover:border-ink hover:text-ink"
           >
-            Try again
+            <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Try a sample
           </button>
         </div>
-      )}
 
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <Dropzone
-          label="I · Draft manuscript"
-          helper=".md or .txt"
-          accept=".md,.txt,text/markdown,text/plain"
-          files={draft}
-          onFilesChange={setDraft}
-        />
-        <Dropzone
-          label="II · Source documents"
-          helper=".pdf, .docx, .md, .txt"
-          accept=".pdf,.docx,.md,.txt"
-          multiple
-          files={sources}
-          onFilesChange={setSources}
-          minHeight="180px"
-        />
+        <section>
+          <p className="font-display text-xs small-caps text-econ-red">
+            Now, to work —
+          </p>
+          <h1 className="mt-2 font-editorial text-2xl font-bold tracking-tight text-ink lg:text-3xl">
+            Submit a manuscript for audit
+          </h1>
+          <p className="mt-3 max-w-prose font-editorial text-md text-ink-2">
+            Three desks will read your draft in parallel: fact-checker, style
+            editor, red-team critic. Their verdicts are returned in one
+            marked-up column.
+          </p>
+        </section>
+
+        {phase === "error" && error && (
+          <div
+            role="alert"
+            className="border-l-[3px] border-econ-red bg-paper-deep px-5 py-4 font-editorial text-base italic text-ink"
+          >
+            {error}
+            <button
+              onClick={reset}
+              className="ml-4 cursor-pointer font-ui text-xs not-italic small-caps text-ink-2 underline underline-offset-4"
+            >
+              Try again
+            </button>
+          </div>
+        )}
+
+        <section>
+          <StepLabel
+            num={1}
+            title="Provide the sources to audit against"
+            complete={hasSources}
+          />
+          <Dropzone
+            label="Source documents"
+            helper=".pdf, .docx, .md, .txt"
+            accept=".pdf,.docx,.md,.txt"
+            multiple
+            files={sources}
+            onFilesChange={setSources}
+          />
+          <p className="mt-2 font-editorial text-sm italic text-ink-2">
+            The grounds of truth. Every factual claim in the draft will be
+            checked against these documents only.
+          </p>
+        </section>
+
+        <section>
+          <StepLabel
+            num={2}
+            title="Upload the draft manuscript"
+            complete={hasDraft}
+          />
+          <Dropzone
+            label="Draft manuscript"
+            helper=".md or .txt"
+            accept=".md,.txt,text/markdown,text/plain"
+            files={draft}
+            onFilesChange={setDraft}
+            pastedText={draftText}
+            onPastedTextChange={setDraftText}
+          />
+        </section>
+
+        <section>
+          <StepLabel
+            num={3}
+            title="Codify the voice"
+            complete={rules.length > 0}
+          >
+            Optional — defaults apply
+          </StepLabel>
+          <RulesEditor rules={rules} onChange={setRules} />
+        </section>
+      </main>
+
+      <div className="sticky bottom-0 z-20 border-t-2 border-ink bg-paper/95 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4 lg:px-12">
+          <div className="flex items-center gap-3">
+            <StatusDot complete={hasSources} label="Sources" />
+            <StatusDot complete={hasDraft} label="Draft" />
+            <StatusDot complete={rules.length > 0} label="Voice" optional />
+          </div>
+          <div className="flex items-center gap-4">
+            {!canSubmit && (
+              <span className="font-ui text-xs small-caps text-ink-2">
+                {!hasSources
+                  ? "Add at least one source"
+                  : !hasDraft
+                    ? "Add or paste a draft"
+                    : ""}
+              </span>
+            )}
+            <ReadyCta canSubmit={canSubmit} onClick={submit} />
+          </div>
+        </div>
       </div>
+    </>
+  );
+}
 
-      <RulesEditor rules={rules} onChange={setRules} />
+function StatusDot({
+  complete,
+  label,
+  optional = false,
+}: {
+  complete: boolean;
+  label: string;
+  optional?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <span
+        aria-hidden
+        className={
+          "inline-block h-2 w-2 rounded-full transition-colors " +
+          (complete
+            ? "bg-econ-red"
+            : optional
+              ? "bg-ink-3"
+              : "border border-ink bg-transparent")
+        }
+      />
+      <span className="font-ui text-xs small-caps text-ink-2">
+        {label}
+        {optional && " ·"}
+      </span>
+    </div>
+  );
+}
 
-      <div className="mt-8 flex flex-col items-start gap-3 border-t border-rule pt-6">
-        <Cta disabled={!canSubmit} onClick={submit}>
-          Evaluate Draft
-        </Cta>
-        <p className="font-ui text-xs small-caps text-ink-3">
-          Requires a draft and at least one source
-        </p>
-      </div>
-    </main>
+function ReadyCta({
+  canSubmit,
+  onClick,
+}: {
+  canSubmit: boolean;
+  onClick: () => void;
+}) {
+  const [pulse, setPulse] = useState(false);
+  useEffect(() => {
+    if (canSubmit) {
+      setPulse(true);
+      const t = setTimeout(() => setPulse(false), 650);
+      return () => clearTimeout(t);
+    }
+  }, [canSubmit]);
+  return (
+    <Cta
+      onClick={onClick}
+      disabled={!canSubmit}
+      size="md"
+      className={pulse ? "cta-ready" : undefined}
+    >
+      Evaluate Draft →
+    </Cta>
   );
 }

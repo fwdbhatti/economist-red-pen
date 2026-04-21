@@ -8,16 +8,16 @@
   --paper: #fbf8f1;
   --paper-deep: #f2ebdc;
   --paper-edge: #e6ddc8;
-  --ink: #121212;
-  --ink-2: #3c3a36;
-  --ink-3: #6b6760;
-  --rule: #b0a89a;
-  --rule-strong: #121212;
+  --ink: #111111;
+  --ink-2: #2e2c28;
+  --ink-3: #504c46;
+  --rule: #9c9485;
+  --rule-strong: #111111;
   --economist-red: #e3120b;
   --red-ink: #b50d07;
   --red-wash: rgba(227, 18, 11, 0.08);
   --navy: #0f3b5f;
-  --amber: #a4741a;
+  --amber: #8a5d0f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,8 +27,8 @@
     --paper-edge: #1e1d1b;
     --ink: #f0ece2;
     --ink-2: #c7c1b4;
-    --ink-3: #8a8579;
-    --rule: #3a3732;
+    --ink-3: #9e998c;
+    --rule: #4a463f;
     --rule-strong: #f0ece2;
     --navy: #7fb3d9;
     --amber: #d6a53d;
@@ -59,12 +59,29 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--economist-red);
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
   .small-caps {
     font-variant-caps: all-small-caps;
     letter-spacing: 0.08em;
+  }
+
+  .section-label {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
 
   .prose-editorial {
@@ -146,6 +163,18 @@
   @keyframes caret {
     50% {
       opacity: 0;
+    }
+  }
+
+  .cta-ready {
+    animation: ctaPulse 0.6s ease-out 1;
+  }
+  @keyframes ctaPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(227, 18, 11, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 0 10px rgba(227, 18, 11, 0);
     }
   }
 

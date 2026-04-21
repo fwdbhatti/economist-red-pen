@@ -9,7 +9,8 @@ interface IntroScreenProps {
 
 export function IntroScreen({ onEnter }: IntroScreenProps) {
   return (
-    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-12 px-6 py-10 lg:px-12 lg:py-16">
+    <>
+    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-12 px-6 pb-32 pt-10 lg:px-12 lg:pt-16">
       <Titlepiece desk="Leader · the case for the red pen" />
 
       <section className="mt-4">
@@ -101,18 +102,28 @@ export function IntroScreen({ onEnter }: IntroScreenProps) {
       </div>
 
       <div className="mt-6 flex flex-col items-start gap-3 border-t border-rule pt-8">
-        <Cta onClick={onEnter} autoFocus>
+        <Cta onClick={onEnter} autoFocus size="lg">
           OK — to the desk
         </Cta>
-        <p className="font-ui text-xs small-caps text-ink-3">
+        <p className="font-ui text-xs small-caps text-ink-2">
           Proceed to the sub-editing desk · submit a manuscript
         </p>
       </div>
 
-      <footer className="mt-16 border-t border-rule pt-4 text-center font-display text-xs small-caps text-ink-3">
+      <footer className="mt-16 border-t border-rule pt-4 text-center font-display text-xs small-caps text-ink-2">
         The Editorial Red Pen · v0.1 · Evaluation only. No content is generated.
       </footer>
     </main>
+
+    <div className="sticky bottom-0 z-20 border-t-2 border-ink bg-paper/95 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-3 lg:px-12">
+        <span className="font-ui text-xs small-caps text-ink-2">
+          Ready to audit a manuscript?
+        </span>
+        <Cta onClick={onEnter}>OK — to the desk</Cta>
+      </div>
+    </div>
+    </>
   );
 }
 
