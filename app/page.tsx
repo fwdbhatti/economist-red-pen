@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { Cta } from "@/components/Cta";
 import { Dropzone } from "@/components/Dropzone";
+import { IntroScreen } from "@/components/IntroScreen";
 import { ProcessingState } from "@/components/ProcessingState";
 import { ResultsLayout } from "@/components/ResultsLayout";
 import { RulesEditor } from "@/components/RulesEditor";
 import { Titlepiece } from "@/components/Titlepiece";
 import type { EvaluateResponse, VoiceRule } from "@/lib/types";
 
-type Phase = "ingest" | "processing" | "results" | "error";
+type Phase = "intro" | "ingest" | "processing" | "results" | "error";
 
 const DEFAULT_RULES: VoiceRule[] = [
   {
@@ -30,7 +31,7 @@ const DEFAULT_RULES: VoiceRule[] = [
 ];
 
 export default function Home() {
-  const [phase, setPhase] = useState<Phase>("ingest");
+  const [phase, setPhase] = useState<Phase>("intro");
   const [draft, setDraft] = useState<File[]>([]);
   const [sources, setSources] = useState<File[]>([]);
   const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
@@ -65,6 +66,10 @@ export default function Home() {
     setPhase("ingest");
     setResult(null);
     setError(null);
+  }
+
+  if (phase === "intro") {
+    return <IntroScreen onEnter={() => setPhase("ingest")} />;
   }
 
   if (phase === "processing") return <ProcessingState />;
