@@ -1,81 +1,57 @@
 import { NextRequest, NextResponse } from "next/server";
-import { type UIMessage, type TextUIPart, createTextStreamResponse } from "ai";
+import OpenAI from "openai";
 
-import { ChatOpenAI } from "@langchain/openai";
-import { PromptTemplate } from "@langchain/core/prompts";
-import { HttpResponseOutputParser } from "langchain/output_parsers";
+export const runtime = "nodejs";
+export const maxDuration = 300;
 
-export const runtime = "edge";
+const DEFAULT_MODEL = process.env.OPENAI_MODEL ?? "gpt-5.4";
 
-const getMessageText = (message: UIMessage) =>
-  message.parts
-    .filter((p): p is TextUIPart => p.type === "text")
-    .map((p) => p.text)
-    .join("");
+const SYSTEM_INSTRUCTIONS =
+  "You are the Economist Red Pen: a rigorous editor who critiques economic writing for clarity, accuracy, and tight argument. Respond with sharp, constructive edits. Cite specific phrases you would change and explain briefly why.";
 
-const formatMessage = (message: UIMessage) => {
-  return `${message.role}: ${getMessageText(message)}`;
-};
+interface ChatBody {
+  input?: string;
+  system?: string;
+  model?: string;
+}
 
-const TEMPLATE = `You are a pirate named Patchy. All responses must be extremely verbose and in pirate dialect.
-
-Current conversation:
-{chat_history}
-
-User: {input}
-AI:`;
-
-/**
- * This handler initializes and calls a simple chain with a prompt,
- * chat model, and output parser. See the docs for more information:
- *
- * https://js.langchain.com/docs/guides/expression_language/cookbook#prompttemplate--llm--outputparser
- */
 export async function POST(req: NextRequest) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json(
+      { error: "OPENAI_API_KEY is not configured on the server." },
+      { status: 500 }
+    );
+  }
+
+  let body: ChatBody;
   try {
-    const body = await req.json();
-    const messages = body.messages ?? [];
-    const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-    const currentMessageContent = getMessageText(messages[messages.length - 1]);
-    const prompt = PromptTemplate.fromTemplate(TEMPLATE);
+    body = (await req.json()) as ChatBody;
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
 
-    /**
-     * You can also try e.g.:
-     *
-     * import { ChatAnthropic } from "@langchain/anthropic";
-     * const model = new ChatAnthropic({});
-     *
-     * See a full list of supported models at:
-     * https://js.langchain.com/docs/modules/model_io/models/
-     */
-    const model = new ChatOpenAI({
-      temperature: 0.8,
-      model: "gpt-4o-mini",
+  const input = body.input?.trim();
+  if (!input) {
+    return NextResponse.json({ error: "`input` is required." }, { status: 400 });
+  }
+
+  const client = new OpenAI({ apiKey });
+  const model = body.model ?? DEFAULT_MODEL;
+
+  try {
+    const response = await client.responses.create({
+      model,
+      input,
+      instructions: body.system ?? SYSTEM_INSTRUCTIONS,
     });
 
-    /**
-     * Chat models stream message chunks rather than bytes, so this
-     * output parser handles serialization and byte-encoding.
-     */
-    const outputParser = new HttpResponseOutputParser();
-
-    /**
-     * Can also initialize as:
-     *
-     * import { RunnableSequence } from "@langchain/core/runnables";
-     * const chain = RunnableSequence.from([prompt, model, outputParser]);
-     */
-    const chain = prompt.pipe(model).pipe(outputParser);
-
-    const stream = await chain.stream({
-      chat_history: formattedPreviousMessages.join("\n"),
-      input: currentMessageContent,
+    return NextResponse.json({
+      model: response.model,
+      output: response.output_text,
     });
-
-    return createTextStreamResponse({
-      textStream: stream.pipeThrough(new TextDecoderStream()),
-    });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: e.status ?? 500 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown OpenAI error.";
+    return NextResponse.json({ error: message }, { status: 502 });
   }
 }
