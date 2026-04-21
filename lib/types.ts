@@ -1,13 +1,15 @@
 export type MistakeCategory = "grounding" | "voice" | "argumentation";
-export type Severity = "low" | "medium" | "high";
+
+export interface InfoBlock {
+  id: string;
+  text: string;
+}
 
 export interface Mistake {
   id: string;
   category: MistakeCategory;
-  severity: Severity;
-  exact_quote: string;
-  explanation: string;
-  rule_ref?: string;
+  info_block_id: string;
+  flaw: string;
 }
 
 export interface VoiceRule {
@@ -19,9 +21,14 @@ export interface VoiceRule {
   children?: VoiceRule[];
 }
 
+export interface ParagraphRef {
+  blockIds: string[];
+}
+
 export interface EvaluateResponse {
   model: string;
-  draft: string;
+  blocks: InfoBlock[];
+  paragraphs: ParagraphRef[];
   mistakes: Mistake[];
   totals: { grounding: number; voice: number; argumentation: number };
 }

@@ -40,7 +40,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Draft is empty." }, { status: 400 });
   }
 
-  const sourceFiles = form.getAll("sources").filter((v): v is File => v instanceof File);
+  const sourceFiles = form
+    .getAll("sources")
+    .filter((v): v is File => v instanceof File);
   const sources: Array<{ name: string; text: string }> = [];
   for (const f of sourceFiles) {
     try {
@@ -67,7 +69,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { mistakes, model } = await evaluateDraft({
+    const { mistakes, model, blocks, paragraphs } = await evaluateDraft({
       draft,
       sources,
       rules,
@@ -82,7 +84,13 @@ export async function POST(req: NextRequest) {
       { grounding: 0, voice: 0, argumentation: 0 },
     );
 
-    const response: EvaluateResponse = { model, draft, mistakes, totals };
+    const response: EvaluateResponse = {
+      model,
+      blocks,
+      paragraphs,
+      mistakes,
+      totals,
+    };
     return NextResponse.json(response);
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown OpenAI error.";

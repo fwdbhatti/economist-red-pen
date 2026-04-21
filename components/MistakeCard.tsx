@@ -1,8 +1,9 @@
 import { cn } from "@/lib/cn";
-import type { Mistake } from "@/lib/types";
+import type { InfoBlock, Mistake } from "@/lib/types";
 
 interface MistakeCardProps {
   mistake: Mistake;
+  block: InfoBlock | undefined;
   active: boolean;
   onClick: () => void;
 }
@@ -19,7 +20,12 @@ const FLAG_CLASS: Record<Mistake["category"], string> = {
   argumentation: "before:bg-amber",
 };
 
-export function MistakeCard({ mistake, active, onClick }: MistakeCardProps) {
+export function MistakeCard({
+  mistake,
+  block,
+  active,
+  onClick,
+}: MistakeCardProps) {
   return (
     <article
       id={`card-${mistake.id}`}
@@ -38,23 +44,21 @@ export function MistakeCard({ mistake, active, onClick }: MistakeCardProps) {
         )}
       >
         <span>{CATEGORY_LABEL[mistake.category]}</span>
-        <span className="text-ink-3">·</span>
-        <span>{mistake.severity}</span>
       </div>
 
-      <blockquote className="mt-3 font-editorial text-md italic text-ink">
-        &ldquo;{mistake.exact_quote}&rdquo;
-      </blockquote>
+      {block && (
+        <blockquote className="mt-3 font-editorial text-md italic text-ink">
+          &ldquo;{block.text}&rdquo;
+        </blockquote>
+      )}
 
       <p className="mt-3 font-editorial text-base text-ink-2">
-        {mistake.explanation}
+        {mistake.flaw}
       </p>
 
-      {mistake.rule_ref && (
-        <p className="mt-4 font-mono text-xs small-caps text-ink-3">
-          {mistake.rule_ref}
-        </p>
-      )}
+      <p className="mt-4 font-mono text-xs small-caps text-ink-3">
+        {mistake.info_block_id}
+      </p>
     </article>
   );
 }

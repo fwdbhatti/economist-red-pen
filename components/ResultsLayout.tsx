@@ -2,8 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
-import type { EvaluateResponse } from "@/lib/types";
-import { draftToParagraphs, renderDraftWithMarks } from "./Mark";
+import type { EvaluateResponse, InfoBlock } from "@/lib/types";
+import { renderDraftHTML } from "./Mark";
 import { MistakeCard } from "./MistakeCard";
 import { Tally } from "./Tally";
 
@@ -13,37 +13,45 @@ interface ResultsLayoutProps {
 }
 
 export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeMistakeId, setActiveMistakeId] = useState<string | null>(null);
 
-  const html = useMemo(() => {
-    return draftToParagraphs(
-      renderDraftWithMarks(result.draft, result.mistakes, activeId),
-    );
-  }, [result.draft, result.mistakes, activeId]);
+  const blockIndex = useMemo<Map<string, InfoBlock>>(
+    () => new Map(result.blocks.map((b) => [b.id, b])),
+    [result.blocks],
+  );
+
+  const html = useMemo(
+    () => renderDraftHTML(result, activeMistakeId),
+    [result, activeMistakeId],
+  );
+
+  const scrollToMark = useCallback((blockId: string) => {
+    requestAnimationFrame(() => {
+      const el = document.querySelector(
+        `mark.redpen[data-block-id="${blockId}"]`,
+      ) as HTMLElement | null;
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }, []);
 
   const handleCardClick = useCallback(
-    (id: string) => {
-      setActiveId((prev) => (prev === id ? null : id));
-      requestAnimationFrame(() => {
-        const el = document.querySelector(
-          `mark.redpen[data-id="${id}"]`,
-        ) as HTMLElement | null;
-        el?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
+    (mistakeId: string, blockId: string) => {
+      setActiveMistakeId((prev) => (prev === mistakeId ? null : mistakeId));
+      scrollToMark(blockId);
     },
-    [],
+    [scrollToMark],
   );
 
   const onPaneClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
-    if (target.tagName === "MARK") {
-      const id = target.getAttribute("data-id");
-      if (id) {
-        setActiveId((prev) => (prev === id ? null : id));
-        const card = document.getElementById(`card-${id}`);
-        card?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
+    const target = (e.target as HTMLElement).closest(
+      "mark.redpen",
+    ) as HTMLElement | null;
+    if (!target) return;
+    const mistakeId = target.getAttribute("data-mistake-id");
+    if (!mistakeId) return;
+    setActiveMistakeId((prev) => (prev === mistakeId ? null : mistakeId));
+    const card = document.getElementById(`card-${mistakeId}`);
+    card?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -51,11 +59,11 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
       <section
         className={cn(
           "border-r border-rule px-8 py-10 lg:px-14",
-          activeId && "results-focused",
+          activeMistakeId && "results-focused",
         )}
       >
         <div className="mb-2 font-ui text-xs small-caps text-ink-3">
-          Manuscript · model {result.model}
+          Manuscript · model {result.model} · {result.blocks.length} info-blocks
         </div>
         <div className="rule-strong mb-6" />
         <div
@@ -89,8 +97,9 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
               <MistakeCard
                 key={m.id}
                 mistake={m}
-                active={activeId === m.id}
-                onClick={() => handleCardClick(m.id)}
+                block={blockIndex.get(m.info_block_id)}
+                active={activeMistakeId === m.id}
+                onClick={() => handleCardClick(m.id, m.info_block_id)}
               />
             ))
           )}
