@@ -138,19 +138,23 @@ export async function evaluateDraft(params: {
     ARTICLE_BLOCKS: blocksToPrompt(blocks),
   };
 
+  const hasSources = params.sources.length > 0;
+
   const [groundingTpl, voiceTpl, argTpl] = await Promise.all([
-    loadPrompt("grounding.md"),
+    hasSources ? loadPrompt("grounding.md") : Promise.resolve(""),
     loadPrompt("voice.md"),
     loadPrompt("argumentation.md"),
   ]);
 
   const [grounding, voice, argumentation] = await Promise.all([
-    runCall(
-      client,
-      "grounding",
-      renderPrompt(groundingTpl, commonSubs),
-      blockIds,
-    ),
+    hasSources
+      ? runCall(
+          client,
+          "grounding",
+          renderPrompt(groundingTpl, commonSubs),
+          blockIds,
+        )
+      : Promise.resolve<Mistake[]>([]),
     runCall(client, "voice", renderPrompt(voiceTpl, commonSubs), blockIds),
     runCall(
       client,

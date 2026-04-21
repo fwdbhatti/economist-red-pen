@@ -42,9 +42,11 @@ export default function Home() {
   const [result, setResult] = useState<EvaluateResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const [skipSources, setSkipSources] = useState(false);
   const hasDraft = draft.length === 1 || draftText.trim().length > 20;
   const hasSources = sources.length > 0;
-  const canSubmit = hasDraft && hasSources;
+  const sourcesResolved = hasSources || skipSources;
+  const canSubmit = hasDraft && sourcesResolved;
 
   async function submit() {
     if (!canSubmit) return;
@@ -86,6 +88,7 @@ export default function Home() {
     setDraft([d]);
     setDraftText("");
     setSources([s]);
+    setSkipSources(false);
   }
 
   if (phase === "intro") {
@@ -145,20 +148,56 @@ export default function Home() {
           <StepLabel
             num={1}
             title="Provide the sources to audit against"
-            complete={hasSources}
-          />
-          <Dropzone
-            label="Source documents"
-            helper=".pdf, .docx, .md, .txt"
-            accept=".pdf,.docx,.md,.txt"
-            multiple
-            files={sources}
-            onFilesChange={setSources}
-          />
-          <p className="mt-2 font-editorial text-sm italic text-ink-2">
-            The grounds of truth. Every factual claim in the draft will be
-            checked against these documents only.
-          </p>
+            complete={sourcesResolved}
+          >
+            {skipSources
+              ? "Skipped · grounding desk disabled"
+              : "Optional · enables grounding desk"}
+          </StepLabel>
+
+          {!skipSources ? (
+            <>
+              <Dropzone
+                label="Source documents"
+                helper=".pdf, .docx, .md, .txt"
+                accept=".pdf,.docx,.md,.txt"
+                multiple
+                files={sources}
+                onFilesChange={setSources}
+              />
+              <div className="mt-3 flex items-start justify-between gap-4">
+                <p className="max-w-prose font-editorial text-sm italic text-ink-2">
+                  The grounds of truth. Every factual claim in the draft will
+                  be checked against these documents only. Without sources,
+                  the grounding desk is dark and only voice and argument are
+                  audited.
+                </p>
+                {!hasSources && (
+                  <button
+                    type="button"
+                    onClick={() => setSkipSources(true)}
+                    className="flex-shrink-0 cursor-pointer border border-rule bg-paper px-3 py-2 font-ui text-xs small-caps text-ink-2 transition-colors hover:border-ink hover:text-ink"
+                  >
+                    Skip sources →
+                  </button>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-between gap-4 border border-dashed border-rule bg-paper-deep/50 px-5 py-4">
+              <p className="font-editorial text-sm italic text-ink-2">
+                Running without sources. The grounding desk will be bypassed
+                — only voice and argument audits will run.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSkipSources(false)}
+                className="flex-shrink-0 cursor-pointer font-ui text-xs small-caps text-ink underline underline-offset-4 hover:text-econ-red"
+              >
+                Add sources
+              </button>
+            </div>
+          )}
         </section>
 
         <section>
@@ -193,15 +232,19 @@ export default function Home() {
       <div className="sticky bottom-0 z-20 border-t-2 border-ink bg-paper/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4 lg:px-12">
           <div className="flex items-center gap-3">
-            <StatusDot complete={hasSources} label="Sources" />
+            <StatusDot
+              complete={sourcesResolved}
+              label={skipSources ? "Skipped" : "Sources"}
+              optional={skipSources}
+            />
             <StatusDot complete={hasDraft} label="Draft" />
             <StatusDot complete={rules.length > 0} label="Voice" optional />
           </div>
           <div className="flex items-center gap-4">
             {!canSubmit && (
               <span className="font-ui text-xs small-caps text-ink-2">
-                {!hasSources
-                  ? "Add at least one source"
+                {!sourcesResolved
+                  ? "Add sources or skip"
                   : !hasDraft
                     ? "Add or paste a draft"
                     : ""}
