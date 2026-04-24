@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Presentation deck for The Editorial Red Pen, an evaluation-only editorial immune system for AI-assisted journalism.",
 };
 
-const TOTAL_MAIN = 9;
+const TOTAL_MAIN = 12;
 
 export default function SlidesPage() {
   return (
@@ -28,18 +28,20 @@ export default function SlidesPage() {
             "s7",
             "s8",
             "s9",
+            "s10",
+            "s11",
             "closing",
             "appendix",
             "a1",
             "a2",
           ].map((id, i) => (
             <a key={id} href={`#${id}`}>
-              {i === 9
+              {i === 11
                 ? "END"
-                : i === 10
+                : i === 12
                   ? "APX"
-                  : i > 10
-                    ? `A${i - 10}`
+                  : i > 12
+                    ? `A${i - 12}`
                     : String(i + 1).padStart(2, "0")}
             </a>
           ))}
@@ -67,10 +69,256 @@ export default function SlidesPage() {
         </div>
       </section>
 
-      {/* 2 — WHY THIS MATTERS */}
+      {/* 2 — THE EXAMPLE */}
       <section id="s2" className="slide">
         <div className="slide-head">
-          <span className="brand">01 · Why this matters</span>
+          <span className="brand">01 · The example</span>
+          <span className="ctx">
+            What a grammar checker misses. What a fact-checker misses. What the
+            Red Pen catches.
+          </span>
+        </div>
+        <h2
+          style={{ fontSize: 28, marginBottom: 14, lineHeight: 1.15 }}
+        >
+          What AI gets wrong isn't facts — it's nuance.
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: "46% 28% 18%",
+            gap: 10,
+            flex: 1,
+            minHeight: 0,
+          }}
+        >
+          {/* Draft as published */}
+          <div
+            style={{
+              background: "#fffdf8",
+              border: "1px solid #e8e2d2",
+              padding: "22px 34px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: 12,
+                right: 18,
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: 9,
+                textTransform: "uppercase",
+                letterSpacing: 2,
+                color: "#e3120b",
+                fontWeight: 700,
+              }}
+            >
+              Draft · as published
+            </div>
+            <div
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: 9,
+                textTransform: "uppercase",
+                letterSpacing: 2,
+                color: "#999",
+                marginBottom: 6,
+              }}
+            >
+              Britain · Economics
+            </div>
+            <div
+              style={{
+                fontFamily: "'Georgia', serif",
+                fontSize: 22,
+                fontWeight: 700,
+                lineHeight: 1.2,
+                color: "#121212",
+                marginBottom: 10,
+                borderBottom: "1px solid #e8e2d2",
+                paddingBottom: 8,
+              }}
+            >
+              Inflation's long retreat
+            </div>
+            <div
+              style={{
+                fontFamily: "'Georgia', serif",
+                fontSize: 19,
+                lineHeight: 1.55,
+                color: "#121212",
+              }}
+            >
+              A cooler-than-expected set of figures landed this week, and the
+              mood in Westminster shifted with them.{" "}
+              <span
+                style={{
+                  borderBottom: "3px solid #e3120b",
+                  paddingBottom: 1,
+                }}
+              >
+                Most economists now agree that inflation will fall in the next
+                quarters, with good news for the UK public ahead.
+              </span>{" "}
+              The chancellor seized the moment, telling reporters the country
+              had turned a corner; the Bank of England, predictably, was more
+              circumspect.
+            </div>
+          </div>
+
+          {/* Source */}
+          <div
+            style={{
+              background: "#f4f5fb",
+              borderLeft: "5px solid #1b3a8a",
+              padding: "14px 20px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: 9,
+                textTransform: "uppercase",
+                letterSpacing: 2,
+                color: "#1b3a8a",
+                fontWeight: 700,
+                marginBottom: 6,
+              }}
+            >
+              Source — what the research said
+            </div>
+            <div
+              style={{
+                fontFamily: "'Georgia', serif",
+                fontSize: 17,
+                lineHeight: 1.4,
+                color: "#121212",
+                marginBottom: 6,
+              }}
+            >
+              &ldquo;
+              <span
+                style={{ background: "#d6dfff", padding: "1px 3px" }}
+              >
+                7 out of 10 economists <strong>we interviewed</strong>
+              </span>{" "}
+              believe inflation may fall,{" "}
+              <span
+                style={{ background: "#d6dfff", padding: "1px 3px" }}
+              >
+                though others disagree
+              </span>
+              .&rdquo;
+            </div>
+            <div
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: 11,
+                color: "#666",
+                lineHeight: 1.45,
+                fontStyle: "italic",
+              }}
+            >
+              A small, attributed sample. Dissent acknowledged. The
+              Economist&apos;s own reporting.
+            </div>
+          </div>
+
+          {/* Two distortions */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div
+              style={{
+                padding: "10px 14px",
+                background: "#faf5f5",
+                borderLeft: "4px solid #e3120b",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: 9,
+                  textTransform: "uppercase",
+                  letterSpacing: 1.5,
+                  color: "#e3120b",
+                  fontWeight: 700,
+                  marginBottom: 3,
+                }}
+              >
+                Distortion 01 — scale
+              </div>
+              <div
+                style={{
+                  fontFamily: "'Georgia', serif",
+                  fontSize: 13.5,
+                  lineHeight: 1.4,
+                  color: "#222",
+                }}
+              >
+                A sample of seven interviews became{" "}
+                <strong>&ldquo;most economists&rdquo;</strong> — universal
+                consensus.
+              </div>
+            </div>
+            <div
+              style={{
+                padding: "10px 14px",
+                background: "#faf5f5",
+                borderLeft: "4px solid #e3120b",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: 9,
+                  textTransform: "uppercase",
+                  letterSpacing: 1.5,
+                  color: "#e3120b",
+                  fontWeight: 700,
+                  marginBottom: 3,
+                }}
+              >
+                Distortion 02 — attribution
+              </div>
+              <div
+                style={{
+                  fontFamily: "'Georgia', serif",
+                  fontSize: 13.5,
+                  lineHeight: 1.4,
+                  color: "#222",
+                }}
+              >
+                <strong>&ldquo;We interviewed&rdquo;</strong> disappeared. The
+                Economist&apos;s own research became an unattributed claim.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="slide-foot">
+          <span>The Editorial Red Pen</span>
+          <span>02 / {TOTAL_MAIN}</span>
+        </div>
+      </section>
+
+      {/* 3 — WHY THIS MATTERS */}
+      <section id="s3" className="slide">
+        <div className="slide-head">
+          <span className="brand">02 · Why this matters</span>
           <span className="ctx">
             Editorial integrity in the age of AI-assisted journalism
           </span>
@@ -128,14 +376,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>02 / {TOTAL_MAIN}</span>
+          <span>03 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 3 — PRODUCT / FLOW */}
-      <section id="s3" className="slide">
+      {/* 4 — PRODUCT / FLOW */}
+      <section id="s4" className="slide">
         <div className="slide-head">
-          <span className="brand">02 · The product</span>
+          <span className="brand">03 · The product</span>
           <span className="ctx">
             What the editor does, and what the Red Pen returns
           </span>
@@ -249,14 +497,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>03 / {TOTAL_MAIN}</span>
+          <span>04 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 4 — PRODUCT DECISIONS */}
-      <section id="s4" className="slide">
+      {/* 5 — PRODUCT DECISIONS */}
+      <section id="s5" className="slide">
         <div className="slide-head">
-          <span className="brand">03 · Product decisions</span>
+          <span className="brand">04 · Product decisions</span>
           <span className="ctx">Three high-priority + two lower-priority</span>
         </div>
         <h2>
@@ -358,14 +606,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>04 / {TOTAL_MAIN}</span>
+          <span>05 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 5 — ENGINEERING DECISIONS */}
-      <section id="s5" className="slide">
+      {/* 6 — ENGINEERING DECISIONS */}
+      <section id="s6" className="slide">
         <div className="slide-head">
-          <span className="brand">04 · Engineering decisions</span>
+          <span className="brand">05 · Engineering decisions</span>
           <span className="ctx">
             Three architecture choices — chosen vs rejected
           </span>
@@ -421,14 +669,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>05 / {TOTAL_MAIN}</span>
+          <span>06 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 6 — WALKTHROUGH */}
-      <section id="s6" className="slide">
+      {/* 7 — WALKTHROUGH */}
+      <section id="s7" className="slide">
         <div className="slide-head">
-          <span className="brand">05 · Walkthrough</span>
+          <span className="brand">06 · Walkthrough</span>
           <span className="ctx">The red-line review UI</span>
         </div>
         <div className="question">What the editor sees</div>
@@ -469,28 +717,28 @@ export default function SlidesPage() {
               <div className="tag">Grounding · fail</div>
               <div className="msg">
                 Source states inflation is 3.2%, not 4.2%. The adjective
-                "plummeted" also misrepresents a mild fluctuation.
+                &ldquo;plummeted&rdquo; also misrepresents a mild fluctuation.
               </div>
             </div>
             <div className="audit-item navy">
               <div className="tag">Voice · warn</div>
               <div className="msg">
-                Banned terms: "leverage", "going forward". Replace with
-                specific verbs.
+                Banned terms: &ldquo;leverage&rdquo;, &ldquo;going
+                forward&rdquo;. Replace with specific verbs.
               </div>
             </div>
             <div className="audit-item amber">
               <div className="tag">Argument · fail</div>
               <div className="msg">
-                "Most economists now agree" — unsupported. Source contains
-                dissenting views from the ECB and two cited academics.
+                &ldquo;Most economists now agree&rdquo; — unsupported. Source
+                contains dissenting views from the ECB and two cited academics.
               </div>
             </div>
             <div className="audit-item">
               <div className="tag">Grounding · fail</div>
               <div className="msg">
-                "Lowest in a decade" — the sources only cover the last
-                five years.
+                &ldquo;Lowest in a decade&rdquo; — the sources only cover the
+                last five years.
               </div>
             </div>
           </div>
@@ -498,14 +746,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>06 / {TOTAL_MAIN}</span>
+          <span>07 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 7 — TRADE-OFFS & UNFINISHED */}
-      <section id="s7" className="slide">
+      {/* 8 — TRADE-OFFS & UNFINISHED */}
+      <section id="s8" className="slide">
         <div className="slide-head">
-          <span className="brand">06 · Trade-offs & unfinished work</span>
+          <span className="brand">07 · Trade-offs & unfinished work</span>
           <span className="ctx">
             What I cut, what I'd revisit with more time
           </span>
@@ -592,14 +840,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>07 / {TOTAL_MAIN}</span>
+          <span>08 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 8 — MARKET REALITY */}
-      <section id="s8" className="slide">
+      {/* 9 — MARKET REALITY */}
+      <section id="s9" className="slide">
         <div className="slide-head">
-          <span className="brand">07 · Market reality</span>
+          <span className="brand">08 · Market reality</span>
           <span className="ctx">
             Why generic AI fails elite newsrooms
           </span>
@@ -625,15 +873,17 @@ export default function SlidesPage() {
             </MarketCard>
             <MarketCard n="02" title="Bloat vs. brevity">
               Models equate intelligence with complexity: passive voice,
-              "leverage", "delve", "multifaceted". The Economist treats
-              brevity as the mark of a clear thinker. The Red Pen pushes
-              back on that instinct.
+              &ldquo;leverage&rdquo;, &ldquo;delve&rdquo;,
+              &ldquo;multifaceted&rdquo;. The Economist treats brevity as
+              the mark of a clear thinker. The Red Pen pushes back on that
+              instinct.
             </MarketCard>
             <MarketCard n="03" title="The adjective gap">
               AI checks the number. It does not check the word sitting
-              next to it. "GDP fell 2%" passes. "The economy{" "}
-              <em>plummeted</em> by 2%" also passes. One is true. The
-              other is dishonest. Off-the-shelf RAG sees no difference.
+              next to it. &ldquo;GDP fell 2%&rdquo; passes. &ldquo;The
+              economy <em>plummeted</em> by 2%&rdquo; also passes. One is
+              true. The other is dishonest. Off-the-shelf RAG sees no
+              difference.
             </MarketCard>
             <MarketCard n="04" title="Smoothing over the potholes">
               Given contradictory sources, a completion engine smooths
@@ -704,14 +954,14 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>08 / {TOTAL_MAIN}</span>
+          <span>09 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
-      {/* 9 — ROADMAP */}
-      <section id="s9" className="slide">
+      {/* 10 — ROADMAP */}
+      <section id="s10" className="slide">
         <div className="slide-head">
-          <span className="brand">08 · Roadmap</span>
+          <span className="brand">09 · Roadmap</span>
           <span className="ctx">Validate first, then build</span>
         </div>
         <h2 style={{ fontSize: 28 }}>
@@ -791,7 +1041,106 @@ export default function SlidesPage() {
 
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>09 / {TOTAL_MAIN}</span>
+          <span>10 / {TOTAL_MAIN}</span>
+        </div>
+      </section>
+
+      {/* 11 — I'VE BUILT THIS BEFORE */}
+      <section id="s11" className="slide">
+        <div className="slide-head">
+          <span className="brand">10 · I've built this before</span>
+          <span className="ctx">Why this is not theory for me</span>
+        </div>
+        <h2 style={{ fontSize: 30, marginBottom: 4, lineHeight: 1.15 }}>
+          I've shipped evaluation layers, AI-assisted tools, and
+          editorial-grade workflows before.
+        </h2>
+        <p className="serif-lead">
+          Three patterns that repeat in my work — the same patterns that
+          built the Red Pen.
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: 14,
+            flex: 1,
+          }}
+        >
+          <ProofCard
+            pattern="Pattern 01 — Eval layers"
+            color="var(--econ-red)"
+            title="Shipping eval loops before shipping the model"
+            outcome="<2% error rate, >96% coverage. Scaled 0–70+ boards. Acquired by BoardPro."
+          >
+            <strong>PageBreak (2025)</strong> — built RAG, evaluation and
+            guardrails for AI-generated board packs. Directors in regulated
+            industries won't trust AI without audit-grade reliability, so the
+            scorecard was the product.
+          </ProofCard>
+          <ProofCard
+            pattern="Pattern 02 — Workflow tools"
+            color="var(--navy)"
+            title="AI that slots into an expert's day, not around it"
+            outcome="+20% daily customer visits, +30% pipeline growth, 30% prep-time reduction."
+          >
+            <strong>Hilti (2023–2026)</strong> — shipped AI-driven Meeting
+            Prep for 9,000 sales managers across 68 countries. Pulled from 13
+            LLM-ready data stores I architected across 7+ global platforms.
+          </ProofCard>
+          <ProofCard
+            pattern="Pattern 03 — Trust & QA"
+            color="var(--amber)"
+            title="Turning intuition into an auditable checklist"
+            outcome="+35% SEO experiment throughput, 18% faster product decisioning."
+          >
+            <strong>Yelp (2022–2023)</strong> — ran the Bunsen
+            experimentation platform. Coached PMs on hypothesis framing and
+            metric selection so the platform measured decision{" "}
+            <em>quality</em>, not just velocity.
+          </ProofCard>
+        </div>
+
+        <div
+          style={{
+            marginTop: 14,
+            background: "#3a3a3a",
+            color: "#fff",
+            padding: "12px 18px",
+            borderLeft: "4px solid var(--econ-red)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontSize: 10,
+              textTransform: "uppercase",
+              letterSpacing: 2,
+              color: "#ff7a73",
+              fontWeight: 700,
+            }}
+          >
+            The through-line
+          </div>
+          <div
+            style={{
+              fontFamily: "'Georgia', serif",
+              fontSize: 15,
+              color: "#fff",
+            }}
+          >
+            AI wins in elite domains only when the evaluation layer is
+            built by someone who's lived in the workflow.
+          </div>
+        </div>
+
+        <div className="slide-foot">
+          <span>The Editorial Red Pen</span>
+          <span>11 / {TOTAL_MAIN}</span>
         </div>
       </section>
 
@@ -821,7 +1170,7 @@ export default function SlidesPage() {
         </div>
         <div className="slide-foot">
           <span>The Editorial Red Pen</span>
-          <span>— end —</span>
+          <span>12 / {TOTAL_MAIN} · END</span>
         </div>
       </section>
 
@@ -1015,6 +1364,82 @@ function MarketCard({
       <div className="num">{n}</div>
       <h4>{title}</h4>
       <p>{children}</p>
+    </div>
+  );
+}
+
+function ProofCard({
+  pattern,
+  color,
+  title,
+  outcome,
+  children,
+}: {
+  pattern: string;
+  color: string;
+  title: string;
+  outcome: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        background: "#f9f6f0",
+        borderTop: `4px solid ${color}`,
+        padding: "16px 18px",
+      }}
+    >
+      <div
+        style={{
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          fontSize: 10,
+          textTransform: "uppercase",
+          letterSpacing: 1.5,
+          color,
+          fontWeight: 700,
+          marginBottom: 8,
+        }}
+      >
+        {pattern}
+      </div>
+      <div
+        style={{
+          fontFamily: "'Georgia', serif",
+          fontSize: 19,
+          fontWeight: 700,
+          color: "#121212",
+          lineHeight: 1.2,
+          marginBottom: 8,
+        }}
+      >
+        {title}
+      </div>
+      <p
+        style={{
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          fontSize: 12.5,
+          lineHeight: 1.5,
+          color: "#333",
+          margin: "0 0 10px 0",
+        }}
+      >
+        {children}
+      </p>
+      <div
+        style={{
+          marginTop: "auto",
+          paddingTop: 10,
+          borderTop: "1px dashed #cfc9bc",
+          fontFamily: "'Georgia', serif",
+          fontSize: 11.5,
+          fontStyle: "italic",
+          color: "#6b6b6b",
+        }}
+      >
+        Outcome: {outcome}
+      </div>
     </div>
   );
 }
