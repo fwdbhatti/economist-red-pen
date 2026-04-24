@@ -24,6 +24,8 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
 
 interface GraphViewProps {
   result: EvaluateResponse;
+  cachedGraph?: ConceptGraph | null;
+  onGraphFetched?: (g: ConceptGraph) => void;
   onBack: () => void;
 }
 
@@ -73,8 +75,13 @@ const POLARITY_COLOR: Record<ConceptEdge["polarity"], string> = {
 
 type FilterMode = "all" | "contradictions";
 
-export function GraphView({ result, onBack }: GraphViewProps) {
-  const [graph, setGraph] = useState<ConceptGraph | null>(null);
+export function GraphView({
+  result,
+  cachedGraph,
+  onGraphFetched,
+  onBack,
+}: GraphViewProps) {
+  const [graph, setGraph] = useState<ConceptGraph | null>(cachedGraph ?? null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<FGNode | null>(null);
@@ -128,19 +135,25 @@ export function GraphView({ result, onBack }: GraphViewProps) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Graph build failed.");
-      setGraph(data as ConceptGraph);
+      const next = data as ConceptGraph;
+      setGraph(next);
+      onGraphFetched?.(next);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error.");
     } finally {
       setLoading(false);
     }
-  }, [result]);
+  }, [result, onGraphFetched]);
 
   useEffect(() => {
     if (fetchedRef.current) return;
+    if (graph) {
+      fetchedRef.current = true;
+      return;
+    }
     fetchedRef.current = true;
     fetchGraph();
-  }, [fetchGraph]);
+  }, [fetchGraph, graph]);
 
   useEffect(() => {
     const el = containerRef.current;

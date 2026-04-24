@@ -14,7 +14,12 @@ import { SamplePicker } from "@/components/SamplePicker";
 import { StepLabel } from "@/components/StepLabel";
 import { Titlepiece } from "@/components/Titlepiece";
 import { packToFiles, type SamplePack } from "@/lib/sampleArticles";
-import type { ApiErrorDetail, EvaluateResponse, VoiceRule } from "@/lib/types";
+import type {
+  ApiErrorDetail,
+  ConceptGraph,
+  EvaluateResponse,
+  VoiceRule,
+} from "@/lib/types";
 import { ECONOMIST_DEFAULTS } from "@/lib/voicePresets";
 
 type Phase = "intro" | "ingest" | "processing" | "results" | "graph" | "error";
@@ -27,6 +32,7 @@ export default function Home() {
   const [sources, setSources] = useState<File[]>([]);
   const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
   const [result, setResult] = useState<EvaluateResponse | null>(null);
+  const [conceptGraph, setConceptGraph] = useState<ConceptGraph | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [errorDetail, setErrorDetail] = useState<ApiErrorDetail | undefined>(undefined);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -43,6 +49,7 @@ export default function Home() {
     setPhase("processing");
     setError(null);
     setErrorDetail(undefined);
+    setConceptGraph(null);
 
     const form = new FormData();
     form.append("draft", draft[0]);
@@ -85,6 +92,7 @@ export default function Home() {
   function reset() {
     setPhase("ingest");
     setResult(null);
+    setConceptGraph(null);
     setError(null);
   }
 
@@ -112,7 +120,14 @@ export default function Home() {
   }
 
   if (phase === "graph" && result) {
-    return <GraphView result={result} onBack={() => setPhase("results")} />;
+    return (
+      <GraphView
+        result={result}
+        cachedGraph={conceptGraph}
+        onGraphFetched={setConceptGraph}
+        onBack={() => setPhase("results")}
+      />
+    );
   }
 
   return (
