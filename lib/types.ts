@@ -75,6 +75,9 @@ export interface ConceptOrigin {
   blockIds: string[];
 }
 
+export type ConceptKind = "claim" | "topic";
+export type SupportStatus = "supported" | "unsupported" | "topic";
+
 export interface ConceptNode {
   id: string;
   label: string;
@@ -82,6 +85,8 @@ export interface ConceptNode {
   summary: string;
   origin: ConceptOrigin;
   salience: number;
+  kind?: ConceptKind;
+  support?: SupportStatus;
 }
 
 export interface ConceptEdge {

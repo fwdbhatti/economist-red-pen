@@ -22,12 +22,13 @@ const CONCEPTS_SCHEMA = {
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["label", "summary", "block_ids", "salience"],
+        required: ["label", "summary", "block_ids", "salience", "kind"],
         properties: {
           label: { type: "string" },
           summary: { type: "string" },
           block_ids: { type: "array", items: { type: "string" } },
           salience: { type: "number" },
+          kind: { type: "string", enum: ["claim", "topic"] },
         },
       },
     },
@@ -73,6 +74,7 @@ interface RawConcept {
   summary: string;
   block_ids: string[];
   salience: number;
+  kind: "claim" | "topic";
 }
 
 interface RawEdge {
@@ -89,21 +91,31 @@ function clamp01(n: number): number {
   return Math.max(0, Math.min(1, n));
 }
 
-function conceptExtractionPrompt(doc: DocInput): string {
+function conceptExtractionPrompt(doc: DocInput, isDraft: boolean): string {
   const blocksHint = doc.blocks?.length
     ? `Block IDs available for grounding (use exact IDs):\n${doc.blocks
         .map((b) => `${b.id}: ${b.text.slice(0, 140).replace(/\s+/g, " ")}`)
         .join("\n")}\n\n`
     : "";
-  return `Extract the load-bearing CLAIMS and ARGUMENTS in the document below.
-Output 6–14 concepts. Skip background colour, anecdotes, and hedges.
-Each concept is a discrete claim or sub-argument that the rest of the piece rests on.
+
+  const kindGuide = isDraft
+    ? `Each concept must be classified as either:
+- "claim" — a verifiable assertion the article makes (a number, a causal statement, a prediction, an attribution to a source). These are the things a fact-checker would underline.
+- "topic" — a background subject the article discusses but does not assert as fact (an idea, a framework, a question, a definition). Topics give the article shape; they are not the things that need backing up.
+Aim for a roughly 70/30 split favouring claims.`
+    : `Every concept here is from a SOURCE document. Mark its "kind" as "claim" if the source asserts it as a fact or finding, "topic" if it is background framing.`;
+
+  return `Extract the load-bearing concepts in the document below.
+Output 6–14 concepts. Skip mere colour and hedges. Each concept must be discrete and load-bearing.
 
 For each concept:
 - "label": ≤8 words, neutral framing (no quotes from the text)
 - "summary": 1–2 sentences in your own words
 - "block_ids": IDs of the source passages where this concept appears (must come from the list provided; can be empty if nothing matches)
 - "salience": 0..1 — how central to the document's overall argument
+- "kind": see below
+
+${kindGuide}
 
 ${blocksHint}DOCUMENT (${doc.name}):
 ${doc.text.slice(0, 80_000)}`;
@@ -219,7 +231,7 @@ export async function buildConceptGraph(params: {
     docs.map((doc) =>
       callJson<{ concepts: RawConcept[] }>(
         client,
-        conceptExtractionPrompt(doc),
+        conceptExtractionPrompt(doc, doc.docId === "draft"),
         "concepts",
         CONCEPTS_SCHEMA as unknown as Record<string, unknown>,
       ).then((r) => ({ doc, concepts: r?.concepts ?? [] })),
@@ -245,6 +257,7 @@ export async function buildConceptGraph(params: {
         summary: c.summary.trim(),
         origin: { docId: doc.docId, blockIds: safeBlocks },
         salience: clamp01(c.salience),
+        kind: c.kind === "topic" ? "topic" : "claim",
       };
       return node;
     });
@@ -316,10 +329,59 @@ export async function buildConceptGraph(params: {
       }));
   }
 
+  const nodeById = new Map(allNodes.map((n) => [n.id, n]));
+
+  const positiveSourceEdgesByArticleId = new Map<string, number>();
+  const anyEdgeBySourceId = new Map<string, number>();
+
+  for (const e of edges) {
+    const a = nodeById.get(e.from);
+    const b = nodeById.get(e.to);
+    if (!a || !b) continue;
+    const articleNode =
+      a.role === "article" ? a : b.role === "article" ? b : null;
+    const sourceNode =
+      a.role === "source" ? a : b.role === "source" ? b : null;
+    if (articleNode && sourceNode && e.polarity === "positive") {
+      positiveSourceEdgesByArticleId.set(
+        articleNode.id,
+        (positiveSourceEdgesByArticleId.get(articleNode.id) ?? 0) + 1,
+      );
+    }
+    if (sourceNode) {
+      anyEdgeBySourceId.set(
+        sourceNode.id,
+        (anyEdgeBySourceId.get(sourceNode.id) ?? 0) + 1,
+      );
+    }
+  }
+
+  for (const node of allNodes) {
+    if (node.role !== "article") continue;
+    if (node.kind === "topic") {
+      node.support = "topic";
+      continue;
+    }
+    node.support =
+      (positiveSourceEdgesByArticleId.get(node.id) ?? 0) > 0
+        ? "supported"
+        : "unsupported";
+  }
+
+  const keptNodes = allNodes.filter((n) => {
+    if (n.role !== "source") return true;
+    return (anyEdgeBySourceId.get(n.id) ?? 0) > 0;
+  });
+
+  const keptIds = new Set(keptNodes.map((n) => n.id));
+  const keptEdges = edges.filter(
+    (e) => keptIds.has(e.from) && keptIds.has(e.to),
+  );
+
   return {
     model: MODEL,
     generatedAt: new Date().toISOString(),
-    nodes: allNodes,
-    edges,
+    nodes: keptNodes,
+    edges: keptEdges,
   };
 }
