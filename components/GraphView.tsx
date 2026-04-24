@@ -192,13 +192,18 @@ export function GraphView({ result, onBack }: GraphViewProps) {
   }, [graph, filterMode]);
 
   const onNodeClick = useCallback((node: FGNode) => {
-    setSelectedNode(node);
+    setSelectedNode((prev) => (prev?.id === node.id ? null : node));
     setSelectedEdge(null);
   }, []);
 
   const onLinkClick = useCallback((link: FGLink) => {
-    setSelectedEdge(link);
+    setSelectedEdge((prev) => (prev?.id === link.id ? null : link));
     setSelectedNode(null);
+  }, []);
+
+  const onBackgroundClick = useCallback(() => {
+    setSelectedNode(null);
+    setSelectedEdge(null);
   }, []);
 
   const totals = useMemo(() => {
@@ -315,6 +320,7 @@ export function GraphView({ result, onBack }: GraphViewProps) {
               linkDirectionalParticleColor={(() => "#b80c09") as never}
               onNodeClick={((n: FGNode) => onNodeClick(n)) as never}
               onLinkClick={((l: FGLink) => onLinkClick(l)) as never}
+              onBackgroundClick={onBackgroundClick as never}
               cooldownTicks={120}
               nodeCanvasObject={((n: FGNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
                 const isSource = n.role === "source";
@@ -389,9 +395,19 @@ export function GraphView({ result, onBack }: GraphViewProps) {
             )}
           </div>
           <p className="mt-1 font-editorial text-sm italic text-ink-2">
-            {selectedNode || selectedEdge
-              ? "Showing details for the selected item."
-              : "Click a node or edge to inspect. The colour key is below."}
+            {selectedNode || selectedEdge ? (
+              <>
+                Showing details for the selected item.{" "}
+                <button
+                  onClick={onBackgroundClick}
+                  className="cursor-pointer not-italic font-ui text-[11px] small-caps text-ink underline underline-offset-2 hover:text-econ-red"
+                >
+                  Clear
+                </button>
+              </>
+            ) : (
+              "Click a node or edge to inspect. The colour key is below."
+            )}
           </p>
         </div>
 
