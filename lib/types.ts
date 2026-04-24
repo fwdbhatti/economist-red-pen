@@ -39,6 +39,22 @@ export interface IngestionRecord {
   method: string;
 }
 
+export interface ApiErrorDetail {
+  name?: string;
+  status?: number;
+  code?: string;
+  type?: string;
+  requestId?: string;
+  hint?: string;
+  raw?: string;
+  stack?: string;
+}
+
+export interface ApiErrorResponse {
+  error: string;
+  detail?: ApiErrorDetail;
+}
+
 export interface EvaluateResponse {
   model: string;
   blocks: InfoBlock[];
@@ -46,4 +62,42 @@ export interface EvaluateResponse {
   mistakes: Mistake[];
   totals: { grounding: number; voice: number; argumentation: number };
   ingestion: IngestionRecord[];
+  draftText?: string;
+  sources?: Array<{ name: string; text: string }>;
+}
+
+export type ConceptRole = "article" | "source" | "concept";
+export type EdgeKind = "supports" | "contradicts" | "elaborates" | "cites";
+export type EdgePolarity = "positive" | "negative";
+
+export interface ConceptOrigin {
+  docId: string;
+  blockIds: string[];
+}
+
+export interface ConceptNode {
+  id: string;
+  label: string;
+  role: ConceptRole;
+  summary: string;
+  origin: ConceptOrigin;
+  salience: number;
+}
+
+export interface ConceptEdge {
+  id: string;
+  from: string;
+  to: string;
+  kind: EdgeKind;
+  polarity: EdgePolarity;
+  confidence: number;
+  rationale: string;
+  evidence: ConceptOrigin[];
+}
+
+export interface ConceptGraph {
+  model: string;
+  generatedAt: string;
+  nodes: ConceptNode[];
+  edges: ConceptEdge[];
 }

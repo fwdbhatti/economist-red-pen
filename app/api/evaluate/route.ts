@@ -105,10 +105,87 @@ export async function POST(req: NextRequest) {
       mistakes,
       totals,
       ingestion,
+      draftText: draft,
+      sources,
     };
     return NextResponse.json(response);
   } catch (err) {
-    const msg = err instanceof Error ? err.message : "Unknown OpenAI error.";
-    return NextResponse.json({ error: msg }, { status: 502 });
+    return NextResponse.json(buildErrorPayload(err), { status: 502 });
+  }
+}
+
+interface ErrorPayload {
+  error: string;
+  detail: {
+    name?: string;
+    status?: number;
+    code?: string;
+    type?: string;
+    requestId?: string;
+    hint?: string;
+    raw?: string;
+    stack?: string;
+  };
+}
+
+function buildErrorPayload(err: unknown): ErrorPayload {
+  console.error("[/api/evaluate] failure:", err);
+
+  const e = err as Record<string, unknown> & { message?: string };
+  const message = typeof e?.message === "string" ? e.message : "Unknown error.";
+  const status = typeof e?.status === "number" ? (e.status as number) : undefined;
+  const code = typeof e?.code === "string" ? (e.code as string) : undefined;
+  const type = typeof e?.type === "string" ? (e.type as string) : undefined;
+  const requestId =
+    typeof e?.request_id === "string"
+      ? (e.request_id as string)
+      : typeof (e?.headers as { [k: string]: string } | undefined)?.[
+            "x-request-id"
+          ] === "string"
+        ? ((e.headers as Record<string, string>)["x-request-id"] as string)
+        : undefined;
+
+  const lower = message.toLowerCase();
+  let hint: string | undefined;
+  if (lower.includes("model") && (lower.includes("not found") || lower.includes("does not exist"))) {
+    hint = `The model "${process.env.OPENAI_MODEL ?? "gpt-5.4"}" is not available on this API key. Set OPENAI_MODEL to a model your key can access (e.g. gpt-4o, gpt-4o-mini) and restart dev.`;
+  } else if (status === 401 || code === "invalid_api_key") {
+    hint = "OPENAI_API_KEY is missing or invalid. Check .env.local and restart dev.";
+  } else if (status === 429 || code === "rate_limit_exceeded") {
+    hint = "Rate-limited by OpenAI. Wait a moment and retry, or upgrade tier.";
+  } else if (status === 403 || code === "insufficient_quota") {
+    hint = "OpenAI account has no quota / billing issue.";
+  } else if (lower.includes("connection") || lower.includes("econnrefused") || lower.includes("fetch failed")) {
+    hint = "Network call to OpenAI failed. Check connectivity / proxy / VPN.";
+  } else if (lower.includes("aborted") || lower.includes("timeout")) {
+    hint = "Request timed out. The draft may be too large; try a shorter draft or fewer sources.";
+  }
+
+  return {
+    error: message,
+    detail: {
+      name: typeof e?.name === "string" ? (e.name as string) : undefined,
+      status,
+      code,
+      type,
+      requestId,
+      hint,
+      raw: safeStringify(err).slice(0, 4000),
+      stack: typeof (e as { stack?: string })?.stack === "string"
+        ? ((e as { stack: string }).stack).split("\n").slice(0, 8).join("\n")
+        : undefined,
+    },
+  };
+}
+
+function safeStringify(value: unknown): string {
+  try {
+    return JSON.stringify(value, Object.getOwnPropertyNames(value as object));
+  } catch {
+    try {
+      return String(value);
+    } catch {
+      return "[unserialisable error]";
+    }
   }
 }

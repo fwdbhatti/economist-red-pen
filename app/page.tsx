@@ -4,17 +4,20 @@ import { BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Cta } from "@/components/Cta";
 import { Dropzone } from "@/components/Dropzone";
+import { ErrorModal } from "@/components/ErrorModal";
+import { GraphView } from "@/components/GraphView";
 import { IntroScreen } from "@/components/IntroScreen";
 import { ProcessingState } from "@/components/ProcessingState";
 import { ResultsLayout } from "@/components/ResultsLayout";
 import { RulesEditor } from "@/components/RulesEditor";
+import { SamplePicker } from "@/components/SamplePicker";
 import { StepLabel } from "@/components/StepLabel";
 import { Titlepiece } from "@/components/Titlepiece";
-import { makeSampleFiles } from "@/lib/sampleData";
-import type { EvaluateResponse, VoiceRule } from "@/lib/types";
+import { packToFiles, type SamplePack } from "@/lib/sampleArticles";
+import type { ApiErrorDetail, EvaluateResponse, VoiceRule } from "@/lib/types";
 import { ECONOMIST_DEFAULTS } from "@/lib/voicePresets";
 
-type Phase = "intro" | "ingest" | "processing" | "results" | "error";
+type Phase = "intro" | "ingest" | "processing" | "results" | "graph" | "error";
 
 const DEFAULT_RULES: VoiceRule[] = ECONOMIST_DEFAULTS;
 
@@ -25,8 +28,11 @@ export default function Home() {
   const [rules, setRules] = useState<VoiceRule[]>(DEFAULT_RULES);
   const [result, setResult] = useState<EvaluateResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [errorDetail, setErrorDetail] = useState<ApiErrorDetail | undefined>(undefined);
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
 
   const [skipSources, setSkipSources] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const hasDraft = draft.length === 1;
   const hasSources = sources.length > 0;
   const sourcesResolved = hasSources || skipSources;
@@ -36,6 +42,7 @@ export default function Home() {
     if (!canSubmit) return;
     setPhase("processing");
     setError(null);
+    setErrorDetail(undefined);
 
     const form = new FormData();
     form.append("draft", draft[0]);
@@ -44,13 +51,34 @@ export default function Home() {
 
     try {
       const res = await fetch("/api/evaluate", { method: "POST", body: form });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Evaluation failed.");
+      let data: unknown;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(
+          `Server returned ${res.status} ${res.statusText} (no JSON body).`,
+        );
+      }
+      if (!res.ok) {
+        const payload = data as { error?: string; detail?: ApiErrorDetail };
+        const message = payload?.error ?? `Evaluation failed (HTTP ${res.status}).`;
+        setError(message);
+        setErrorDetail(payload?.detail);
+        setErrorModalOpen(true);
+        setPhase("ingest");
+        return;
+      }
       setResult(data as EvaluateResponse);
       setPhase("results");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error.");
-      setPhase("error");
+      const message = err instanceof Error ? err.message : "Unknown error.";
+      setError(message);
+      setErrorDetail({
+        hint: "The browser could not reach /api/evaluate. Check the dev server is running and there are no CORS / network blockers.",
+        raw: err instanceof Error ? `${err.name}: ${err.message}\n${err.stack ?? ""}` : String(err),
+      });
+      setErrorModalOpen(true);
+      setPhase("ingest");
     }
   }
 
@@ -60,10 +88,10 @@ export default function Home() {
     setError(null);
   }
 
-  function loadSample() {
-    const { draft: d, source: s } = makeSampleFiles();
+  function loadSample(pack: SamplePack) {
+    const { draft: d, sources: s } = packToFiles(pack);
     setDraft([d]);
-    setSources([s]);
+    setSources(s);
     setSkipSources(false);
   }
 
@@ -74,7 +102,17 @@ export default function Home() {
   if (phase === "processing") return <ProcessingState />;
 
   if (phase === "results" && result) {
-    return <ResultsLayout result={result} onReset={reset} />;
+    return (
+      <ResultsLayout
+        result={result}
+        onReset={reset}
+        onOpenGraph={() => setPhase("graph")}
+      />
+    );
+  }
+
+  if (phase === "graph" && result) {
+    return <GraphView result={result} onBack={() => setPhase("results")} />;
   }
 
   return (
@@ -83,12 +121,17 @@ export default function Home() {
         <div className="flex items-start justify-between gap-6">
           <Titlepiece />
           <button
-            onClick={loadSample}
+            onClick={() => setPickerOpen(true)}
             className="flex cursor-pointer items-center gap-2 border border-rule bg-paper px-3 py-2 font-ui text-xs small-caps text-ink-2 transition-colors hover:border-ink hover:text-ink"
           >
             <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
             Try a sample
           </button>
+          <SamplePicker
+            open={pickerOpen}
+            onClose={() => setPickerOpen(false)}
+            onSelect={loadSample}
+          />
         </div>
 
         <section>
@@ -105,17 +148,17 @@ export default function Home() {
           </p>
         </section>
 
-        {phase === "error" && error && (
+        {error && !errorModalOpen && (
           <div
             role="alert"
-            className="border-l-[3px] border-econ-red bg-paper-deep px-5 py-4 font-editorial text-base italic text-ink"
+            className="flex items-center justify-between gap-4 border-l-[3px] border-econ-red bg-paper-deep px-5 py-4 font-editorial text-base italic text-ink"
           >
-            {error}
+            <span className="line-clamp-2">{error}</span>
             <button
-              onClick={reset}
-              className="ml-4 cursor-pointer font-ui text-xs not-italic small-caps text-ink-2 underline underline-offset-4"
+              onClick={() => setErrorModalOpen(true)}
+              className="flex-shrink-0 cursor-pointer font-ui text-xs not-italic small-caps text-ink underline underline-offset-4 hover:text-econ-red"
             >
-              Try again
+              View log
             </button>
           </div>
         )}
@@ -232,6 +275,17 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <ErrorModal
+        open={errorModalOpen}
+        message={error ?? ""}
+        detail={errorDetail}
+        onClose={() => setErrorModalOpen(false)}
+        onRetry={() => {
+          setErrorModalOpen(false);
+          submit();
+        }}
+      />
     </>
   );
 }

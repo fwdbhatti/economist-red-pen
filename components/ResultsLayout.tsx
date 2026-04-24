@@ -1,6 +1,6 @@
 "use client";
 
-import { Download } from "lucide-react";
+import { Download, Network } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
 import { downloadReport } from "@/lib/downloadReport";
@@ -12,6 +12,7 @@ import { Tally } from "./Tally";
 interface ResultsLayoutProps {
   result: EvaluateResponse;
   onReset: () => void;
+  onOpenGraph?: () => void;
 }
 
 type Tab = "all" | MistakeCategory;
@@ -23,7 +24,7 @@ const TABS: Array<{ id: Tab; label: string }> = [
   { id: "argumentation", label: "Argument" },
 ];
 
-export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
+export function ResultsLayout({ result, onReset, onOpenGraph }: ResultsLayoutProps) {
   const [activeMistakeId, setActiveMistakeId] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("all");
 
@@ -121,6 +122,18 @@ export function ResultsLayout({ result, onReset }: ResultsLayoutProps) {
               </span>
             </div>
           </div>
+          {onOpenGraph && (
+            <div className="mb-3 flex justify-end">
+              <button
+                onClick={onOpenGraph}
+                className="flex cursor-pointer items-center gap-1.5 border border-ink bg-paper px-3 py-1.5 font-ui text-xs font-semibold small-caps text-ink transition-colors hover:border-econ-red hover:text-econ-red"
+                aria-label="Open concept graph view"
+              >
+                <Network className="h-3.5 w-3.5" strokeWidth={1.75} />
+                Graph view
+              </button>
+            </div>
+          )}
           <div className="rule-strong mb-6" />
           <article className="article-pane mt-4">
             <div
