@@ -1,14 +1,15 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import type { InfoBlock, Mistake } from "@/lib/types";
+import type { InfoBlock, Mistake, MistakeSeverity } from "@/lib/types";
 
 interface MistakeCardProps {
   mistake: Mistake;
   block: InfoBlock | undefined;
   active: boolean;
   onSelect: () => void;
+  onDismiss: () => void;
 }
 
 const CATEGORY_LABEL: Record<Mistake["category"], string> = {
@@ -23,11 +24,30 @@ const FLAG_CLASS: Record<Mistake["category"], string> = {
   argumentation: "before:bg-amber",
 };
 
+const SEVERITY_LABEL: Record<MistakeSeverity, string> = {
+  error: "Error",
+  nuance: "Nuance",
+  opinion: "Opinion",
+};
+
+const SEVERITY_BADGE: Record<MistakeSeverity, string> = {
+  error: "border-econ-red text-econ-red bg-econ-red/5",
+  nuance: "border-amber text-amber bg-amber/5",
+  opinion: "border-ink-3 text-ink-2 bg-paper-deep border-dashed",
+};
+
+const SEVERITY_CARD: Record<MistakeSeverity, string> = {
+  error: "",
+  nuance: "",
+  opinion: "opacity-80",
+};
+
 export function MistakeCard({
   mistake,
   block,
   active,
   onSelect,
+  onDismiss,
 }: MistakeCardProps) {
   const previewText = block?.text
     ? block.text.length > 80
@@ -41,7 +61,7 @@ export function MistakeCard({
       tabIndex={0}
       role="button"
       aria-expanded={active}
-      aria-label={`${CATEGORY_LABEL[mistake.category]} mistake. Click to ${active ? "deselect" : "select and highlight in draft"}.`}
+      aria-label={`${SEVERITY_LABEL[mistake.severity]} · ${CATEGORY_LABEL[mistake.category]} mistake. Click to ${active ? "deselect" : "select and highlight in draft"}.`}
       onClick={onSelect}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -53,6 +73,7 @@ export function MistakeCard({
         "group relative cursor-pointer border-t border-rule px-5 py-4 transition-colors",
         "last:border-b hover:bg-paper-deep focus:bg-paper-deep focus:outline-none",
         active && "bg-paper-deep shadow-[inset_3px_0_0_var(--economist-red)]",
+        SEVERITY_CARD[mistake.severity],
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -64,15 +85,37 @@ export function MistakeCard({
           )}
         >
           <span>{CATEGORY_LABEL[mistake.category]}</span>
+          <span
+            className={cn(
+              "ml-1 border px-1.5 py-px font-mono text-[10px] font-semibold uppercase tracking-wider",
+              SEVERITY_BADGE[mistake.severity],
+            )}
+          >
+            {SEVERITY_LABEL[mistake.severity]}
+          </span>
         </div>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 flex-shrink-0 text-ink-2 transition-transform",
-            active && "rotate-180",
-          )}
-          strokeWidth={1.75}
-          aria-hidden
-        />
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDismiss();
+            }}
+            aria-label="Dismiss this mistake"
+            title="Dismiss"
+            className="cursor-pointer rounded p-1 text-ink-3 opacity-0 transition-opacity hover:text-econ-red focus:opacity-100 group-hover:opacity-100"
+          >
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 flex-shrink-0 text-ink-2 transition-transform",
+              active && "rotate-180",
+            )}
+            strokeWidth={1.75}
+            aria-hidden
+          />
+        </div>
       </div>
 
       {!active && previewText && (

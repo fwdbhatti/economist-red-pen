@@ -5,6 +5,7 @@ import type {
   InfoBlock,
   Mistake,
   MistakeCategory,
+  MistakeSeverity,
   ParagraphRef,
   VoiceRule,
 } from "./types";
@@ -23,9 +24,10 @@ const MISTAKE_SCHEMA = {
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["info_block_id", "flaw"],
+        required: ["info_block_id", "severity", "flaw"],
         properties: {
           info_block_id: { type: "string" },
+          severity: { type: "string", enum: ["error", "nuance", "opinion"] },
           flaw: { type: "string" },
         },
       },
@@ -100,18 +102,33 @@ async function runCall(
 
   const raw = res.output_text;
   if (!raw) return [];
-  let parsed: { mistakes: Array<{ info_block_id: string; flaw: string }> };
+  let parsed: {
+    mistakes: Array<{
+      info_block_id: string;
+      severity?: string;
+      flaw: string;
+    }>;
+  };
   try {
     parsed = JSON.parse(raw);
   } catch {
     return [];
   }
 
+  const ALLOWED: ReadonlySet<MistakeSeverity> = new Set([
+    "error",
+    "nuance",
+    "opinion",
+  ]);
+
   return (parsed.mistakes ?? [])
     .filter((m) => blockIds.has(m.info_block_id) && m.flaw?.trim())
     .map((m) => ({
       id: `${category}-${crypto.randomUUID()}`,
       category,
+      severity: (ALLOWED.has(m.severity as MistakeSeverity)
+        ? (m.severity as MistakeSeverity)
+        : "error") as MistakeSeverity,
       info_block_id: m.info_block_id,
       flaw: m.flaw.trim(),
     }));

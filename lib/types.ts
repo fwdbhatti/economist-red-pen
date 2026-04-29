@@ -1,5 +1,7 @@
 export type MistakeCategory = "grounding" | "voice" | "argumentation";
 
+export type MistakeSeverity = "error" | "nuance" | "opinion";
+
 export interface InfoBlock {
   id: string;
   text: string;
@@ -8,6 +10,7 @@ export interface InfoBlock {
 export interface Mistake {
   id: string;
   category: MistakeCategory;
+  severity: MistakeSeverity;
   info_block_id: string;
   flaw: string;
 }

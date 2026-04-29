@@ -27,31 +27,67 @@ const TABS: Array<{ id: Tab; label: string }> = [
 export function ResultsLayout({ result, onReset, onOpenGraph }: ResultsLayoutProps) {
   const [activeMistakeId, setActiveMistakeId] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("all");
+  const [dismissed, setDismissed] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  );
 
   const blockIndex = useMemo<Map<string, InfoBlock>>(
     () => new Map(result.blocks.map((b) => [b.id, b])),
     [result.blocks],
   );
 
+  const visibleMistakes = useMemo(
+    () => result.mistakes.filter((m) => !dismissed.has(m.id)),
+    [result.mistakes, dismissed],
+  );
+
+  const visibleResult = useMemo(
+    () => ({ ...result, mistakes: visibleMistakes }),
+    [result, visibleMistakes],
+  );
+
   const html = useMemo(
-    () => renderDraftHTML(result, activeMistakeId),
-    [result, activeMistakeId],
+    () => renderDraftHTML(visibleResult, activeMistakeId),
+    [visibleResult, activeMistakeId],
   );
 
   const filtered = useMemo(() => {
-    if (tab === "all") return result.mistakes;
-    return result.mistakes.filter((m) => m.category === tab);
-  }, [result.mistakes, tab]);
+    if (tab === "all") return visibleMistakes;
+    return visibleMistakes.filter((m) => m.category === tab);
+  }, [visibleMistakes, tab]);
+
+  const liveTotals = useMemo(() => {
+    return visibleMistakes.reduce(
+      (acc, m) => {
+        acc[m.category] += 1;
+        return acc;
+      },
+      { grounding: 0, voice: 0, argumentation: 0 },
+    );
+  }, [visibleMistakes]);
 
   const tabCounts = useMemo(
     () => ({
-      all: result.mistakes.length,
-      grounding: result.totals.grounding,
-      voice: result.totals.voice,
-      argumentation: result.totals.argumentation,
+      all: visibleMistakes.length,
+      grounding: liveTotals.grounding,
+      voice: liveTotals.voice,
+      argumentation: liveTotals.argumentation,
     }),
-    [result.mistakes.length, result.totals],
+    [visibleMistakes.length, liveTotals],
   );
+
+  const dismissMistake = useCallback((mistakeId: string) => {
+    setDismissed((prev) => {
+      const next = new Set(prev);
+      next.add(mistakeId);
+      return next;
+    });
+    setActiveMistakeId((prev) => (prev === mistakeId ? null : prev));
+  }, []);
+
+  const restoreAll = useCallback(() => {
+    setDismissed(new Set());
+  }, []);
 
   const scrollToMark = useCallback(() => {
     requestAnimationFrame(() => {
@@ -159,12 +195,26 @@ export function ResultsLayout({ result, onReset, onOpenGraph }: ResultsLayoutPro
       </section>
 
       <aside className="sticky top-0 flex h-screen flex-col bg-paper">
-        <Tally totals={result.totals} />
+        <Tally totals={liveTotals} />
+        {dismissed.size > 0 && (
+          <div className="flex items-center justify-between border-b border-rule bg-paper-deep px-5 py-2 font-ui text-xs text-ink-2">
+            <span>
+              {dismissed.size} dismissed
+            </span>
+            <button
+              type="button"
+              onClick={restoreAll}
+              className="cursor-pointer small-caps underline underline-offset-2 hover:text-econ-red"
+            >
+              Restore
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center justify-between border-b border-rule px-5 py-3">
           <button
-            onClick={() => downloadReport(result)}
-            disabled={result.mistakes.length === 0}
+            onClick={() => downloadReport(visibleResult)}
+            disabled={visibleMistakes.length === 0}
             className={cn(
               "flex cursor-pointer items-center gap-1.5 border border-ink bg-paper px-3 py-1.5 font-ui text-xs font-semibold small-caps text-ink transition-colors",
               "hover:border-econ-red hover:text-econ-red",
@@ -216,8 +266,8 @@ export function ResultsLayout({ result, onReset, onOpenGraph }: ResultsLayoutPro
         <div className="flex-1 overflow-y-auto">
           {filtered.length === 0 ? (
             <div className="px-5 py-8 font-editorial italic text-ink-2">
-              {result.mistakes.length === 0
-                ? "No red-lines returned. The manuscript is either clean — or the audit found nothing it was equipped to flag."
+              {visibleMistakes.length === 0
+                ? "No red-lines remain. The manuscript is either clean — or you've dismissed every flag."
                 : "No red-lines in this category."}
             </div>
           ) : (
@@ -228,6 +278,7 @@ export function ResultsLayout({ result, onReset, onOpenGraph }: ResultsLayoutPro
                 block={blockIndex.get(m.info_block_id)}
                 active={activeMistakeId === m.id}
                 onSelect={() => selectFromCard(m.id)}
+                onDismiss={() => dismissMistake(m.id)}
               />
             ))
           )}
