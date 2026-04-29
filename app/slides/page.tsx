@@ -69,42 +69,47 @@ const DECK_HTML = `
 
 <!-- 3. WHY -->
 <section class="slide">
+  <div style="position: absolute; top: 56px; right: 72px; display: flex; align-items: center; gap: 8px; padding: 5px 12px; background: #3a3a3a; color: #fff; z-index: 5;">
+    <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.8px; color: #ff7a73; font-weight: 700;">Persona</span>
+    <span style="font-family: 'Georgia', serif; font-size: 13px; font-weight: 700;">Editors &amp; writers</span>
+  </div>
   <div class="header-bar">
     <span class="brand">03 — Why this matters</span>
     <span>What The Economist actually sells</span>
   </div>
-  <h2 style="font-size: 36px; margin-bottom: 6px; line-height: 1.1;">What you sell is <span style="color:#e3120b;">trust</span>.</h2>
-  <p style="font-family: 'Georgia', serif; font-size: 20px; color: #555; font-style: italic; margin-bottom: 16px;">Anything that erodes it costs more than it earns.</p>
+  <h2 style="font-size: 30px; margin-bottom: 4px; line-height: 1.15; font-style: italic;">"The Economist is produced by <span style="color:#e3120b; font-style: normal;">smart humans</span>, not clever machines."</h2>
+  <p style="font-family: 'Georgia', serif; font-size: 16px; color: #444; line-height: 1.45; margin-bottom: 6px;">"AI can improve how we work, not change what we do. AI tools can help with research, for instance, or ease the editing of videos. But humans bear the responsibility for our work, from reporting to editing and fact-checking."</p>
+  <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.8px; color: #6b6b6b; margin-bottom: 14px;">— <a href="https://myaccount.economist.com/s/article/How-we-handle-AI-generated-content" target="_blank" style="color: #e3120b; text-decoration: none; font-weight: 700; border-bottom: 1px solid #e3120b;">The Economist · How we handle AI-generated content</a> · Dec 2025</p>
 
-  <div style="display: grid; grid-template-columns: 70% 30%; gap: 24px; flex: 1;">
+  <div style="display: grid; grid-template-columns: 70% 30%; gap: 24px; flex: 1; align-items: stretch;">
 
-    <div style="display: flex; flex-direction: column; gap: 14px; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center;">
 
-      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #3a3a3a; color: #fff;">
-        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #ff7a73; font-weight: 700;">Persona</span>
-        <span style="font-family: 'Georgia', serif; font-size: 18px; font-weight: 700;">Editors &amp; writers</span>
-        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: #cfcfcf; margin-left: auto;">the people holding the line on house style, rigour, and truth</span>
+      <div style="padding: 18px 24px; background: #f9f6f0; border-left: 6px solid #e3120b;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px;">
+          <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #e3120b; font-weight: 700;">AI-assisted writing is here</div>
+          <a href="#a6-sources" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; text-decoration: none; font-weight: 700; border-bottom: 1px solid #e3120b;">Sources →</a>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="font-family: 'Georgia', serif; font-size: 17px; line-height: 1.5; color: #121212; padding: 8px 0 8px 20px; position: relative;"><span style="position:absolute; left:0; color:#e3120b; font-weight:700;">›</span><strong>22%</strong> of UK journalists use AI for research; <strong>16%</strong> for parts of articles; <strong>10%</strong> for first drafts.</li>
+          <li style="font-family: 'Georgia', serif; font-size: 17px; line-height: 1.5; color: #121212; padding: 8px 0 8px 20px; position: relative;"><span style="position:absolute; left:0; color:#e3120b; font-weight:700;">›</span>AI-content fact-checks <strong>doubled YoY</strong> — 7% → 16% in 12 months.</li>
+        </ul>
       </div>
 
-      <div style="padding: 20px 24px; background: #f9f6f0; border-left: 6px solid #e3120b;">
-        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">Why — start here</div>
-        <div style="font-family: 'Georgia', serif; font-size: 21px; line-height: 1.4; color: #121212;">AI-assisted writing isn't going away — and it shouldn't. But it has to be guardrailed. For The Economist, the product is trust; one hallucinated claim or jargon-bloated sentence undoes what it took decades to earn.</div>
-      </div>
-
-      <div style="padding: 20px 24px; background: #f9f6f0; border-left: 6px solid #e3120b;">
+      <div style="padding: 18px 24px; background: #f9f6f0; border-left: 6px solid #e3120b;">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">The Problem</div>
-        <div style="font-family: 'Georgia', serif; font-size: 19px; line-height: 1.4; color: #121212;">Editing is already hard. Now editors are also manually policing AI drafts for hallucinations, weak arguments, and bloated corporate jargon — and generic grammar or RAG tools are blind to any of it.</div>
+        <div style="font-family: 'Georgia', serif; font-size: 19px; line-height: 1.45; color: #121212;">Editors now police AI drafts for hallucinations by hand. Grammar checkers and RAG tools can't see what they're looking for.</div>
       </div>
 
       <div style="padding: 20px 24px; background: #3a3a3a; color: #fff; border-left: 6px solid #e3120b;">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #ff7a73; font-weight: 700; margin-bottom: 8px;">The Solution — one line</div>
-        <div style="font-family: 'Georgia', serif; font-size: 22px; line-height: 1.35; color: #fff; font-weight: 700;">An evaluation-only auditor that reads every AI-assisted draft against the source material and the house style — and hands the editor a pre-flighted red-line.</div>
+        <div style="font-family: 'Georgia', serif; font-size: 20px; line-height: 1.3; color: #fff; font-weight: 700;">An evaluation-only auditor that reads every AI-assisted draft against the source material and the house style. Hands the editor a pre-flighted red-line.</div>
       </div>
 
     </div>
 
-    <div style="display: flex; align-items: center; justify-content: center; background: #faf7f1; border: 1px solid #eee4d1; padding: 20px; position: relative;">
-      <svg viewBox="0 0 220 500" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; max-height: 460px;">
+    <div style="display: flex; align-items: stretch; justify-content: center; background: #faf7f1; border: 1px solid #eee4d1; padding: 16px 20px; position: relative; align-self: stretch;">
+      <svg viewBox="0 0 220 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%;">
         <defs>
           <linearGradient id="penBody" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#b00d07"/>
@@ -239,7 +244,7 @@ const DECK_HTML = `
     </div>
     <div style="padding: 14px 16px; background: #fafafa; border-left: 4px solid #999;">
       <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #666; font-weight: 700; margin-bottom: 4px;">What it is not</div>
-      <div style="font-family: 'Georgia', serif; font-size: 14px; line-height: 1.45; color: #555;">Not a writer. Not a grammar checker. Not a replacement for an editor.</div>
+      <div style="font-family: 'Georgia', serif; font-size: 14px; line-height: 1.45; color: #555;">Not a writer. Not a grammar checker.</div>
     </div>
   </div>
 
@@ -248,7 +253,7 @@ const DECK_HTML = `
       <span class="pill" style="background:#e3120b; margin-right: 12px;">Live prototype</span>
       Try the Red Pen yourself
     </div>
-    <a href="https://economist-red-pen.vercel.app/" target="_blank" rel="noopener noreferrer" style="background: #e3120b; color: #fff; padding: 10px 22px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; text-decoration: none;">
+    <a href="https://economist-red-pen.vercel.app/" target="_blank" style="background: #e3120b; color: #fff; padding: 10px 22px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; text-decoration: none;">
       economist-red-pen.vercel.app →
     </a>
   </div>
@@ -272,7 +277,7 @@ const DECK_HTML = `
       <div class="title">Audit only,<br>never write.</div>
       <div class="vs">vs. another AI writer</div>
       <div class="why-label">Why</div>
-      <div class="why-body">A tool that writes competes with the editor. One that audits enhances them. The market is saturated with generators — the gap is a QA backstop that audits AI-assisted drafts.</div>
+      <div class="why-body">A tool that writes competes with the editor. One that audits enhances them. The market is saturated with generators. The gap is a QA backstop that audits AI-assisted drafts.</div>
       <div class="takeaway">Constraint = trust signal. The discipline is the product.</div>
     </div>
 
@@ -282,7 +287,7 @@ const DECK_HTML = `
       <div class="vs">vs. a single fuzzy 7/10</div>
       <div class="why-body" style="margin-top: 8px;"></div>
       <div class="why-label">Why</div>
-      <div class="why-body">Editors need to know <em>which</em> dimension failed. Composite scores hide failures. Independent judges are independently false-able — and stop one pillar's reasoning leaking into another.</div>
+      <div class="why-body">Editors need to know <em>which</em> dimension failed. Composite scores hide failures. Independent judges are independently false-able. They also stop one pillar's reasoning leaking into another.</div>
       <div class="takeaway">Specialised judges scale. One model trying to score everything will not.</div>
     </div>
 
@@ -292,7 +297,7 @@ const DECK_HTML = `
       <div class="vs">vs. user-controlled prompts</div>
       <div class="why-label">Why</div>
       <div class="why-body">Guardrails encoded into the prompts feeding the tool, not redefinable by users. Centralisation bakes in institutional best practice and prevents a well-meaning user from silently weakening the audit.</div>
-      <div class="takeaway">House style is institutional, not individual.</div>
+      <div class="takeaway">House style belongs to the institution.</div>
     </div>
 
   </div>
@@ -316,7 +321,7 @@ const DECK_HTML = `
       <div class="title">Whole sources,<br>sentence-ID'd drafts.</div>
       <div class="vs">vs. vector DB + RAG chunking</div>
       <div class="why-label">Why</div>
-      <div class="why-body">Tokenise the draft into UUID'd sentences <em>before</em> the LLM sees it. The LLM returns IDs, not text. Chunked retrieval <em>causes</em> the false positives we are trying to catch — claims fail because the supporting sentence sat in an unseen chunk.</div>
+      <div class="why-body">Tokenise the draft into UUID'd sentences <em>before</em> the LLM sees it. The LLM returns IDs. It never sees raw text. Chunked retrieval <em>causes</em> the false positives we are trying to catch. Claims fail because the supporting sentence sat in an unseen chunk.</div>
       <div class="takeaway">~400k context lets sources go in whole. Determinism &gt; cleverness.</div>
     </div>
 
@@ -325,7 +330,7 @@ const DECK_HTML = `
       <div class="title">Strict JSON +<br>LLM-as-judge with rubric.</div>
       <div class="vs">vs. freeform LLM-as-judge</div>
       <div class="why-label">Why</div>
-      <div class="why-body">Freeform LLM-as-judge is unreliable. Strict JSON eliminates parse retries; the rubric forces structured failure modes. Three calls fire in parallel — latency capped by the slowest, not the sum.</div>
+      <div class="why-body">Freeform LLM-as-judge is unreliable. Strict JSON eliminates parse retries; the rubric forces structured failure modes. Three calls fire in parallel. Latency is capped by the slowest call, not the sum of all three.</div>
       <div class="takeaway"><strong style="color:#1b3a8a;">~66% faster</strong> than a sequential chain. Errors become testable.</div>
     </div>
 
@@ -334,7 +339,7 @@ const DECK_HTML = `
       <div class="title">No framework,<br>no DB, no session store.</div>
       <div class="vs">vs. LangChain · Promptfoo · Braintrust</div>
       <div class="why-label">Why</div>
-      <div class="why-body">~200 LOC of evaluation logic doesn't need a framework. Frameworks lock you into their abstractions — Promptfoo assumes static rubrics. Editorial standards drift. You'd be fighting the framework within six months.</div>
+      <div class="why-body">~200 LOC of evaluation logic doesn't need a framework. Frameworks lock you into their abstractions. Promptfoo assumes static rubrics. Editorial standards drift. You'd be fighting the framework within six months.</div>
       <div class="takeaway">Right-sized tooling beats trendy tooling at this scope.</div>
     </div>
 
@@ -343,38 +348,50 @@ const DECK_HTML = `
   <div class="footer"><span>The Editorial Red Pen</span><span>6 / 13</span></div>
 </section>
 
-<!-- 7. TRADE-OFFS -->
+<!-- 7. CONSTRAINTS I WORKED AROUND -->
 <section class="slide">
   <div class="header-bar">
-    <span class="brand">07 — What I cut</span>
-    <span>Three shortcuts I'd come back to</span>
+    <span class="brand">07 — Constraints I worked around</span>
+    <span>Five calls I'd revisit with more time</span>
   </div>
-  <h2 style="font-size: 30px; margin-bottom: 14px;">What we skipped due to time.</h2>
+  <h2 style="font-size: 30px; margin-bottom: 6px;">Constraints I worked around.</h2>
+  <p style="font-family: 'Georgia', serif; font-size: 15px; color: #555; font-style: italic; margin-bottom: 18px;">Three-hour timebox. Five calls. Each one a known revisit.</p>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; flex: 1;">
+  <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; flex: 1;">
 
-    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 16px 18px; display: flex; flex-direction: column;">
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">Shortcut 01</div>
-      <div style="font-family: 'Georgia', serif; font-size: 18px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 12px;">No formal evaluation framework for the tool itself.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">What I did</strong><br>Manual sanity check on a small set of articles.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">Why</strong><br>No labelled test data, no time to build a proper harness.</div>
-      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 12px; font-style: italic; color: #6b6b6b;">Revisit — editor-annotated test bench, CI gate before any prompt change.</div>
+    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 14px 14px; display: flex; flex-direction: column;">
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">01 · Eval bench</div>
+      <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 10px;">No formal eval — manual sanity check only.</div>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #444; margin: 0;">No labelled data on hand. Ran the tool over a few articles and read the output.</p>
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">With time → editor-labelled test bench, CI gate.</div>
     </div>
 
-    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 16px 18px; display: flex; flex-direction: column;">
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">Shortcut 02</div>
-      <div style="font-family: 'Georgia', serif; font-size: 18px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 12px;">Skipped LangChain. Dumped everything into a large-context model.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">What I did</strong><br>Pushed full draft + sources + rules into one large-context call.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">Why</strong><br>LangChain wouldn't cooperate, and the timebox didn't allow debugging.</div>
-      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 12px; font-style: italic; color: #6b6b6b;">Revisit — orchestration layer to cache sources, route by pillar, control cost.</div>
+    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 14px 14px; display: flex; flex-direction: column;">
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">02 · Orchestration</div>
+      <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 10px;">One large-context call instead of LangChain.</div>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #444; margin: 0;">LangChain didn't cooperate inside the timebox. Pushed everything through one call to keep moving.</p>
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">With time → orchestration that caches sources and routes per judge.</div>
     </div>
 
-    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 16px 18px; display: flex; flex-direction: column;">
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">Shortcut 03</div>
-      <div style="font-family: 'Georgia', serif; font-size: 18px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 12px;">Tesseract OCR instead of PaddleOCR.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">What I did</strong><br>tesseract.js (WASM) inside the serverless function.</div>
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: #444; margin-bottom: 8px;"><strong style="color:#e3120b; font-size:9px; letter-spacing: 1.5px; text-transform: uppercase;">Why</strong><br>PaddleOCR would have forced a Python sidecar mid-build.</div>
-      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 12px; font-style: italic; color: #6b6b6b;">Revisit — PaddleOCR microservice behind a queue. Better on scanned filings.</div>
+    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 14px 14px; display: flex; flex-direction: column;">
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">03 · OCR</div>
+      <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 10px;">Tesseract over PaddleOCR.</div>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #444; margin: 0;">PaddleOCR is stronger but needs a Python sidecar. Stayed in Node to avoid a second deploy pipeline.</p>
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">With time → PaddleOCR behind a queue for scanned filings.</div>
+    </div>
+
+    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 14px 14px; display: flex; flex-direction: column;">
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">04 · Judge set</div>
+      <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 10px;">Started with three judges.</div>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #444; margin: 0;">Grounding, Voice, Rigor. Bias and source quality belong here too. Defer until Voice is calibrated. Numerical checks sit better in deterministic code.</p>
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">With time → expand the set, ship deterministic checks alongside.</div>
+    </div>
+
+    <div style="background: #f9f6f0; border-top: 4px solid #e3120b; padding: 14px 14px; display: flex; flex-direction: column;">
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 8px;">05 · Cost</div>
+      <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 10px;">Didn't model cost for v1.</div>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #444; margin: 0;">Per-draft cost is small at newspaper volume. EIU and customer service are different. That's where caching and small-model fallback earn their keep.</p>
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">With time → cost model per tenant.</div>
     </div>
 
   </div>
@@ -386,78 +403,102 @@ const DECK_HTML = `
 <section class="slide">
   <div class="header-bar">
     <span class="brand">08 — What I'd measure</span>
-    <span>None of these instruments exist yet</span>
+    <span>Named metrics · instrumentation · baseline source</span>
   </div>
   <h2 style="font-size: 30px; margin-bottom: 4px; line-height: 1.15;">Three things I'd measure.</h2>
-  <p style="font-family: 'Georgia', serif; font-size: 15px; color: #555; font-style: italic; margin-bottom: 14px;">The instruments come first. The wins come after.</p>
+  <p style="font-family: 'Georgia', serif; font-size: 14px; color: #555; font-style: italic; margin-bottom: 10px;">Leading and lagging. Operational and strategic. One lead metric per pillar.</p>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; flex: 1;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; flex: 1;">
 
-    <div style="background: #f9f6f0; border-top: 5px solid #e3120b; padding: 18px 20px; display: flex; flex-direction: column;">
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px;">
-        <span style="background:#e3120b; color:#fff; padding:3px 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Primary</span>
-        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 01</span>
+    <div style="background: #f9f6f0; border-top: 5px solid #e3120b; padding: 14px 16px; display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px;">
+        <span style="background:#e3120b; color:#fff; padding:2px 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Primary</span>
+        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 01</span>
       </div>
-      <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 8px;">Editor productivity</div>
-      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #444; margin: 0 0 12px 0;">The thing the tool is for. Save editor time, raise edit quality, reduce manual policing.</p>
+      <div style="font-family: 'Georgia', serif; font-size: 19px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 10px;">Editor productivity</div>
 
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700; margin-bottom: 6px;">Areas to measure</div>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#e3120b; font-weight:700;">▸</span>Time-on-task per draft</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#e3120b; font-weight:700;">▸</span>Issues caught before vs after editor</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#e3120b; font-weight:700;">▸</span>Editor confidence in AI-assisted drafts</li>
-      </ul>
+      <div style="background: #121212; color: #fff; padding: 12px 14px; border-left: 4px solid #e3120b; margin-bottom: 8px;">
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.8px; color: #ff7a73; font-weight: 700; margin-bottom: 4px;">Lead metric</div>
+        <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 4px;">Time-to-publish on AI-assisted drafts</div>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; color: #cfcfcf; line-height: 1.4;">CMS event timestamps · 90-day baseline · target calibrated wk 1</div>
+      </div>
 
-      <div style="margin-top: auto; padding-top: 12px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11.5px; font-style: italic; color: #6b6b6b; line-height: 1.4;">The pillar that justifies the spend.</div>
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #999; font-weight: 700; margin-bottom: 6px;">Supporting</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Accept rate on Red Pen flags</div>
+        </div>
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Issues caught pre-editor vs post-editor</div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">The pillar that justifies the spend.</div>
     </div>
 
-    <div style="background: #f9f6f0; border-top: 5px solid #1b3a8a; padding: 18px 20px; display: flex; flex-direction: column;">
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px;">
-        <span style="background:#1b3a8a; color:#fff; padding:3px 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Guardrail</span>
-        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 02</span>
+    <div style="background: #f9f6f0; border-top: 5px solid #1b3a8a; padding: 14px 16px; display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px;">
+        <span style="background:#1b3a8a; color:#fff; padding:2px 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Guardrail</span>
+        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 02</span>
       </div>
-      <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 8px;">Subscriber trust</div>
-      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #444; margin: 0 0 12px 0;">The thing the tool must not break. If productivity goes up but trust drops, the tool failed.</p>
+      <div style="font-family: 'Georgia', serif; font-size: 19px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 10px;">Subscriber trust</div>
 
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #1b3a8a; font-weight: 700; margin-bottom: 6px;">Areas to measure</div>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#1b3a8a; font-weight:700;">▸</span>Retention on AI-assisted vs untouched articles</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#1b3a8a; font-weight:700;">▸</span>Correction rate per published piece</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#1b3a8a; font-weight:700;">▸</span>Time a hallucination survives in production</li>
-      </ul>
+      <div style="background: #1b3a8a; color: #fff; padding: 12px 14px; border-left: 4px solid #e3120b; margin-bottom: 8px;">
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.8px; color: #d6dfff; font-weight: 700; margin-bottom: 4px;">Lead metric</div>
+        <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 4px;">Correction rate per AI-assisted piece</div>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; color: #d6dfff; line-height: 1.4;">CMS corrections column · vs unassisted baseline · floor 1.0× · break 1.5×</div>
+      </div>
 
-      <div style="margin-top: auto; padding-top: 12px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11.5px; font-style: italic; color: #6b6b6b; line-height: 1.4;">A floor, not a target. You can't credit a tool for trust you didn't lose.</div>
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #999; font-weight: 700; margin-bottom: 6px;">Supporting</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Reader-reported errors per 1k views <span style="color:#999; font-style:italic;">(ideal but lagging)</span></div>
+        </div>
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Time-to-correction</div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">A floor, not a target. Reader trust should never go down.</div>
     </div>
 
-    <div style="background: #f9f6f0; border-top: 5px solid #c68a00; padding: 18px 20px; display: flex; flex-direction: column;">
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px;">
-        <span style="background:#c68a00; color:#fff; padding:3px 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Leading</span>
-        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 03</span>
+    <div style="background: #f9f6f0; border-top: 5px solid #c68a00; padding: 14px 16px; display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px;">
+        <span style="background:#c68a00; color:#fff; padding:2px 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Leading</span>
+        <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #6b6b6b; font-weight: 700;">Pillar 03</span>
       </div>
-      <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 8px;">Tool adoption</div>
-      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #444; margin: 0 0 12px 0;">The thing that tells you anyone uses it. Without adoption, the other two pillars are noise.</p>
+      <div style="font-family: 'Georgia', serif; font-size: 19px; font-weight: 700; color: #121212; line-height: 1.15; margin-bottom: 10px;">Tool adoption</div>
 
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #8a6d00; font-weight: 700; margin-bottom: 6px;">Areas to measure</div>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#c68a00; font-weight:700;">▸</span>% of AI-assisted drafts run through Red Pen</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#c68a00; font-weight:700;">▸</span>% of mistake cards an editor clicks</li>
-        <li style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #333; padding: 3px 0 3px 14px; position: relative;"><span style="position:absolute; left:0; color:#c68a00; font-weight:700;">▸</span>% of flags accepted vs overridden</li>
-      </ul>
+      <div style="background: #8a6d00; color: #fff; padding: 12px 14px; border-left: 4px solid #e3120b; margin-bottom: 8px;">
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.8px; color: #fff2b3; font-weight: 700; margin-bottom: 4px;">Lead metric</div>
+        <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 4px;">% AI-assisted drafts run through Red Pen</div>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; color: #fff2b3; line-height: 1.4;">CMS tag + API logs · pilot beats target set wk 1</div>
+      </div>
 
-      <div style="margin-top: auto; padding-top: 12px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11.5px; font-style: italic; color: #6b6b6b; line-height: 1.4;">Editors won't say it's useless. They'll just stop using it.</div>
+      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #999; font-weight: 700; margin-bottom: 6px;">Supporting</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Card-engagement rate</div>
+        </div>
+        <div style="border-left: 1px solid #cfc9bc; padding: 2px 0 2px 8px;">
+          <div style="font-family: 'Georgia', serif; font-size: 11.5px; color: #444; line-height: 1.3;">Override-to-accept ratio per judge</div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11px; font-style: italic; color: #6b6b6b; line-height: 1.4;">The platform PM's metric. If editors don't use it, nothing else matters.</div>
     </div>
 
   </div>
 
-  <div style="margin-top: 12px; background: #121212; color: #fff; padding: 12px 18px; border-left: 4px solid #e3120b; display: flex; align-items: center; gap: 18px;">
-    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #ff7a73; font-weight: 700; min-width: 130px;">The honest part</div>
-    <div style="font-family: 'Georgia', serif; font-size: 14.5px; line-height: 1.4; color: #e0e0e0;">Optimise productivity. Hold trust as the floor. Watch adoption to know the system is even live.</div>
+  <div style="margin-top: 10px; background: #121212; color: #fff; padding: 10px 16px; border-left: 4px solid #e3120b; display: flex; align-items: center; gap: 16px;">
+    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 2px; color: #ff7a73; font-weight: 700; min-width: 200px; line-height: 1.3;">Day-1 editor confidence</div>
+    <div style="font-family: 'Georgia', serif; font-size: 13px; line-height: 1.4; color: #e0e0e0;">No survey. I read two behaviours that already exist: accept rate on flags, and tracked changes an editor adds that Red Pen missed. Confidence shows up in the next draft an editor opens. Surveys are a quarterly tripwire, never the primary signal.</div>
   </div>
 
   <div class="footer"><span>The Editorial Red Pen</span><span>8 / 13</span></div>
 </section>
 
-<!-- 9. SECTION DIVIDER MARKER -->
+<!-- 9. SECTION DIVIDER -->
 <section class="slide divider-slide">
   <div class="header-bar">
     <span class="brand">From feature to platform</span>
@@ -523,7 +564,7 @@ const DECK_HTML = `
       <div class="num">Primitive 02</div>
       <div class="name">Prompt registry</div>
       <div class="gap">Every iteration overwrote. No diff, no rollback.</div>
-      <div class="fix">"Who controls the prompting?" — answered</div>
+      <div class="fix">"Who controls the prompting?" Answered.</div>
     </div>
 
     <div class="prim-card">
@@ -565,7 +606,7 @@ const DECK_HTML = `
 
   <div style="margin-top: 16px; background: #121212; color: #fff; padding: 14px 20px; border-left: 4px solid #e3120b; display: flex; align-items: center; justify-content: space-between;">
     <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #ff7a73; font-weight: 700;">The bet</div>
-    <div style="font-family: 'Georgia', serif; font-size: 16px; color: #fff;">Build the four once · ship the next ten features faster · trust scales as a contract, not as a wish.</div>
+    <div style="font-family: 'Georgia', serif; font-size: 16px; color: #fff;">Build the four once. Ship the next ten features faster. Trust scales as a contract.</div>
   </div>
 
   <div class="footer"><span>The Editorial Red Pen</span><span>10 / 13</span></div>
@@ -574,10 +615,10 @@ const DECK_HTML = `
 <!-- 11. PLATFORM STACK + TENANTS -->
 <section class="slide">
   <div class="header-bar">
-    <span class="brand">11 — The layer above your infra</span>
+    <span class="brand">11 — Productizing the platform</span>
     <span>One platform, three tenants, zero rebuilds</span>
   </div>
-  <h2 style="font-size: 30px; margin-bottom: 14px;">Productizing the platform — beyond component enablement.</h2>
+  <h2 style="font-size: 30px; margin-bottom: 14px;">Productizing the platform. Beyond component enablement.</h2>
 
   <svg viewBox="0 0 1140 460" style="width: 100%; flex: 1;" xmlns="http://www.w3.org/2000/svg">
     <g>
@@ -680,8 +721,8 @@ const DECK_HTML = `
       <h4>Generic LLMs<br>can't refuse.</h4>
       <ul>
         <li>Trained to please. Plausible answers when sources are weak.</li>
-        <li>Economist voice <em>is</em> refusal — "we don't know yet" is a feature.</li>
-        <li>Fine-tune problem, not a prompt problem.</li>
+        <li>Economist voice <em>is</em> refusal. "We don't know yet" is a feature.</li>
+        <li>Better prompts won't close the gap. The model itself has to change.</li>
       </ul>
     </div>
 
@@ -698,7 +739,7 @@ const DECK_HTML = `
       <div class="layer">Pillar 02 · Framework</div>
       <h4>Eval frameworks assume rubrics are stable.</h4>
       <ul>
-        <li>Promptfoo, Langfuse, Braintrust — static contracts.</li>
+        <li>Promptfoo, Langfuse, Braintrust assume static contracts.</li>
         <li>Editorial standards drift with editor, beat, era.</li>
         <li>Adopt one, fight it within six months.</li>
       </ul>
@@ -717,9 +758,9 @@ const DECK_HTML = `
       <div class="layer">Pillar 03 · Platform</div>
       <h4>No tool separates feature from contract.</h4>
       <ul>
-        <li>Off-the-shelf tools ship features, not contracts.</li>
+        <li>Off-the-shelf tools ship features. The contracts underneath are yours to build.</li>
         <li>Every team rebuilds eval logic from scratch.</li>
-        <li>This is the gap at TEG — and what I'd ship.</li>
+        <li>This is the gap at TEG. It's what I'd ship.</li>
       </ul>
     </div>
 
@@ -738,9 +779,9 @@ const DECK_HTML = `
       <div class="layer">The unfair advantage</div>
       <h4>Only The Economist has the data to fix this.</h4>
       <ul>
-        <li><strong style="color:#fff;">183 years of edited copy</strong> — ground-truth labels at scale, no competitor can replicate.</li>
-        <li><strong style="color:#fff;">Codified house style</strong> — editorial decisions reified into a rubric over generations.</li>
-        <li><strong style="color:#fff;">Editor-validated archive</strong> — the test bench writes itself once you have the access.</li>
+        <li><strong style="color:#fff;">Published archive:</strong> 183 years of editorial decisions reified. What was published, what was corrected, what was refused. The decisions are already made.</li>
+        <li><strong style="color:#fff;">Style Guide as rubric:</strong> the Economist Style Guide is already a codified ruleset. Half the work of building Voice judges is done.</li>
+        <li><strong style="color:#fff;">Editorial veto trail:</strong> corrections column, "we don't know yet" patterns, the EIU/Newspaper wall. Mine these for the refusal contract.</li>
       </ul>
       <div class="punch">Buying this in is buying a generic auditor for a non-generic newsroom. That trade collapses the moat.</div>
     </div>
@@ -750,19 +791,45 @@ const DECK_HTML = `
   <div class="footer"><span>The Editorial Red Pen</span><span>12 / 13</span></div>
 </section>
 
-<!-- 14. CLOSING -->
+<!-- 13. CLOSING -->
 <section class="slide closing-slide">
   <div class="header-bar">
     <span class="brand">Thank you</span>
-    <span>Questions &amp; discussion</span>
+    <span>Three things if I joined</span>
   </div>
-  <div style="margin-top: auto; margin-bottom: auto;">
-    <div class="kicker">Closing</div>
-    <h1>Your edge in AI<br>won't come from a model.<br><span style="color:#e3120b;">It comes from what sits on top.</span></h1>
-    <p style="font-size: 21px; color: #ccc; margin-top: 28px; max-width: 980px; line-height: 1.45;">
-      The layer between model and subscriber is where trust is enforced. That's the platform I want to build with you.
-    </p>
-    <div style="margin-top: 50px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #999;">
+  <div style="margin-top: auto; margin-bottom: auto; max-width: 1100px;">
+    <div class="kicker" style="color:#ff7a73;">If I joined</div>
+    <h1 style="font-size: 52px; line-height: 1.1; margin-bottom: 36px;">Three things I'd do.</h1>
+
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+
+      <div style="display: flex; gap: 24px; align-items: flex-start;">
+        <div style="font-family: 'Georgia', serif; font-size: 56px; font-weight: 700; color: #e3120b; line-height: 0.9; min-width: 70px;">01</div>
+        <div>
+          <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 6px;">Month one shadowing editors before opening a laptop.</div>
+          <div style="font-family: 'Georgia', serif; font-size: 16px; color: #ccc; line-height: 1.45;">The deck is a hypothesis. They are the test.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 24px; align-items: flex-start;">
+        <div style="font-family: 'Georgia', serif; font-size: 56px; font-weight: 700; color: #e3120b; line-height: 0.9; min-width: 70px;">02</div>
+        <div>
+          <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 6px;">Ship the eval bench before the first new feature.</div>
+          <div style="font-family: 'Georgia', serif; font-size: 16px; color: #ccc; line-height: 1.45;">The platform stops being a slide the day a CI gate blocks a prompt change.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 24px; align-items: flex-start;">
+        <div style="font-family: 'Georgia', serif; font-size: 56px; font-weight: 700; color: #e3120b; line-height: 0.9; min-width: 70px;">03</div>
+        <div>
+          <div style="font-family: 'Georgia', serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 6px;">Hold the line on "audit, never write."</div>
+          <div style="font-family: 'Georgia', serif; font-size: 16px; color: #ccc; line-height: 1.45;">The Economist's edge is what it won't publish. The platform's job is to hold that line.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 44px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #999;">
       Fawad Bhatti &nbsp;·&nbsp; f.e.bhatti@gmail.com
     </div>
   </div>
@@ -778,15 +845,15 @@ const DECK_HTML = `
   <div style="margin-top: auto; margin-bottom: auto;">
     <div class="kicker">Appendix</div>
     <h1 style="font-size: 72px;">Appendix</h1>
-    <p style="font-family: 'Georgia', serif; font-size: 22px; color: #555; font-style: italic; margin-top: 18px; max-width: 900px; line-height: 1.4;">Red Pen feature roadmap · patterns I've shipped before · infrastructure lifecycle · stack rationale.</p>
+    <p style="font-family: 'Georgia', serif; font-size: 22px; color: #555; font-style: italic; margin-top: 18px; max-width: 900px; line-height: 1.4;">Red Pen roadmap · platform roadmap · patterns I've shipped · infra · stack · editor-pain evidence.</p>
     <div style="margin-top: 44px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #6b6b6b;">
-      A1 · Red Pen roadmap &nbsp;·&nbsp; A2 · Why this isn't theory &nbsp;·&nbsp; A3 · Infrastructure &nbsp;·&nbsp; A4 · Stack &amp; Chunking
+      A1 · Red Pen roadmap &nbsp;·&nbsp; A2 · Platform roadmap &nbsp;·&nbsp; A3 · Why this isn't theory &nbsp;·&nbsp; A4 · Infrastructure &nbsp;·&nbsp; A5 · Stack &nbsp;·&nbsp; A6 · Sources
     </div>
   </div>
   <div class="footer"><span>The Editorial Red Pen</span><span>Appendix</span></div>
 </section>
 
-<!-- A1. RED PEN FEATURE ROADMAP — 50% validate, 50% build -->
+<!-- A1. RED PEN FEATURE ROADMAP -->
 <section class="slide">
   <div class="header-bar">
     <span class="brand">A1 — Red Pen feature roadmap</span>
@@ -805,7 +872,7 @@ const DECK_HTML = `
 
       <div style="background:#f9f6f0; border-top: 3px solid #e3120b; padding: 12px 14px;">
         <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
-          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Now — 4 weeks</span>
+          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Now → 4 weeks</span>
           <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; color: #999; letter-spacing: 1px; text-transform: uppercase;">Phase 01</span>
         </div>
         <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 5px;">Shadow real edits</div>
@@ -814,7 +881,7 @@ const DECK_HTML = `
 
       <div style="background:#f9f6f0; border-top: 3px solid #e3120b; padding: 12px 14px;">
         <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
-          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Weeks 4 – 10</span>
+          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Weeks 4 — 10</span>
           <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; color: #999; letter-spacing: 1px; text-transform: uppercase;">Phase 02</span>
         </div>
         <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 5px;">Co-write the rules</div>
@@ -823,7 +890,7 @@ const DECK_HTML = `
 
       <div style="background:#f9f6f0; border-top: 3px solid #e3120b; padding: 12px 14px;">
         <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
-          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Weeks 8 – 14</span>
+          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #e3120b; font-weight: 700;">Weeks 8 — 14</span>
           <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 8.5px; color: #999; letter-spacing: 1px; text-transform: uppercase;">Phase 03</span>
         </div>
         <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 5px;">Hand-build a v1 test bench</div>
@@ -850,9 +917,9 @@ const DECK_HTML = `
       </div>
 
       <div style="background:#f4f5fb; border-top: 3px solid #1b3a8a; padding: 12px 14px;">
-        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #1b3a8a; font-weight: 700; margin-bottom: 4px;">Build 02 — Fine-tuned house-style judge</div>
-        <div style="font-family: 'Georgia', serif; font-size: 15px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 4px;">Train a model on the edited archive.</div>
-        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #444; margin: 0;">Generic models hedge and please. A model fine-tuned on Economist edits learns refusal, brevity, and stance — the things off-the-shelf will not give you.</p>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #1b3a8a; font-weight: 700; margin-bottom: 4px;">Build 02 — House-style layer over foundation models</div>
+        <div style="font-family: 'Georgia', serif; font-size: 15px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 4px;">A house-style layer, not a house-style model.</div>
+        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #444; margin: 0;">Foundation models keep getting better at writing. A specialisation layer (codified rubrics, structured judges, retrieval over the Style Guide and edited archive) captures Economist voice without retraining anything. Faster to ship, easier to evolve, no model lock-in.</p>
       </div>
 
       <div style="background:#f4f5fb; border-top: 3px solid #1b3a8a; padding: 12px 14px;">
@@ -864,7 +931,7 @@ const DECK_HTML = `
       <div style="background:#f4f5fb; border-top: 3px solid #1b3a8a; padding: 12px 14px;">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #1b3a8a; font-weight: 700; margin-bottom: 4px;">Build 04 — In-situ integration</div>
         <div style="font-family: 'Georgia', serif; font-size: 15px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 4px;">Lives inside the CMS or Google Docs.</div>
-        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #444; margin: 0;">A standalone tool teaches editors a habit. An embedded one removes the habit and makes the audit invisible. Final form, not first form.</p>
+        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; line-height: 1.45; color: #444; margin: 0;">A standalone tool teaches editors a habit. An embedded one removes the habit and makes the audit invisible. This is the year-2 surface.</p>
       </div>
 
     </div>
@@ -874,10 +941,68 @@ const DECK_HTML = `
   <div class="footer"><span>The Editorial Red Pen</span><span>A1 · Appendix</span></div>
 </section>
 
-<!-- A2. CREDENTIALS -->
+<!-- A2. PLATFORM 90-DAY ROADMAP -->
 <section class="slide">
   <div class="header-bar">
-    <span class="brand">A2 — Why this isn't theory</span>
+    <span class="brand">A2 — Platform roadmap</span>
+    <span>What ships in the first quarter</span>
+  </div>
+  <h2 style="font-size: 30px; margin-bottom: 12px;">What I'd ship in the first 90 days.</h2>
+
+  <div class="timeline">
+
+    <div class="tl-col">
+      <div class="week">Weeks 1 — 4</div>
+      <div class="what">Eval contract, runner, first judge</div>
+      <ul>
+        <li>YAML contract spec + runner</li>
+        <li>Test bench (~20 cases) editor-validated</li>
+        <li>Grounding judge — reference</li>
+        <li>Red Pen runs on the contract</li>
+      </ul>
+      <div class="tenant"><strong>Tenant 1 live</strong>Newspaper · Editorial Red Pen</div>
+    </div>
+
+    <div class="tl-col">
+      <div class="week">Weeks 5 — 8</div>
+      <div class="what">Registries + second tenant</div>
+      <ul>
+        <li>Source registry · per-team, versioned</li>
+        <li>Prompt registry · owner, version, eval-linked</li>
+        <li>Judge-as-service interface extracted</li>
+        <li>EIU copilot plugs in</li>
+      </ul>
+      <div class="tenant"><strong>Tenant 2 live</strong>EIU · Copilot grounding</div>
+    </div>
+
+    <div class="tl-col">
+      <div class="week">Weeks 9 — 12</div>
+      <div class="what">CI hook, refusal, third tenant</div>
+      <ul>
+        <li>CI hook · no merge without bench green</li>
+        <li>Voice + Rigor judges in production</li>
+        <li>Refusal added to JudgeResult</li>
+        <li>Customer service onboards</li>
+      </ul>
+      <div class="tenant"><strong>Tenant 3 live</strong>Customer service · Refusal</div>
+    </div>
+
+  </div>
+
+  <div class="cuts-strip">
+    <div class="label">What I'd cut</div>
+    <div class="cuts">
+      <strong>No fine-tune year 1</strong> · <strong>No CMS integration</strong> · <strong>No multi-modal</strong> · <strong>No PM-spec linter</strong>
+    </div>
+  </div>
+
+  <div class="footer"><span>The Editorial Red Pen</span><span>A2 · Appendix</span></div>
+</section>
+
+<!-- A3. CREDENTIALS -->
+<section class="slide">
+  <div class="header-bar">
+    <span class="brand">A3 — Why this isn't theory</span>
     <span>Evidence the bet is real</span>
   </div>
   <h2 style="font-size: 30px; margin-bottom: 14px;">I've shipped each piece of this before.</h2>
@@ -901,7 +1026,7 @@ const DECK_HTML = `
     <div style="background: #f9f6f0; border-top: 4px solid #c68a00; padding: 16px 18px; display: flex; flex-direction: column;">
       <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #8a6d00; font-weight: 700; margin-bottom: 8px;">Platform metric for an internal tool</div>
       <div style="font-family: 'Georgia', serif; font-size: 19px; font-weight: 700; color: #121212; line-height: 1.2; margin-bottom: 8px;">Yelp · Bunsen</div>
-      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #333; margin: 0 0 10px 0;">Experimentation platform serving every PM. Defined experimentation velocity as the platform metric — same playbook for eval velocity at TEG.</p>
+      <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #333; margin: 0 0 10px 0;">Experimentation platform serving every PM. Defined experimentation velocity as the platform metric. Same playbook for eval velocity at TEG.</p>
       <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cfc9bc; font-family: 'Georgia', serif; font-size: 11.5px; font-style: italic; color: #6b6b6b;">+35% throughput · 18% faster decisions.</div>
     </div>
 
@@ -912,13 +1037,13 @@ const DECK_HTML = `
     <div style="font-family: 'Georgia', serif; font-size: 15px; color: #fff;">AI wins in elite domains only when the evaluation layer is built by someone who's lived in the workflow.</div>
   </div>
 
-  <div class="footer"><span>The Editorial Red Pen</span><span>A2 · Appendix</span></div>
+  <div class="footer"><span>The Editorial Red Pen</span><span>A3 · Appendix</span></div>
 </section>
 
-<!-- A3. INFRASTRUCTURE -->
+<!-- A4. INFRASTRUCTURE -->
 <section class="slide">
   <div class="header-bar">
-    <span class="brand">A3 — Infrastructure</span>
+    <span class="brand">A4 — Infrastructure</span>
     <span>Request lifecycle · stateless · serverless</span>
   </div>
   <h2>Stateless. Serverless. No database. No vector store.</h2>
@@ -933,30 +1058,30 @@ const DECK_HTML = `
                   │  Next.js Route Handler          │
                   │  /api/evaluate · Node · 300s    │
                   └──────────┬──────────────────────┘
-                             │
-       ┌─────────────────────┼─────────────────────────┐
-       ▼                     ▼                         ▼
+                            │
+       ─────────────────────┼───────────────────────┐
+       ▼                    ▼                        ▼
   ┌──────────┐       ┌──────────────┐       ┌────────────────┐
   │  Parser  │       │  Tokeniser   │       │  Evaluator     │
   │ file→txt │─────▶ │  text→blocks │─────▶ │  3× LLM calls  │
   │ mammoth  │       │ Intl.        │       │  in parallel   │
   │ pdf-parse│       │ Segmenter    │       │ (strict JSON)  │
   │ tesseract│       │ +UUID per s. │       └────────┬───────┘
-  └──────────┘       └──────────────┘                │
+  └──────────┘       └──────────────┘               │
                                                     ▼
-                                            <span class="red">OpenAI gpt-5.4</span>
+                                            <span class="red">Frontier general model</span>
                                             <span class="dim">(~400k ctx, one-shot)</span>
 
        <span class="dim">No database · No session store · No persistence · Request → response → done.</span>
 </div>
 
-  <div class="footer"><span>The Editorial Red Pen</span><span>A3 · Appendix</span></div>
+  <div class="footer"><span>The Editorial Red Pen</span><span>A4 · Appendix</span></div>
 </section>
 
-<!-- A4. STACK & CHUNKING -->
+<!-- A5. STACK & CHUNKING -->
 <section class="slide">
   <div class="header-bar">
-    <span class="brand">A4 — Stack &amp; Chunking</span>
+    <span class="brand">A5 — Stack &amp; Chunking</span>
     <span>What we chose, and what we deliberately rejected</span>
   </div>
   <h2>Sources go in whole. Drafts are sentence-ID'd.</h2>
@@ -994,7 +1119,7 @@ const DECK_HTML = `
     </div>
     <div class="row">
       <div class="cell tool">LLM</div>
-      <div class="cell tool">OpenAI gpt-5.4 · strict JSON</div>
+      <div class="cell tool">Frontier general model · strict JSON</div>
       <div class="cell why">~400k context — sources fit in one call. Schema enforcement eliminates parse failures.</div>
     </div>
     <div class="row">
@@ -1014,7 +1139,127 @@ const DECK_HTML = `
     </div>
   </div>
 
-  <div class="footer"><span>The Editorial Red Pen</span><span>A4 · Appendix</span></div>
+  <div class="footer"><span>The Editorial Red Pen</span><span>A5 · Appendix</span></div>
+</section>
+
+<!-- A6. EDITOR-PAIN SOURCES -->
+<section class="slide a6-slide" id="a6-sources" style="padding: 36px 56px 52px 56px;">
+  <div class="header-bar">
+    <span class="brand">A6 — Editor-pain evidence</span>
+    <span>The load is documented · I'm extrapolating to The Economist</span>
+  </div>
+  <h2 style="font-size: 26px; line-height: 1.15;">Editor pain is not assumed. It's measured across newsrooms.</h2>
+  <p style="font-family: 'Georgia', serif; font-size: 13px; color: #555; font-style: italic; margin-bottom: 12px;">Nine sources, exact figures, one explicit extrapolation. Citations re-verified before submission.</p>
+
+  <div class="a6-grid">
+
+    <div class="src-card">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">01 · Verification time</div>
+      <div class="src-stat">~50% of facts survive AI summarisation.</div>
+      <div class="src-quote">"Human-generated summaries took three to four hours each. AI tools produced each summary in about a minute" — but recovered only ~half the facts, with longer AI summaries hallucinating <em>more</em>, not less.</div>
+      <div class="src-link">
+        <a href="https://www.cjr.org/analysis/can-ai-tools-meet-journalistic-standards.php" target="_blank">Can AI Tools Meet Journalistic Standards?</a>
+        <span class="pub">Columbia Journalism Review · 2024</span>
+      </div>
+    </div>
+
+    <div class="src-card">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">02 · Hallucination rate</div>
+      <div class="src-stat">Heavy users hit hallucinations 3× as often (34% vs 12%).</div>
+      <div class="src-quote">"Heavy users run into frequent hallucinations nearly three times more often than casual users (34% vs. 12%)." Power users are 10× more likely to spend 11+ minutes wrestling with output until satisfied.</div>
+      <div class="src-link">
+        <a href="https://www.rev.com/blog/ai-results" target="_blank">Heavy AI Users See 3× More Hallucinations</a>
+        <span class="pub">Rev · 17 Feb 2026</span>
+      </div>
+    </div>
+
+    <div class="src-card">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">03 · Fact-check load</div>
+      <div class="src-stat">AI-content fact-checks more than doubled YoY at one major checker.</div>
+      <div class="src-quote">"16% of the 619 claims fact-checked involved AI-generated content, compared with 7% the previous year" — Aos Fatos (Brazil). Indicative of a global shift, not yet a global aggregate. "Newsrooms lack the capacity to verify every claim."</div>
+      <div class="src-link">
+        <a href="https://reutersinstitute.politics.ox.ac.uk/news/ai-and-future-news-2026-what-we-learnt-about-its-impact-newsrooms-fact-checking-and-news" target="_blank">AI and the Future of News 2026</a>
+        <span class="pub">Reuters Institute · 2026</span>
+      </div>
+    </div>
+
+    <div class="src-card navy">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">04 · Workflow drag</div>
+      <div class="src-stat">AI <em>increases</em> low-level editor work.</div>
+      <div class="src-quote">"Many journalists say AI increases low-level work such as data cleaning and output checking. Newsrooms should examine workflows carefully to ensure AI reduces, rather than adds to, workload."</div>
+      <div class="src-link">
+        <a href="https://reutersinstitute.politics.ox.ac.uk/ai-adoption-uk-journalists-and-their-newsrooms-surveying-applications-approaches-and-attitudes" target="_blank">AI adoption by UK journalists</a>
+        <span class="pub">Reuters Institute · Thurman et al. · 2025</span>
+      </div>
+    </div>
+
+    <div class="src-card navy">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">05 · Adoption depth</div>
+      <div class="src-stat">10% generate first drafts. 16% generate parts of articles. 22% use AI for research.</div>
+      <div class="src-quote">"22% of journalists use AI at least monthly for story research; 16% for parts of articles (e.g. headlines); 10% for first drafts." Survey of n&gt;1,000 UK journalists, Aug-Nov 2024. Those drafts have to be policed by an editor.</div>
+      <div class="src-link">
+        <a href="https://reutersinstitute.politics.ox.ac.uk/sites/default/files/2025-10/Gen_AI_and_News_Report_2025.pdf" target="_blank">Generative AI and News Report 2025 (PDF)</a>
+        <span class="pub">Reuters Institute · Oct 2025</span>
+      </div>
+    </div>
+
+    <div class="src-card navy">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">06 · Citation failure</div>
+      <div class="src-stat">LLMs hallucinate authors, titles, and quotes.</div>
+      <div class="src-quote">"AI tools like ChatGPT, Gemini, Copilot, and Meta AI are unable to reliably cite and quote their sources accurately, and commonly hallucinate authors and titles." Quotes are the single most-mishandled element.</div>
+      <div class="src-link">
+        <a href="https://www.cjr.org/analysis/i-tested-how-well-ai-tools-work-for-journalism.php" target="_blank">I Tested How Well AI Tools Work for Journalism</a>
+        <span class="pub">Columbia Journalism Review · 2024</span>
+      </div>
+    </div>
+
+    <div class="src-card amber">
+      <span class="verify-tag warn">Re-verify</span>
+      <div class="src-num">07 · Sub-editor time budget</div>
+      <div class="src-stat">UK sub-editors work to tight, often hourly turnaround.</div>
+      <div class="src-quote">"For breaking news, a copy editor may have less than an hour to read a piece and do everything the article needs." Adding "police an AI draft for hallucinations and voice slips" is an extra job, not a replacement task.</div>
+      <div class="src-link">
+        <a href="https://blog.ciep.uk/subediting/" target="_blank">What is subediting?</a>
+        <span class="pub">CIEP · UK editors' professional body</span>
+      </div>
+    </div>
+
+    <div class="src-card amber">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">08 · The thesis, externally</div>
+      <div class="src-stat">Editing is where institutional standards live.</div>
+      <div class="src-quote">"AI is everywhere. Editors should be, too." AI scales drafting, so the bottleneck moves to editing — and editing is where house style, refusal, and rigour are enforced. Exactly the Red Pen's thesis.</div>
+      <div class="src-link">
+        <a href="https://www.poynter.org/commentary/2025/ai-editors-hallucinations-human-help/" target="_blank">AI is everywhere. Editors should be, too.</a>
+        <span class="pub">Poynter · April 2025</span>
+      </div>
+    </div>
+
+    <div class="src-card dark">
+      <span class="verify-tag">Verified</span>
+      <div class="src-num">09 · Why The Economist feels it most</div>
+      <div class="src-stat">Hard line on consumer-AI licensing. Format investment. Cloudflare-blocked scrapers.</div>
+      <div class="src-quote">"Holding a hard line against licensing deals with AI firms it views as competitors… investing in formats like video and audio that are more difficult for machines to mimic… actively blocking AI bots via Cloudflare." Enterprise API stays open via ring-fenced LLMs.</div>
+      <div class="src-link">
+        <a href="https://digiday.com/media/inside-the-economists-plan-to-grow-revenues-in-a-post-search-ai-driven-future/" target="_blank">Inside The Economist's post-search plan</a>
+        <span class="pub">Digiday · 2024</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="talk-strip">
+    <div class="label">The honest part</div>
+    <div class="body">I have <strong>not</strong> spoken to an Economist editor. The load is documented across newsrooms; I'm extrapolating to TEG. Phase 1 of the Red Pen roadmap is editor shadowing. A falsifiable bet, replacing an assumption. Card 03 is a frontline indicator (Aos Fatos), not a global aggregate; Card 09 reflects TEG's consumer-AI posture, not a blanket licensing refusal.</div>
+  </div>
+
+  <div class="footer"><span>The Editorial Red Pen</span><span>A6 · Appendix · Editor-pain evidence</span></div>
 </section>
 `;
 
