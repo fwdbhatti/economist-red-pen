@@ -409,7 +409,141 @@ Validity markets BriteVerify (email verification), DemandTools (Salesforce data 
 
 The draft article cites Validity's research for the 44% / 10% revenue loss figure. That figure is not findable on Validity's homepage. It may live in a downloadable report behind a form, but a reader following the link in the article will not see the supporting data.`;
 
+const WARSH_DRAFT = `# Will Kevin Warsh Trumpify the Federal Reserve?
+
+The incoming Fed chair says he wants regime change. But a revolution is unlikely.
+
+POLITICIANS HAVE usually let America's central bank be. Few voters pay direct attention to monetary policy, and when they notice inflation, it can be helpful to have someone else to blame. Donald Trump is not a usual politician. So in his second term the president, who believes interest rates are too high, has assailed the Federal Reserve with angry lawsuits, fulminated on social media about its chair, Jerome "too late" Powell, and launched a bogus criminal probe into Mr Powell to browbeat him.
+
+So far presidential haranguing has not had the desired effect. It may even have backfired, by stiffening the spines of the Fed's defenders. The Supreme Court looks poised to deny Mr Trump the right to fire Lisa Cook, a Fed governor. A ploy by Thom Tillis, a retiring Republican senator, to hold up the confirmation of Kevin Warsh, Mr Trump's pick to succeed Mr Powell, probably played a role in the decision by the Department of Justice (DoJ) on April 24th to drop its case against the Fed chair. Markets now shrug off Mr Trump's regular Fed-bashing.
+
+Could Mr Warsh, whose path to the top job has been all but cleared by the DoJ's climbdown, reshape the Fed into a Trumpier mould? He certainly comes across as more pliable than his steadfast predecessor. He secured the nomination by abandoning a lifetime of inflation hawkishness and aligning his position with the dove-in-chief at the White House. In his mostly dull Senate confirmation hearing on April 21st he passed the MAGA purity test by refusing to say outright that Mr Trump lost the 2020 election to Joe Biden. And he has, in what is "YMCA" to Mr Trump's ears, called for a "regime change" at the central bank.
+
+However, a closer look at what Mr Warsh wants to do at the Fed—and what he can realistically achieve—hints at a much more modest project. That is because his ideas are either marginal, irrelevant or beyond the power of a Fed chair alone to deliver.
+
+Start with what Mr Warsh is not planning to do. Fed insiders have worried that the regime he wants to change is literally the Fed's personnel. The main fear was that he would try to sack the presidents of the regional branches, five of whom vote on monetary policy, and replace them with Trump toadies. Many minds were put at ease when he appeared to rule this out in the Senate hearing. When asked directly whether "regime change" amounted to a purge of branch presidents, Mr Warsh said: "I meant policy regime change".
+
+That is reassuring. For when it comes to policy, Mr Warsh is often a marginal revolutionary. Like a proper wonk, he often gets most exercised by the smallest of details. One of his biggest bugbears is rate-setters paying too much attention to "core" inflation, which excludes only volatile food and fuel prices, and too little to "trimmed-mean" measures, which drop whichever prices have risen or fallen the most each month. Trimmed-mean inflation can be lower than the core measure and so justify lower rates. But most of the time, including now, the two are almost indistinguishable.
+
+Others of Mr Warsh's most cherished ideas would make similarly little difference in practice because they are out of date. He wants to get monetary policymaking out of politically charged terrain such as climate change and social justice. The Fed has, sensibly, done this already. He is wary of expansive readings of the central bank's mandate to promote employment, which during the covid-19 pandemic may have undercut its other job of maintaining price stability. The Fed has already closed the book on those, too.
+
+Mr Warsh has essentially two substantive ideas for meaningful reform. One is his desire to trim the Fed's balance-sheet in short order. Many observers agree that, at $7trn, it is bloated. Although Mr Warsh has signalled he does not favour shrinking the central bank's bond holdings at breakneck pace, any movement in that direction goes directly against the Fed's recent decision to end "quantitative tightening". The effect of bond sales could be to lower their prices and, since the two move inversely, push up yields. To offset those rising yields, Mr Warsh would cut short-term rates. But since the effect of the Fed's bond sales on yields is uncertain, the exercise could blow up if not handled deftly.
+
+The second of Mr Warsh's big ideas is his scepticism of "forward guidance". Setting out a future path of monetary policy has been the norm at the world's central banks since the global financial crisis of 2007-09. Mr Warsh frets that the practice does more harm than good by making policymakers dig in their heels and ignore new information that proves them wrong. Most Fed-watchers think the trade-off is worth it.
+
+Scrapping forward guidance and rapidly shrinking the balance-sheet would be meaningful changes for the Fed. They are not, though, in Mr Warsh's individual gift. Most relevant decisions require a majority of the seven-member board of governors. In both cases Mr Warsh will, as chair, have the bully pulpit but still cast only one vote.
+
+He is no less constrained when it comes to the regular business of setting interest rates. Rate-setting decisions need the support of at least seven of the 12 voting members of the Federal Open Market Committee (FOMC). Before the war with Iran, the market assumed several rate cuts this year. Now the conflict is pushing up energy and food prices, which could in time spill over into broader inflationary pressure. As a result, the expectation is for the FOMC to hold rates steady at 3.5-3.75%.
+
+The constraints on Mr Warsh make it unlikely that he will radically transform the Fed. But this does not make him harmless. That is because, as Peter Conti-Brown, a Fed historian at the Wharton School of the University of Pennsylvania, points out, he and those closest to him "are taking way too seriously the false notion that the Fed is in crisis".
+
+Indeed, Mr Warsh himself has, like many of Mr Trump's cabinet secretaries, developed a habit of getting carried away when criticising the institution he is about to lead. In the past year he has called the broad conduct of monetary policy "broken for quite a long time". If in office Mr Warsh cannot deliver what Mr Trump wants, blaming his colleagues may be a way to keep the president from turning on him. But having both a president and a sitting Fed chair fulminating against monetary policy would be unprecedented, and would worsen the politicisation of America's central bank.`;
+
+const WARSH_MJE = `# Michigan Journal of Economics — "Can the Federal Reserve Remain Independent? Institutional Safeguards in a Politicized Era" (April 13, 2026)
+
+## Background on the Cook case
+
+Lisa Cook was appointed to the Fed Board of Governors by President Biden in 2022. In 2025, the Trump administration sought to remove her on the basis of mortgage-related allegations dating from before her appointment. Cook filed suit (Cook v. Trump); the administration counter-petitioned (Trump v. Cook).
+
+The Federal Reserve Act permits removal of governors only "for cause." Federal district and appellate courts blocked the removal pending review. The Supreme Court declined to lift the lower-court stay, allowing Cook to remain on the Board while litigation proceeds. Oral argument is scheduled and a ruling is expected in the current term.
+
+The article notes the Court has not yet ruled on the merits and that observers reading the stay as a signal of likely outcome are interpreting tea leaves.
+
+## Background on the Powell investigation
+
+The Department of Justice opened an investigation into Chair Powell in late 2025 concerning testimony given to Congress about Fed building renovation costs. Legal scholars described the probe as without precedent for a sitting Fed chair. The DoJ closed the matter on April 24, 2026, without filing charges.
+
+## Composition of the FOMC
+
+The FOMC has 12 voting members: 7 Board governors plus 5 of the 12 regional Reserve Bank presidents on a rotating basis (the New York Fed president holds a permanent seat).
+
+Regional Reserve Bank presidents are appointed by the boards of directors of each regional bank, subject to approval by the Fed Board of Governors. They are not appointed by the President of the United States and cannot be removed by the President.
+
+## What is NOT in this article
+
+- No claim that the Supreme Court has already ruled on the Cook removal.
+- No claim that "five" regional bank presidents vote at any given time other than as a rotating subset of the 12.
+- No quote attributed to Peter Conti-Brown.
+- No discussion of Warsh's "regime change" comments or Senate hearing.`;
+
+const WARSH_HOOVER = `# Kevin Warsh — "Rethinking Macro: Reassessing Micro-Foundations" (Hoover Institution working paper, 2014)
+
+## Core argument
+
+Warsh argues that post-2008 monetary policy — large-scale asset purchases, forward guidance, near-zero rates sustained for years — constituted a structural break from prior practice. He uses the phrase "regime change" to describe this shift in the policy framework, not in personnel.
+
+## Key positions in the paper
+
+- Quantitative easing distorted price signals and weakened the link between monetary policy and the real economy's micro-foundations.
+- Forward guidance, by committing central banks to future paths, reduces optionality and makes policy slower to respond to incoming data.
+- The Fed's balance sheet should be smaller and held primarily in shorter-duration Treasuries.
+- The dual mandate has been over-extended in practice toward employment objectives at the expense of price stability.
+
+## Tone and stance at time of writing (2014)
+
+Warsh writes as an inflation hawk. He warned that easy monetary policy risked future inflation and asset-price distortions. He criticized the Fed's communications strategy as excessively activist.
+
+## What is NOT in this paper
+
+- No call for personnel changes at the Fed or its regional banks.
+- No discussion of "trimmed-mean" vs "core" inflation measures.
+- No specific dollar figure for an appropriate Fed balance sheet.
+- No mention of climate change or social justice as Fed concerns (those debates postdate this paper).
+- No endorsement of rate cuts. The 2014 Warsh is a hawk; the draft article asserts he has since "abandoned a lifetime of inflation hawkishness" — that pivot is not in this source and would need separate documentation.`;
+
+const WARSH_DALLAS_FED = `# Federal Reserve Bank of Dallas — Trimmed Mean PCE Inflation Rate (research page)
+
+## What the index measures
+
+The Trimmed Mean PCE inflation rate is an alternative measure of core inflation produced by the Dallas Fed. Each month, the components of PCE inflation showing the most extreme price changes (both highest and lowest) are excluded; the remaining components are averaged. This differs from "core" PCE, which mechanically excludes food and energy regardless of their behavior in a given month.
+
+## Recent readings (12-month rate, monthly observations)
+
+The Trimmed Mean and core PCE measures track each other closely over long horizons but can diverge in individual months. Over the 24 months ending February 2026, the gap between the two measures averaged 0.2 percentage points, with the Trimmed Mean running slightly below core PCE in most months.
+
+## Stated purpose
+
+Dallas Fed researchers describe the Trimmed Mean as a measure of "underlying" inflation less subject to noise from idiosyncratic price movements in any single category. It is published as a complement to, not a replacement for, headline and core PCE.
+
+## What is NOT on this page
+
+- No statement that the Trimmed Mean is "lower" than core inflation in general — the divergence varies month to month and historically has gone in both directions.
+- No endorsement by the Dallas Fed of using Trimmed Mean as the primary policy target.
+- No reference to Kevin Warsh or his policy preferences.`;
+
+const WARSH_SCOTUS = `# Trump v. Cook — Supreme Court application materials (2026)
+
+## Procedural posture
+
+The Trump administration filed an emergency application asking the Supreme Court to lift a lower-court injunction that prevented the removal of Federal Reserve Governor Lisa Cook. The application was denied; Cook remains on the Board pending full review.
+
+The denial of the stay does not constitute a ruling on the merits. The Court has agreed to hear the case in full and a decision is pending.
+
+## Legal question
+
+Whether the President's removal power, as articulated in Seila Law and Collins v. Yellen, reaches Federal Reserve governors despite the "for cause" protection in the Federal Reserve Act. The administration argues the Fed's structure is unconstitutional under separation-of-powers principles. Cook argues the Fed's independence, repeatedly affirmed in dicta by the Court (Humphrey's Executor; Seila Law footnote 8), places it in a distinct constitutional category.
+
+## What is NOT in these materials
+
+- No final ruling on whether Cook can be removed.
+- No statement by the Court about its likely disposition.
+- No reference to Kevin Warsh, Jerome Powell, or the DoJ probe.
+- No characterization of the Court as "poised" in any direction — that is editorial inference, not a finding in the docket.`;
+
 export const SAMPLES: SamplePack[] = [
+  {
+    id: "warsh-fed",
+    label: "Will Warsh Trumpify the Fed?",
+    blurb:
+      "The Economist's April 2026 piece on Kevin Warsh's incoming Fed chairmanship. Audited against four sources: a Michigan Journal of Economics survey of Fed independence, Warsh's 2014 Hoover paper, the Dallas Fed Trimmed-Mean PCE page, and the Trump v. Cook SCOTUS docket.",
+    draft: { name: "warsh-fed-draft.md", text: WARSH_DRAFT },
+    sources: [
+      { name: "source-michigan-journal.md", text: WARSH_MJE },
+      { name: "source-warsh-hoover-2014.md", text: WARSH_HOOVER },
+      { name: "source-dallas-fed-pce.md", text: WARSH_DALLAS_FED },
+      { name: "source-scotus-trump-v-cook.md", text: WARSH_SCOTUS },
+    ],
+  },
   {
     id: "ai-vs-hiring",
     label: "AI vs. Hiring a Sales Rep",
