@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0d10" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Round 3 — Prep</title>
+<style>
+  :root{
+    --bg:#0b0d10;
+    --bg-2:#12161b;
+    --card:#171c22;
+    --card-2:#1d242c;
+    --line:#272f38;
+    --ink:#eef2f6;
+    --ink-2:#b6c0cc;
+    --muted:#8a95a3;
+    --accent:#e3120b; /* Economist red */
+    --accent-2:#ff5a4e;
+    --gold:#f0b35a;
+    --navy:#7aa7ff;
+    --green:#5ad6a4;
+    --amber:#f0b35a;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+    overscroll-behavior-y:contain;}
+  body{padding:env(safe-area-inset-top) env(safe-area-inset-right) calc(72px + env(safe-area-inset-bottom)) env(safe-area-inset-left)}
+  a{color:var(--accent-2);text-decoration:none}
+  h1,h2,h3,h4{margin:0;line-height:1.2;letter-spacing:-0.01em}
+  p{margin:0 0 .6em}
+  ul{margin:.4em 0 .6em;padding-left:1.1em}
+  li{margin:.25em 0}
+  small{color:var(--muted)}
+  strong{color:#fff}
+  em{color:var(--ink-2);font-style:normal;border-bottom:1px dashed var(--line);padding-bottom:1px}
+
+  /* Header */
+  header.top{
+    position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg, rgba(11,13,16,.96), rgba(11,13,16,.85));
+    backdrop-filter:saturate(140%) blur(10px);
+    -webkit-backdrop-filter:saturate(140%) blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:10px 14px 8px;
+  }
+  .title-row{display:flex;align-items:center;gap:10px}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:4px 10px;border:1px solid var(--accent);color:#fff;
+    background:var(--accent);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  }
+  .title-row h1{font-size:17px;font-weight:700}
+  .subtitle{color:var(--muted);font-size:12px;margin-top:2px}
+
+  /* Tabs */
+  nav.tabs{
+    display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-top:10px;padding-bottom:2px;-webkit-overflow-scrolling:touch;
+  }
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs button{
+    flex:0 0 auto;scroll-snap-align:start;
+    background:transparent;color:var(--ink-2);border:1px solid var(--line);
+    padding:8px 12px;border-radius:999px;font-size:13px;font-weight:600;
+    min-height:36px;cursor:pointer;
+  }
+  nav.tabs button.active{background:#fff;color:#0b0d10;border-color:#fff}
+
+  /* Sections */
+  main{max-width:760px;margin:0 auto;padding:14px}
+  section{display:none}
+  section.active{display:block;animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px;margin:10px 0;
+  }
+  .card.tight{padding:12px}
+  .card h2{font-size:15px;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .card h2 .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:6px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;
+  }
+  .card h3{font-size:14px;color:#fff;margin:10px 0 6px}
+  .key{
+    border-left:3px solid var(--accent);padding:8px 12px;background:var(--bg-2);
+    border-radius:0 8px 8px 0;margin:8px 0;color:#fff;font-weight:600;font-size:14px;
+  }
+  .warn{
+    border-left:3px solid var(--gold);padding:8px 12px;background:rgba(240,179,90,.07);
+    border-radius:0 8px 8px 0;margin:8px 0;font-size:13.5px;
+  }
+  .warn strong{color:var(--gold)}
+  .ok{border-left:3px solid var(--green);padding:8px 12px;background:rgba(90,214,164,.06);
+    border-radius:0 8px 8px 0;margin:8px 0;font-size:13.5px}
+
+  /* Anchor cards */
+  .anchors{display:grid;gap:10px}
+  .anchor{
+    background:linear-gradient(180deg,var(--card),var(--card-2));
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+    position:relative;overflow:hidden;
+  }
+  .anchor::before{
+    content:attr(data-n);position:absolute;right:8px;top:-6px;
+    font-size:54px;font-weight:800;color:rgba(227,18,11,.12);letter-spacing:-.04em;
+  }
+  .anchor .q{color:#fff;font-size:14.5px;font-weight:600}
+  .anchor .use{margin-top:6px;color:var(--muted);font-size:12px}
+
+  /* Slide accordion */
+  details{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    margin:8px 0;overflow:hidden;
+  }
+  details[open]{background:var(--card-2)}
+  summary{
+    list-style:none;cursor:pointer;padding:12px 14px;
+    display:flex;align-items:center;gap:10px;min-height:48px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{
+    content:"›";margin-left:auto;color:var(--muted);font-size:22px;line-height:1;
+    transition:transform .2s;
+  }
+  details[open] summary::after{transform:rotate(90deg)}
+  .slide-num{
+    flex:0 0 auto;width:30px;height:30px;border-radius:8px;
+    background:var(--bg-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:12px;color:var(--ink-2);
+  }
+  .slide-title{font-weight:600;color:#fff;font-size:14.5px}
+  .slide-body{padding:0 14px 14px;border-top:1px solid var(--line)}
+  .slide-body > *:first-child{margin-top:10px}
+
+  /* Q&A */
+  .panelist{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;margin:10px 0;
+  }
+  .panelist h2{display:flex;align-items:center;justify-content:space-between;font-size:16px;color:#fff}
+  .panelist .role{color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .panelist .tests{color:var(--ink-2);font-size:12.5px;font-style:normal;margin:6px 0 10px}
+  .qa{margin:8px 0;border-top:1px solid var(--line);padding-top:10px}
+  .qa:first-of-type{border-top:none;padding-top:0}
+  .q{color:#fff;font-weight:600;font-size:14px;margin-bottom:4px}
+  .q::before{content:"Q ";color:var(--accent);font-weight:800}
+  .a{color:var(--ink-2);font-size:14px}
+  .a::before{content:"A ";color:var(--green);font-weight:800;margin-right:2px}
+
+  /* Pills row */
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+  .chip{
+    font-size:11px;padding:4px 8px;border-radius:999px;
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2);
+  }
+
+  /* Bottom dock */
+  .dock{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:rgba(11,13,16,.92);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:8px env(safe-area-inset-right) calc(8px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+  }
+  .dock-inner{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:760px;margin:0 auto}
+  .dock button{
+    background:transparent;border:0;color:var(--muted);
+    font-size:10.5px;font-weight:600;padding:6px 2px;border-radius:8px;
+    display:flex;flex-direction:column;align-items:center;gap:3px;min-height:50px;cursor:pointer;
+  }
+  .dock button.active{color:#fff}
+  .dock button .ico{font-size:18px;line-height:1}
+  .dock button.active .ico{color:var(--accent-2)}
+
+  /* Intro & danger blocks */
+  .quote{
+    background:var(--bg-2);border-left:3px solid var(--accent-2);
+    padding:10px 12px;border-radius:0 8px 8px 0;color:var(--ink);font-size:14.5px;
+  }
+  .grid-2{display:grid;gap:10px;grid-template-columns:1fr}
+  @media(min-width:560px){.grid-2{grid-template-columns:1fr 1fr}}
+
+  .kbd{
+    display:inline-block;padding:1px 6px;border-radius:4px;background:var(--bg-2);
+    border:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#fff;
+  }
+  .danger-card{
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:0 12px 12px 0;padding:10px 12px;margin:8px 0;
+  }
+  .danger-card h3{font-size:14px;color:#fff;margin-bottom:4px}
+
+  /* Logistics list */
+  .logi{display:grid;gap:8px}
+  .logi-row{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;
+  }
+  .logi-row .ico{font-size:18px;flex:0 0 24px;text-align:center;color:var(--accent-2)}
+  .logi-row .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+  .logi-row .val{color:#fff;font-size:14px;margin-top:2px}
+
+  /* Search hide */
+  section[hidden]{display:none}
+
+  /* ===== Desktop / tablet ===== */
+  @media (min-width: 900px){
+    body{padding-bottom:24px}
+    .dock{display:none}
+    header.top{padding:14px 24px 10px}
+    .title-row h1{font-size:20px}
+    .subtitle{font-size:13px}
+    nav.tabs{margin-top:14px;gap:8px;flex-wrap:wrap;overflow:visible}
+    nav.tabs button{font-size:14px;padding:9px 14px}
+    main{
+      max-width:1180px;
+      padding:24px 28px;
+      display:grid;
+      grid-template-columns:240px 1fr;
+      gap:28px;
+      align-items:start;
+    }
+    section{grid-column:2}
+    .anchors{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .anchor{padding:18px 20px}
+    .anchor::before{font-size:78px;right:14px;top:-14px}
+    .anchor .q{font-size:16px}
+    .panelist{padding:18px}
+    .panelist h2{font-size:18px}
+    .logi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .card{padding:18px}
+    .card h2{font-size:16px}
+    .quote{font-size:15.5px;padding:14px 16px}
+    /* Two-column slides on desktop */
+    #slides > details{display:inline-block;width:calc(50% - 6px);vertical-align:top;margin:6px 3px}
+  }
+  @media (min-width: 1280px){
+    main{grid-template-columns:260px 1fr;max-width:1280px}
+  }
+
+  /* Top progress */
+  .progress{height:2px;background:var(--line);position:sticky;top:0;z-index:31}
+  .progress > i{display:block;height:100%;background:var(--accent);width:0;transition:width .15s}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="title-row">
+    <span class="pill">Round 3</span>
+    <h1>Economist · Red Pen</h1>
+  </div>
+  <div class="subtitle">Adelphi · 14:40 arrival · Liz · Bogdan · Josh · Fionn · Nelson</div>
+  <nav class="tabs" id="tabs" aria-label="Sections">
+    <button data-tab="anchors" class="active">⚓ Anchors</button>
+    <button data-tab="intro">🎤 Intro</button>
+    <button data-tab="slides">🗂 Slides</button>
+    <button data-tab="qa">❓ Q&amp;A</button>
+    <button data-tab="ell">🧭 Ell</button>
+    <button data-tab="past">📚 Past</button>
+    <button data-tab="ask">🙋 Ask Them</button>
+    <button data-tab="danger">⚠️ Danger</button>
+    <button data-tab="logi">📍 Logistics</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ANCHORS -->
+  <section id="anchors" class="active">
+    <div class="card tight">
+      <h2><span class="num">★</span> Five Anchor Sentences</h2>
+      <small>If you forget everything else, these five frame any answer.</small>
+    </div>
+    <div class="anchors">
+      <div class="anchor" data-n="1">
+        <div class="q">"For a journalism brand, 95% accuracy isn't impressive — it's dangerous. The eval framework is what separates trustworthy AI from liability."</div>
+        <div class="use">Use for: any accuracy / trust question.</div>
+      </div>
+      <div class="anchor" data-n="2">
+        <div class="q">"The Red Pen never writes. It only audits. That's the product decision that matters."</div>
+        <div class="use">Use for: scope / positioning.</div>
+      </div>
+      <div class="anchor" data-n="3">
+        <div class="q">"I've built this pattern before — at PageBreak, at Hilti, at Yelp. Eval-driven, trust-first, platform-scale."</div>
+        <div class="use">Use for: credibility / experience.</div>
+      </div>
+      <div class="anchor" data-n="4">
+        <div class="q">"The platform's customers are other PMs and engineers. If they're routing around us, we've failed."</div>
+        <div class="use">Use for: platform strategy.</div>
+      </div>
+      <div class="anchor" data-n="5">
+        <div class="q">"Month one: shadow editors. The deck is a hypothesis. They are the test."</div>
+        <div class="use">Use for: humility / first 90 days.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section id="intro" hidden>
+    <div class="card">
+      <h2><span class="num">1</span> 30-Second Intro</h2>
+      <div class="warn"><strong>Stand.</strong> Eye contact with Liz first, then scan. No "thank you for having me." Just start.</div>
+      <div class="quote">
+        "Hi, I'm Fawad. 12 years in product, last three focused on AI. Three things about me:<br><br>
+        <strong>One.</strong> Platform PM at Yelp and Hilti — data, experimentation, making other teams faster.<br><br>
+        <strong>Two.</strong> Just finished a Hilti contract where I upgraded their data platform into an AI platform. Data mesh, medallion layers, AI foundations — then built use cases on top to prove the platform worked.<br><br>
+        <strong>Three.</strong> Co-founded PageBreak — an AI tool for regulated board documents. Built an eval layer from scratch. Under 2% error rate. Acquired.<br><br>
+        Today I'm going to show you something I built for this interview that ties all three together."
+      </div>
+      <div class="ok">Then transition straight to slide 1. <strong>No "shall I begin?"</strong></div>
+    </div>
+    <div class="card">
+      <h2><span class="num">⏱</span> Time Budget</h2>
+      <ul>
+        <li><strong>Presentation:</strong> 15–18 min</li>
+        <li><strong>Q&amp;A:</strong> 25–30 min</li>
+        <li><strong>If at slide 6 and 20 min gone:</strong> skip to <span class="kbd">9 → 10 → 13</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDES -->
+  <section id="slides" hidden>
+    <div class="card tight">
+      <h2><span class="num">🗂</span> Slide-by-Slide</h2>
+      <small>Tap any slide to expand. Each has one KEY POINT and the moves.</small>
+    </div>
+
+    <details>
+      <summary><div class="slide-num">1</div><div class="slide-title">Title</div></summary>
+      <div class="slide-body">
+        <p>Don't narrate. Let them read it. Move to slide 2 within <strong>5 seconds</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">2</div><div class="slide-title">The Example</div></summary>
+      <div class="slide-body">
+        <div class="key">AI doesn't fail on facts. It fails on nuance.</div>
+        <ul>
+          <li>Walk inflation example. Point at draft sentence, then source.</li>
+          <li>Name both distortions: <em>"Seven became most. Attribution disappeared."</em></li>
+          <li>Pause. <em>"Neither Grammarly nor a RAG pipeline would catch either."</em></li>
+        </ul>
+        <p><small>Transition: <em>"So why does this matter for The Economist specifically?"</em></small></p>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">3</div><div class="slide-title">Why This Matters</div></summary>
+      <div class="slide-body">
+        <div class="key">Quote their own AI policy back to them.</div>
+        <ul>
+          <li>Read: <em>"The Economist is produced by smart humans, not clever machines."</em></li>
+          <li>Hit stats: <strong>22%</strong> UK journalists using AI for research. Fact-checks <strong>doubled YoY</strong>.</li>
+          <li>Problem: editors policing AI drafts by hand. Grammar checkers can't see it.</li>
+          <li>Solution: an evaluation-only auditor. Reads every AI-assisted draft against source + house style.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">4</div><div class="slide-title">What It Does</div></summary>
+      <div class="slide-body">
+        <div class="key">Three inputs · three judges · one red-line output.</div>
+        <ul>
+          <li>Flow: Upload (draft + sources + voice) → 3 parallel judges → red-line review.</li>
+          <li>Judges: <span class="chip" style="border-color:#e3120b;color:#ff8a82">Grounding</span>
+            <span class="chip" style="border-color:#7aa7ff;color:#7aa7ff">Editorial Voice</span>
+            <span class="chip" style="border-color:#f0b35a;color:#f0b35a">Argumentative Rigor</span></li>
+          <li><strong>Is:</strong> a QA backstop before the real edit. <strong>Is not:</strong> a writer or grammar checker.</li>
+        </ul>
+        <div class="ok"><strong>Recommendation:</strong> demo at end — keeps pacing tight.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">5</div><div class="slide-title">Product Decisions</div></summary>
+      <div class="slide-body">
+        <div class="key">Show deliberate trade-offs, not just features.</div>
+        <ul>
+          <li><strong>01.</strong> Audit only, never write. <em>"A tool that writes competes with the editor. One that audits enhances them."</em></li>
+          <li><strong>02.</strong> Three judges, not one composite. <em>"Composite scores hide failures."</em></li>
+          <li><strong>03.</strong> Centralised guardrails. <em>"House style belongs to the institution, not individual users."</em></li>
+        </ul>
+        <p><small>Transition: <em>"Those were product decisions. Here are the engineering ones."</em></small></p>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">6</div><div class="slide-title">Infra Decisions</div></summary>
+      <div class="slide-body">
+        <div class="key">Architecture choices, not technology choices.</div>
+        <ul>
+          <li><strong>01.</strong> Whole sources + UUID'd sentences. <em>Chunked retrieval causes the false positives we're catching.</em></li>
+          <li><strong>02.</strong> Strict JSON + rubric. <em>66% faster than sequential. Errors become testable.</em></li>
+          <li><strong>03.</strong> No framework, no DB. <em>200 lines of eval logic doesn't need LangChain.</em></li>
+        </ul>
+        <div class="warn"><strong>Watch:</strong> slide 7 card 02 still says <em>"LangChain didn't cooperate."</em> If asked, reframe: <strong>"Three parallel SDK calls with strict JSON didn't need an orchestration framework. Deliberate choice, not a failure."</strong></div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">7</div><div class="slide-title">Constraints I Worked Around <span class="chip" style="margin-left:auto">skippable</span></div></summary>
+      <div class="slide-body">
+        <div class="key">Show you know what's missing and what you'd revisit.</div>
+        <ul>
+          <li>Speed through. Don't apologise. Frame as <strong>"five known revisits."</strong></li>
+          <li>Eval bench · Orchestration · OCR · Judge set · Cost model.</li>
+          <li>Card 02 (orchestration): <strong>"Deliberate scope choice"</strong>, not "LangChain didn't cooperate."</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">8</div><div class="slide-title">What I'd Measure</div></summary>
+      <div class="slide-body">
+        <div class="key">Named metrics, not vague KPIs.</div>
+        <ul>
+          <li><strong>Editor productivity</strong> — time-to-publish.</li>
+          <li><strong>Subscriber trust</strong> — correction rate.</li>
+          <li><strong>Tool adoption</strong> — % drafts through Red Pen.</li>
+        </ul>
+        <p>Day-1 strip: <em>"No survey. I read accept rate on flags and tracked changes."</em></p>
+        <div class="ok">Lands well with <strong>Liz</strong> (commercial) and <strong>Josh</strong> (strategic).</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">9</div><div class="slide-title">Feature → Platform Divider</div></summary>
+      <div class="slide-body">
+        <div class="key">Pause here. This is the pivot.</div>
+        <div class="quote">"Everything so far was one feature. The harder question: what does the platform underneath look like?"</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">10</div><div class="slide-title">Platform Primitives</div></summary>
+      <div class="slide-body">
+        <div class="key">The build revealed four gaps every team will hit.</div>
+        <ul>
+          <li>Test bench · Prompt registry · Judge-as-service · Citation contract.</li>
+          <li>Bet: <em>"Build the four once. Ship the next ten features faster."</em></li>
+        </ul>
+        <div class="ok">This slide is for <strong>Bogdan</strong>. He'll recognise these gaps.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">11</div><div class="slide-title">Productizing the Platform</div></summary>
+      <div class="slide-body">
+        <div class="key">Three tenants · one platform · zero rebuilds.</div>
+        <ul>
+          <li>Tenants → Product-platform (5 primitives) → Infra (Bedrock, SageMaker, Snowflake).</li>
+          <li>EIU and Customer Service are <strong>dashed</strong> — hypotheses. Don't oversell.</li>
+          <li><em>"I'd validate EIU as tenant two with Bogdan's team in month two."</em></li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">12</div><div class="slide-title">Competitive Advantage</div></summary>
+      <div class="slide-body">
+        <div class="key">Only The Economist has the data to build this.</div>
+        <ul>
+          <li>Generic LLMs can't refuse · eval frameworks assume stable rubrics · no tool separates feature from contract.</li>
+          <li>Unfair advantage: <strong>183-year archive · Style Guide as rubric · editorial veto trail.</strong></li>
+          <li><em>"Buying this in is buying a generic auditor for a non-generic newsroom."</em></li>
+        </ul>
+        <div class="warn">Heading still reads "Building competitive advantage in the era of AI." Verbally frame as <strong>"Why this is yours to build, not buy."</strong></div>
+      </div>
+    </details>
+
+    <details>
+      <summary><div class="slide-num">13</div><div class="slide-title">Closing — Three Things I'd Do</div></summary>
+      <div class="slide-body">
+        <div class="key">Land three commitments. End strong.</div>
+        <ul>
+          <li><strong>01.</strong> Month one shadowing editors before opening a laptop.</li>
+          <li><strong>02.</strong> Ship the eval bench before the first new feature.</li>
+          <li><strong>03.</strong> Hold the line on "audit, never write."</li>
+        </ul>
+        <div class="quote">"Thank you. I'd love to build this here." — handshake each panellist. Leave.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Q&A -->
+  <section id="qa" hidden>
+    <div class="card tight">
+      <h2><span class="num">❓</span> Predicted Panel Questions</h2>
+      <small>Tap a panellist to jump.</small>
+      <div class="chips" style="margin-top:8px">
+        <a class="chip" href="#liz">Liz</a>
+        <a class="chip" href="#bogdan">Bogdan</a>
+        <a class="chip" href="#josh">Josh</a>
+        <a class="chip" href="#fionn">Fionn</a>
+        <a class="chip" href="#nelson">Nelson</a>
+      </div>
+    </div>
+
+    <div class="panelist" id="liz">
+      <h2>Liz Goulding <span class="role">CPO</span></h2>
+      <div class="tests">Tests: vision · editorial sensitivity · cultural fit · commercial instinct.</div>
+      <div class="qa"><div class="q">How does this connect to subscriber experience?</div><div class="a">The Red Pen protects the trust layer between your AI and 1.5M subscribers. Every AI feature — summaries, recommendations, copilot answers — needs this guardrail before it reaches a reader.</div></div>
+      <div class="qa"><div class="q">How would you prioritise this against everything else?</div><div class="a">I wouldn't ship this first. Start by understanding what product teams are blocked on today. But if editorial trust is as central as your ProductCon talk suggests, a shared eval layer is foundational — everything else is safer once it exists.</div></div>
+      <div class="qa"><div class="q">What did you learn about our editors?</div><div class="a">I haven't spoken to your editors. The prototype is based on publicly available writing and editorial principles. Phase 1 is specifically to fix that — shadow editors, understand where this fits or doesn't.</div></div>
+      <div class="qa"><div class="q">Why build instead of buy?</div><div class="a">Nothing on the market checks adjective-level framing, editorial voice, or argumentative rigour against a house style. Grammarly checks grammar. Originality.ai detects AI text. Neither audits whether a claim distorts the source. This is bespoke to elite editorial.</div></div>
+    </div>
+
+    <div class="panelist" id="bogdan">
+      <h2>Bogdan Vrusias <span class="role">Head AI &amp; Data Eng</span></h2>
+      <div class="tests">Tests: technical depth · architecture · daily working rapport. Pron: <strong>BOG-dan VROO-see-ahs</strong>.</div>
+      <div class="qa"><div class="q">Why not RAG?</div><div class="a">Deliberate choice. Chunked retrieval creates the exact failure mode we're catching — a claim fails grounding because the supporting sentence sat in an unseen chunk. For an audit tool, the LLM needs the full picture. At scale: hybrid — large-context for grounding, retrieval for the voice rules library.</div></div>
+      <div class="qa"><div class="q">How would this work with Bedrock?</div><div class="a">Architecture is model-agnostic. Swap OpenAI for Claude via Bedrock — same JSON schema, same three parallel calls. Bedrock Guardrails handles safety/toxicity, freeing Red Pen judges for editorial-specific checks. I'd test Claude's structured-output compliance before committing.</div></div>
+      <div class="qa"><div class="q">Why no LangChain?</div><div class="a"><strong>Don't say "it didn't cooperate."</strong> Three parallel SDK calls with strict JSON didn't need an orchestration framework. Pure calls are easier to debug and audit. At scale — caching, routing, cost controls — I'd revisit orchestration.</div></div>
+      <div class="qa"><div class="q">How do you evaluate the evaluator?</div><div class="a">Phase 3: held-out dataset of editor-annotated drafts with known flaws. Run three judges. Track precision and recall per pillar. CI gate — no prompt change ships without passing. Same pattern I used at PageBreak.</div></div>
+      <div class="qa"><div class="q">What about latency?</div><div class="a">15–30s for three parallel calls on a 1500-word article. Acceptable for pre-edit QA. At scale: cache source embeddings, pre-process voice rules, stream so grounding flags appear first.</div></div>
+    </div>
+
+    <div class="panelist" id="josh">
+      <h2>Josh Muncke <span class="role">VP Gen AI</span></h2>
+      <div class="tests">Tests: strategic fit · group-wide thinking · internal tools vision.</div>
+      <div class="qa"><div class="q">How does this relate to the broader AI platform?</div><div class="a">The three-judge pattern generalises. Grounding = checking output against source data. Voice = brand/compliance rules. Rigour = logical consistency. EIU copilot, customer service bots, internal tools — all need a version. The Red Pen is the proof; the platform capability is the eval harness underneath.</div></div>
+      <div class="qa"><div class="q">We're piloting Claude internally. How do internal tools evolve?</div><div class="a">Liz mentioned a decentralised approach — company-wide ChatGPT, Claude pilot starting. Opportunity: shared guardrails for internal use too. If an analyst uses Claude to draft a client brief, same grounding check applies. Platform serves both external products and internal workflows.</div></div>
+      <div class="qa"><div class="q">What's your view on agentic AI?</div><div class="a">Agents multiply the need for guardrails, not reduce it. Every autonomous step is a point where editorial trust can break. The eval harness becomes more critical — you audit agent outputs before they reach a human, not after.</div></div>
+    </div>
+
+    <div class="panelist" id="fionn">
+      <h2>Fionn O'Raghallaigh <span class="role">Group PM AI</span></h2>
+      <div class="tests">Tests: editor empathy · peer compatibility · practical product sense. Irish · ex-journalist. Pron: <strong>FYUN O-RAH-hal-ee</strong>.</div>
+      <div class="qa"><div class="q">Have you worked in editorial?</div><div class="a">No. Closest parallel is PageBreak — regulated board documents where accuracy was non-negotiable. I'm not pretending to understand your editorial workflow. That's why Phase 1 is shadowing editors, not shipping features.</div></div>
+      <div class="qa"><div class="q">Our editors are sceptical of AI. How do you get adoption?</div><div class="a">Don't force it. Ship as optional. Find one curious editor, make them the design partner. Let them red-pen the Red Pen. If it saves 20 minutes on one draft, word spreads. If not, I go back and fix it. Adoption is earned, not mandated.</div></div>
+      <div class="qa"><div class="q">How does this sit alongside Economist Enterprise?</div><div class="a">Platform capability, not a product. Your enterprise AI and consumer products both need editorial guardrails. I'd want to understand what you've already built before proposing integration.</div></div>
+    </div>
+
+    <div class="panelist" id="nelson">
+      <h2>Nelson Nogueira <span class="role">Senior Delivery Lead</span></h2>
+      <div class="tests">Tests: buildability · scope control · sprint hygiene · realistic timelines. Pron: <strong>Nelson No-GAIR-ah</strong>.</div>
+      <div class="qa"><div class="q">What's your approach to scoping and delivery?</div><div class="a">Thin vertical slice. For Red Pen: one judge, one article type, one editor. Ship in 2–3 sprints. Measure. Then widen. I write acceptance criteria before sprint planning — the team shouldn't be guessing what done looks like.</div></div>
+      <div class="qa"><div class="q">How do you handle scope creep on AI features?</div><div class="a">AI features are scope-creep magnets because the model always has an opinion. I scope by output contract, not capability. The judge returns this JSON shape. It flags these categories. Anything outside the schema is out of scope this sprint.</div></div>
+      <div class="qa"><div class="q">What does your relationship with engineering leads look like?</div><div class="a">I own what and why. They own how. We co-own when. At Hilti: weekly 1:1 with the principal engineer, shared roadmap doc, PRDs he shaped before I finalised. Never wrote tickets he hadn't agreed to. When we disagreed, default was prototype and measure.</div></div>
+      <div class="qa"><div class="q">What's the cost per audit?</div><div class="a">Roughly $0.05–0.15 per article depending on source length. Three parallel calls, ~400k context. At 1000 articles/day, $50–150/day. Manageable. At scale: cache source embeddings, reduce context per call.</div></div>
+    </div>
+  </section>
+
+  <!-- ELL -->
+  <section id="ell" hidden>
+    <div class="card">
+      <h2><span class="num">🧭</span> Ell Advisory — If It Comes Up</h2>
+      <div class="warn"><strong>Rule:</strong> never bring it up proactively. If asked, frame honestly and briefly.</div>
+      <h3>If asked: "What's Ell Advisory?"</h3>
+      <div class="quote">"I run a small advisory practice helping B2B companies figure out their AI product strategy. It's been a good way to stay sharp across different industries while I'm between roles. If I join here, Ell Advisory goes on pause — this role is full-time and that's what I want."</div>
+      <h3>If pushed: "Would you keep doing it on the side?"</h3>
+      <div class="quote">"No. This role deserves full attention. I'd wind down active engagements before my start date."</div>
+      <h3>If they see it as positive</h3>
+      <div class="quote">"The consulting work means I've seen AI platform problems across 6–7 different companies in the last year. That breadth is useful — I've seen what works and what doesn't across different team sizes and tech stacks."</div>
+      <div class="ok"><strong>Bottom line:</strong> Ell Advisory is a feature, not a risk. But only if they ask.</div>
+    </div>
+  </section>
+
+  <!-- PAST -->
+  <section id="past" hidden>
+    <div class="card">
+      <h2><span class="num">📚</span> Past Products — Quick Recall</h2>
+    </div>
+    <div class="card">
+      <h3 style="color:#fff">PageBreak</h3>
+      <ul>
+        <li>AI tool for regulated board documents (FTSE companies).</li>
+        <li>If AI showed a wrong number to a board, product was dead.</li>
+        <li>LLM-as-judge eval layer from scratch. <strong>Under 2% error rate.</strong></li>
+        <li>Citation tracing — every output auditable to source.</li>
+        <li>Acquired.</li>
+      </ul>
+      <div class="ok">Pattern: eval-driven, trust-first. Same as Red Pen.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:#fff">Hilti (2023 contract)</h3>
+      <ul>
+        <li>Principal PM for AI infra. 13 data stores, 7 global divisions.</li>
+        <li>Upgraded data platform → AI platform.</li>
+        <li>Data mesh + medallion layers.</li>
+        <li>Established AI foundations, then built use cases to prove them.</li>
+      </ul>
+      <div class="warn"><strong>CRITICAL:</strong> Do <strong>NOT</strong> mention 2020 Hilti role metrics (80M CHF). Different, earlier role. Keep separate.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:#fff">Yelp</h3>
+      <ul>
+        <li>Owned the experimentation platform.</li>
+        <li>Platform PM making other teams faster and more rigorous.</li>
+        <li>Data + experimentation infra at scale.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ASK -->
+  <section id="ask" hidden>
+    <div class="card">
+      <h2><span class="num">🙋</span> Questions to Ask <small>· pick 3–4</small></h2>
+    </div>
+    <div class="card">
+      <ul>
+        <li><strong>Bogdan:</strong> What's the current model routing setup? Are teams choosing their own models or is there a standard?</li>
+        <li><strong>Fionn:</strong> What's the biggest AI-related concern you hear from editors today?</li>
+        <li><strong>Liz:</strong> What would make someone fail in this role in the first 6 months?</li>
+        <li><strong>Josh:</strong> Where does the AI platform sit in the org's priority stack relative to the other 20 roles being hired?</li>
+        <li><strong>The room:</strong> If this tool existed today, which team would use it first?</li>
+        <li><strong>Bogdan:</strong> What eval or guardrail patterns has the team already tried and abandoned?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DANGER -->
+  <section id="danger" hidden>
+    <div class="card">
+      <h2><span class="num">⚠️</span> Danger Zones</h2>
+    </div>
+    <div class="danger-card">
+      <h3>Prototype breaks live</h3>
+      <p>Have screen-recording backup on laptop. <em>"Let me show the recording."</em> Don't fumble debugging.</p>
+    </div>
+    <div class="danger-card">
+      <h3>Running over time</h3>
+      <p>Slide 6 + 20 min gone → skip to <span class="kbd">9</span> → <span class="kbd">10</span> → <span class="kbd">13</span>. Appendix exists for a reason.</p>
+    </div>
+    <div class="danger-card">
+      <h3>Don't-know question</h3>
+      <p><em>"I don't have direct experience with that, but here's how I'd approach it."</em> Never bluff with Bogdan in the room.</p>
+    </div>
+    <div class="danger-card">
+      <h3>Editor challenges usefulness</h3>
+      <p><em>"That's exactly what Phase 1 tests. If editors don't want this, I need to know in week 2, not month 6."</em></p>
+    </div>
+    <div class="danger-card">
+      <h3>Deep infra question</h3>
+      <p><em>"That's an engineering decision I'd make with Bogdan, not unilaterally. My instinct is X, but I'd defer to the team."</em></p>
+    </div>
+    <div class="danger-card">
+      <h3>Salary</h3>
+      <p><em>"110–120k base works. Vish and I aligned on that in Round 1."</em> Don't elaborate.</p>
+    </div>
+  </section>
+
+  <!-- LOGISTICS -->
+  <section id="logi" hidden>
+    <div class="card"><h2><span class="num">📍</span> Logistics</h2></div>
+    <div class="logi">
+      <div class="logi-row"><div class="ico">📍</div><div><div class="lbl">Where</div><div class="val">The Adelphi · 1–11 John Adams Street · WC2N 6HT</div></div></div>
+      <div class="logi-row"><div class="ico">⏰</div><div><div class="lbl">Arrive</div><div class="val">14:40 — 20 min early</div></div></div>
+      <div class="logi-row"><div class="ico">👔</div><div><div class="lbl">Dress</div><div class="val">Business casual · media, not finance</div></div></div>
+      <div class="logi-row"><div class="ico">💻</div><div><div class="lbl">Bring</div><div class="val">Laptop with prototype loaded + screen-recording backup</div></div></div>
+      <div class="logi-row"><div class="ico">🗣</div><div><div class="lbl">Pronunciation</div><div class="val">BOG-dan VROO-see-ahs · FYUN O-RAH-hal-ee · Nelson No-GAIR-ah</div></div></div>
+      <div class="logi-row"><div class="ico">🚪</div><div><div class="lbl">First 30 sec</div><div class="val">Stand. Eye contact with Liz. Confident open.</div></div></div>
+      <div class="logi-row"><div class="ico">🤝</div><div><div class="lbl">Last impression</div><div class="val">"Thank you. I'd love to build this here." Handshake each panellist. Leave.</div></div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2><span class="num">🧠</span> Panel Roster</h2>
+      <ul>
+        <li><strong>Liz Goulding</strong> — CPO</li>
+        <li><strong>Bogdan Vrusias</strong> — Head AI &amp; Data Eng</li>
+        <li><strong>Josh Muncke</strong> — VP Gen AI</li>
+        <li><strong>Fionn O'Raghallaigh</strong> — Group PM AI</li>
+        <li><strong>Nelson Nogueira</strong> — Senior Delivery Lead</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="dock">
+  <div class="dock-inner" id="dock">
+    <button data-tab="anchors" class="active"><span class="ico">⚓</span>Anchors</button>
+    <button data-tab="slides"><span class="ico">🗂</span>Slides</button>
+    <button data-tab="qa"><span class="ico">❓</span>Q&amp;A</button>
+    <button data-tab="danger"><span class="ico">⚠️</span>Danger</button>
+    <button data-tab="logi"><span class="ico">📍</span>Logi</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const sections = [...document.querySelectorAll('main > section')];
+  const tabBtns = [...document.querySelectorAll('#tabs button')];
+  const dockBtns = [...document.querySelectorAll('#dock button')];
+
+  function show(id){
+    sections.forEach(s=>{
+      const on = s.id===id;
+      s.classList.toggle('active', on);
+      s.hidden = !on;
+    });
+    [...tabBtns,...dockBtns].forEach(b=>{
+      b.classList.toggle('active', b.dataset.tab===id);
+    });
+    // ensure top tab is visible in scroller
+    const t = tabBtns.find(b=>b.dataset.tab===id);
+    if(t) t.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+    window.scrollTo({top:0,behavior:'instant'});
+    try{ history.replaceState(null,'','#'+id); }catch(e){}
+  }
+  [...tabBtns,...dockBtns].forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+
+  // open via hash
+  const initial = (location.hash||'').replace('#','');
+  if(initial && sections.find(s=>s.id===initial)) show(initial);
+
+  // Tap-to-collapse-others for slides accordion (optional polish)
+  document.querySelectorAll('#slides details').forEach(d=>{
+    d.addEventListener('toggle',()=>{
+      if(d.open){
+        document.querySelectorAll('#slides details').forEach(o=>{ if(o!==d) o.open=false; });
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
