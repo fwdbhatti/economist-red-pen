@@ -83,7 +83,7 @@ const DECK_HTML = `
 
   <div style="display: grid; grid-template-columns: 70% 30%; gap: 24px; flex: 1; align-items: stretch;">
 
-    <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center;">
+    <div style="display: flex; flex-direction: column; gap: 12px; justify-content: flex-start;">
 
       <div style="padding: 18px 24px; background: #f9f6f0; border-left: 6px solid #e3120b;">
         <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px;">
