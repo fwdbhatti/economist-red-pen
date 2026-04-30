@@ -81,7 +81,7 @@ const DECK_HTML = `
   <p style="font-family: 'Georgia', serif; font-size: 16px; color: #444; line-height: 1.45; margin-bottom: 6px;">"AI can improve how we work, not change what we do. AI tools can help with research, for instance, or ease the editing of videos. But humans bear the responsibility for our work, from reporting to editing and fact-checking."</p>
   <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.8px; color: #6b6b6b; margin-bottom: 14px;">— <a href="https://myaccount.economist.com/s/article/How-we-handle-AI-generated-content" target="_blank" style="color: #e3120b; text-decoration: none; font-weight: 700; border-bottom: 1px solid #e3120b;">The Economist · How we handle AI-generated content</a> · Dec 2025</p>
 
-  <div style="display: grid; grid-template-columns: 70% 30%; gap: 24px; flex: 1; align-items: stretch;">
+  <div style="display: grid; grid-template-columns: 70% 30%; gap: 24px; align-items: stretch;">
 
     <div style="display: flex; flex-direction: column; gap: 12px; justify-content: flex-start;">
 
