@@ -108,8 +108,8 @@ const DECK_HTML = `
 
     </div>
 
-    <div style="display: flex; align-items: stretch; justify-content: center; background: #faf7f1; border: 1px solid #eee4d1; padding: 16px 20px; position: relative; align-self: stretch;">
-      <svg viewBox="0 0 220 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%;">
+    <div style="background: #faf7f1; border: 1px solid #eee4d1; position: relative; align-self: stretch; min-height: 0; overflow: hidden;">
+      <svg viewBox="0 0 220 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="position: absolute; top: 16px; left: 20px; right: 20px; bottom: 16px; width: calc(100% - 40px); height: calc(100% - 32px); display: block;">
         <defs>
           <linearGradient id="penBody" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#b00d07"/>
