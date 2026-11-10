@@ -120,7 +120,7 @@ export function GraphView({
     setSelectedEdge(null);
     try {
       const draftRec = result.ingestion.find((i) => i.role === "draft");
-      const res = await fetch("/api/graph", {
+      const res = await fetch("/economist/api/graph", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

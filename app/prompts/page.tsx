@@ -111,13 +111,13 @@ export default async function PromptsPage() {
 
       <nav className="mt-6 flex items-center gap-6 border-t border-rule pt-6 font-ui text-xs small-caps text-ink-2">
         <a
-          href="/"
+          href="/economist"
           className="underline underline-offset-4 hover:text-econ-red"
         >
           ← Back to the desk
         </a>
         <a
-          href="/slides"
+          href="/economist/slides"
           className="underline underline-offset-4 hover:text-econ-red"
         >
           Presentation deck →

@@ -57,7 +57,7 @@ export default function Home() {
     form.append("rules", JSON.stringify(rules));
 
     try {
-      const res = await fetch("/api/evaluate", { method: "POST", body: form });
+      const res = await fetch("/economist/api/evaluate", { method: "POST", body: form });
       let data: unknown;
       try {
         data = await res.json();
